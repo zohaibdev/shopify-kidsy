@@ -1,0 +1,149 @@
+<style>
+  #shopify-section-{{ section.id }} .shop-by-section a { text-decoration: none; width: auto; } #shopify-section-{{ section.id }} .shop-by-section .container .popular-collection { max-width: 1390px; margin: 0 auto; padding: 0 10px; gap: 12px; } #shopify-section-{{ section.id }} .shop-by-section .block_content { padding: 14px 23px; display: flex; flex-direction: column; align-items: center; border-radius: 50px; gap: 10px; border: 1px solid #000; background: #fff; justify-content: center; transition: all 0.2s linear; } #shopify-section-{{ section.id }} .shop-by-section .swiper{ padding-left: calc((100% - 1390px) / 2); padding-right:16px; } #shopify-section-{{ section.id }} .shop-by-section .collection-wrapper .block_content p { font-size: 20px; font-weight: 500; margin: 0; color: #000; line-height: 0.98; letter-spacing: 0.43px; white-space: nowrap; font-family: "Poppins", sans-serif; text-align: center; order: -1; } #shopify-section-{{ section.id }} section.shop-by-section { background: #F48120; padding: 24px 0 44px; } #shopify-section-{{ section.id }} .shop-by-section .heading p { font-size: 48px; line-height: 1.25; letter-spacing: 0; font-weight: 500; color: #fff; text-transform: capitalize; margin: 0; padding-bottom: 14px; font-family: "Poppins", sans-serif; } #shopify-section-{{ section.id }} .shop-by-section .popular-collection-row { display: flex; gap: 28px; margin-top: 16px; } #shopify-section-{{ section.id }} .shop-by-section .popular-collection { max-width: 1390px; margin: 0 auto; } #shopify-section-{{ section.id }} .shop-by-section .swiper-button-next:after, #shopify-section-{{ section.id }} .shop-by-section .swiper-button-prev:after { display: none; } #shopify-section-{{ section.id }} .shop-by-section .slider-controls { display: flex; justify-content: end; gap: 10px; padding-bottom: 20px; } #shopify-section-{{ section.id }} .shop-by-section .swiper-slide { width: auto; } #shopify-section-{{ section.id }} .shop-by-section .popular-collection { display: flex; align-items: center; justify-content: space-between; } #shopify-section-{{ section.id }} .shop-by-section .swiper-button-next, #shopify-section-{{ section.id }} .shop-by-section .swiper-button-prev{ height:50px; width:50px; } #shopify-section-{{ section.id }} .shop-by-section .block_content:hover { background: #F45901; transition: all 0.2s linear; } #shopify-section-{{ section.id }} .shop-by-section .block_content:hover p { color:#fff; } #shopify-section-{{ section.id }} .shop-by-section .block_content:hover img { filter: invert(1); } #shopify-section-{{ section.id }} .shop-by-section.shop-by-brand .block_content img { height: 32px; } .template-collection #shopify-section-{{ section.id }} .shop-by-section .heading p { font-size: 32px; color:#000; } .template-collection #shopify-section-{{ section.id }} .shop-by-section { padding: 24px 0 21px; background:#FFFBF7; } .collection-search-form { width: 100%; flex-grow: 1; max-width: 470px; margin-inline: auto; padding-bottom: 14px; } .collection-search-form form { position: relative; width: 100%; } .collection-search-form form .field__input { border: 1px solid #000000; border-radius: 64px; background-color: #fff; font-size: 16px; padding: 7px 7px 7px 45px; min-height: auto; height: auto; } .collection-search-form form .field__button { width: 26px; height: 100%; left: 17px; right: auto; } @media screen and (max-width:1300px) { #shopify-section-{{ section.id }} .shop-by-section .collection-wrapper { padding: 0 20px; } } @media screen and (max-width:991px) { #shopify-section-{{ section.id }} .shop-by-section .collection-wrapper .block_content p { font-size: 11px; line-height: 0.74; letter-spacing: 0.37px; } #shopify-section-{{ section.id }} .shop-by-section .block_content { padding: 12px 25px; border-radius: 42px; gap: 7px; } .template-collection  #shopify-section-{{ section.id }} .shop-by-section .heading p { font-size: 18px; padding-left: 16px; } #shopify-section-{{ section.id }} .shop-by-section .block_content img { height: 30px; width: 30px; } #shopify-section-{{ section.id }} .shop-by-section .container { padding: 0; } #shopify-section-{{ section.id }} section.shop-by-section { padding: 26px 0 38px; } #shopify-section-{{ section.id }} .shop-by-section .heading p { font-size: 24px; text-align: left; padding-bottom: 0; } #shopify-section-{{ section.id }} .shop-by-section .slider-controls { display: none; justify-content: end; gap: 3px; padding-bottom: 0; position: absolute; right: 15px; } #shopify-section-{{ section.id }} .shop-by-section .container .popular-collection { padding-bottom: 12px; flex-direction: column-reverse; gap: 15px; } .collection-search-form { max-width: 328px; padding-bottom: 14px; } .collection-search-form form .field__input { font-size: 14px; padding: 5px 7px 5px 35px; } .collection-search-form form .field__button { width: 20px; left: 12px; } #shopify-section-{{ section.id }} .shop-by-section .swiper-button-next, #shopify-section-{{ section.id }} .shop-by-section .swiper-button-prev{ height:30px; width:30px; } #shopify-section-{{ section.id }} .shop-by-section.shop-by-brand p { display: none; } #shopify-section-{{ section.id }} .shop-by-section.shop-by-brand .block_content img { height: 30px; width: auto; max-width: 80px; display: block; } #shopify-section-{{ section.id }} .shop-by-section.shop-by-brand .slider-controls { justify-content: end; position: relative; right: 15px; width: 100%; } .template-collection #shopify-section-{{ section.id }} .shop-by-section .block_content img { height: 20px; width: 20px; } .template-collection #shopify-section-{{ section.id }} .shop-by-section .block_content { padding: 5px 15px; } }
+</style>
+
+<section class="shop-by-section {% if section.settings.brands %} shop-by-brand {% endif %}" data-section-id="{{ section.id }}"  >
+  <div class="container">
+    <div class="popular-collection">
+      <div class="heading">{{ section.settings.heading }}</div>
+      {% if section.settings.show_search %}
+      <div class="collection-search-form">
+        <form action="{{ routes.search_url }}" method="get" role="search">
+            <input class="field__input" id="search-collection"
+              type="search"
+              name="q"
+              value="{{ search.terms | escape }}"
+              placeholder=""
+              {%- if settings.predictive_search_enabled -%}
+                role="combobox"
+                aria-expanded="false"
+                aria-owns="predictive-search-results"
+                aria-controls="predictive-search-results"
+                aria-haspopup="listbox"
+                aria-autocomplete="list"
+                autocorrect="off"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+              {%- endif -%}
+            >
+            <input type="hidden" name="options[prefix]" value="last">
+            <button class="field__button" aria-label="{{ 'general.search.search' | t }}">
+              <span class="svg-wrapper">
+                {{- 'icon-search.svg' | inline_asset_content -}}
+              </span>
+            </button>
+        </form>
+      </div>
+      {% endif %}
+      <div class="slider-controls">
+        <div
+          class="swiper-button-prev swiper-{{ section.id }}-prev"
+          style="transform: rotate(180deg); left: 0px; right: 0; position: relative; top: 0; margin: 0;"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="57" height="57" viewBox="0 0 57 57" fill="none">
+            <circle cx="28.5" cy="28.5" r="28" fill="white" stroke="black"/>
+            <path d="M25.1115 19.3259C25.0401 19.2594 24.9828 19.1792 24.9431 19.0901C24.9034 19.001 24.8821 18.9047 24.8803 18.8072C24.8786 18.7096 24.8966 18.6127 24.9331 18.5223C24.9696 18.4318 25.024 18.3496 25.093 18.2806C25.162 18.2116 25.2442 18.1572 25.3347 18.1207C25.4251 18.0841 25.522 18.0662 25.6196 18.0679C25.7172 18.0696 25.8134 18.091 25.9025 18.1307C25.9916 18.1704 26.0718 18.2277 26.1383 18.2991L35.8258 27.9866C35.9619 28.1228 36.0383 28.3075 36.0383 28.5C36.0383 28.6925 35.9619 28.8772 35.8258 29.0134L26.1383 38.7009C26.0006 38.8293 25.8184 38.8991 25.6302 38.8958C25.442 38.8925 25.2624 38.8162 25.1293 38.6831C24.9962 38.55 24.9199 38.3704 24.9166 38.1822C24.9133 37.994 24.9831 37.8118 25.1115 37.6741L34.2843 28.5L25.1115 19.3259Z" fill="black"/>
+          </svg>
+        </div>
+        <div
+          class="swiper-button-next swiper-{{ section.id }}-next"
+          style="transform: none; left: 0px; right: 0; position: relative; top: 0; margin: 0;"
+        >
+          <!-- SVG Arrow -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="57" height="57" viewBox="0 0 57 57" fill="none">
+            <circle cx="28.5" cy="28.5" r="28" fill="white" stroke="black"/>
+            <path d="M25.1115 19.3259C25.0401 19.2594 24.9828 19.1792 24.9431 19.0901C24.9034 19.001 24.8821 18.9047 24.8803 18.8072C24.8786 18.7096 24.8966 18.6127 24.9331 18.5223C24.9696 18.4318 25.024 18.3496 25.093 18.2806C25.162 18.2116 25.2442 18.1572 25.3347 18.1207C25.4251 18.0841 25.522 18.0662 25.6196 18.0679C25.7172 18.0696 25.8134 18.091 25.9025 18.1307C25.9916 18.1704 26.0718 18.2277 26.1383 18.2991L35.8258 27.9866C35.9619 28.1228 36.0383 28.3075 36.0383 28.5C36.0383 28.6925 35.9619 28.8772 35.8258 29.0134L26.1383 38.7009C26.0006 38.8293 25.8184 38.8991 25.6302 38.8958C25.442 38.8925 25.2624 38.8162 25.1293 38.6831C24.9962 38.55 24.9199 38.3704 24.9166 38.1822C24.9133 37.994 24.9831 37.8118 25.1115 37.6741L34.2843 28.5L25.1115 19.3259Z" fill="black"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper collection_swiper collection_swiper-{{ section.id }}">
+      <div class="swiper-wrapper collection-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide text_block">
+            <a href="{{ block.settings.link }}" aria-label="{{ block.settings.add_text }}">
+              <div class="block_content {% if block.settings.link == collection.url %}active{% endif %}">
+                <p>{{ block.settings.add_text }}</p>
+                <img
+                  src="{{ block.settings.icon | image_url }}"
+                  alt="{{ block.settings.add_text }}"
+                  width="auto"
+                  height="auto"
+                  loading="lazy"
+                >
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener("load", function () {
+    new Swiper(".collection_swiper-{{ section.id }}", {
+      slidesPerView: 'auto',
+      spaceBetween: 10,
+      navigation: {
+        nextEl: ".swiper-{{ section.id }}-next",
+        prevEl: ".swiper-{{ section.id }}-prev"
+      },
+
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Shop By Section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "brands",
+      "label": "Brands Class Enabled ?"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Add Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show Search Bar",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content",
+      "name": "content",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Add Icon"
+        },
+        {
+          "type": "text",
+          "id": "add_text",
+          "label": "Add Title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Add Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop By Section"
+    }
+  ]
+}
+{% endschema %}

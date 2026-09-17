@@ -1,0 +1,763 @@
+{% comment %}
+  ============================================================
+  Section: Referral Link Card (inline, not a modal)
+  ------------------------------------------------------------
+  Inline section matching Figma design exactly:
+    • Orange #F45901 outer container with 10px rounded corners
+    • Four decorative shapes: top-right cream blob, bottom-left
+      cream blob, orange squiggle scribble, white squiggle inside card
+    • Soft-gold #FFDFA8 inner card centered with:
+        - Title + subtitle, centered
+        - Email input + "Get My Link" submit button
+        - "— or —" divider
+        - "Log In to My Account" gold tag button
+        - Three share buttons (Copy / Email / Text)
+
+  Renders directly in the page flow (no modal, no triggers).
+  All text, links, colors, and labels are dynamic via schema.
+  ============================================================
+{% endcomment %}
+
+ <link rel="preload" href="{{ 'custom.css' | asset_url }}" as="style">
+{%- liquid
+  assign s = section.settings
+  assign sec_id = 'kidsy-referral-card-' | append: section.id
+-%}
+
+<style>
+  #{{ sec_id }} {
+    --poppy:      {{ s.color_frame      | default: '#F45901' }};
+    --chocolate:  {{ s.color_text       | default: '#341300' }};
+    --gold:       {{ s.color_submit     | default: '#FFBC38' }};
+    --gold-2:     {{ s.color_login      | default: '#FFBF41' }};
+    --soft-gold:  {{ s.color_card       | default: '#FFDFA8' }};
+    --cream:      {{ s.color_share_hover| default: '#FFFBF3' }};
+    --pale-cream: {{ s.color_share      | default: '#FFF4E1' }};
+    --blob:       {{ s.color_blob       | default: '#FFDFA8' }};
+    --border:     {{ s.color_border     | default: 'rgba(52,19,0,0.19)' }};
+  }
+
+  #{{ sec_id }} {
+    padding: {{ s.padding_outer | default: 30 }}px;
+    background: {{ s.color_outer_bg | default: '#FFFBF3' }};
+    font-family: "Roobert TRIAL", sans-serif;
+    color: var(--chocolate);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+
+  /* ============================================================
+     ORANGE FRAME — outer container
+     Figma: bg #F45901, 10px radius, full width, with min-height
+     to give the decorative shapes room to display
+     ============================================================ */
+  #{{ sec_id }} .krc__frame {
+    position: relative;
+    background: var(--poppy);
+    border-radius: 10px;
+    overflow: hidden;
+    isolation: isolate;
+    max-width: 1340px;
+    margin: 0 auto;
+    min-height: {{ s.frame_min_height | default: 600 }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+  }
+
+  /* ============================================================
+     DECORATIVE SHAPES — Figma exact placements
+     ============================================================ */
+
+  /* Top-right cream blob */
+  #{{ sec_id }} .krc__deco-tr {
+    position: absolute;
+    top: 0;
+    right: 0;
+    {% comment %} width: 837px;
+    height: 843px; {% endcomment %}
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  {% comment %} #{{ sec_id }} .krc__deco-tr > svg {
+    width: 632px;
+    height: 559px;
+    transform: scaleY(-1) rotate(-131.38deg);
+    transform-origin: center;
+  } {% endcomment %}
+
+  /* Bottom-left cream blob */
+  #{{ sec_id }} .krc__deco-bl {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    {% comment %} width: 562px;
+    height: 505px; {% endcomment %}
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  {% comment %} #{{ sec_id }} .krc__deco-bl > svg {
+    width: 530px;
+    height: 468px;
+    transform: scaleY(-1) rotate(-4.16deg);
+    transform-origin: center;
+  } {% endcomment %}
+
+  /* Orange squiggle scribble */
+  #{{ sec_id }} .krc__deco-squiggle {
+    position: absolute;
+    top: 221px;
+    left: 302px;
+    width: 200px;
+    height: 216px;
+    pointer-events: none;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #{{ sec_id }} .krc__deco-squiggle > svg {
+    width: 173px;
+    height: 131px;
+    transform: scaleY(-1) rotate(-120.32deg);
+    transform-origin: center;
+  }
+.mb_show{
+display:none !important;
+}
+  @media (max-width: 1100px) {
+    #{{ sec_id }} .krc__deco-tr { right: -200px; left: auto; }
+    #{{ sec_id }} .krc__deco-squiggle { left: 8%; top: 28%; }
+  }
+
+  @media (max-width: 768px) {
+    #{{ sec_id }} {padding: 20px 16px; }
+    #{{ sec_id }} .krc__frame { padding: 32px 21px; min-height: 520px; }
+    .desktop-show{
+display:none !important;
+}
+.mb_show{
+display:block !important;
+}
+    #{{ sec_id }} .krc__deco-tr {
+    right: 0;
+        left: auto;
+        top: 0;
+        width: auto;
+        height: auto;
+    }
+       #{{ sec_id }}  .krc__deco-bl{
+    
+     right: auto;
+        left: 0;
+        bottom: 0;
+        width: auto;
+        height: auto;
+    }
+    {% comment %} #{{ sec_id }} .krc__deco-tr > svg { width: 400px; height: 360px; }
+    #{{ sec_id }} .krc__deco-bl {
+      left: -160px; bottom: -120px;
+      width: 380px; height: 360px;
+    } {% endcomment %}
+    {% comment %} #{{ sec_id }} .krc__deco-bl > svg { width: 360px; height: 320px; } {% endcomment %}
+    #{{ sec_id }} .krc__deco-squiggle {
+      top: auto; left: auto;
+      bottom: 20%; right: 8%;
+      width: 130px; height: 140px;
+    }
+    #{{ sec_id }} .krc__deco-squiggle > svg { width: 110px; height: 84px; }
+  }
+
+  /* ============================================================
+     INNER CARD — soft-gold dialog
+     Figma: 12px radius, padding 62px 32px, gap 18px
+     ============================================================ */
+  #{{ sec_id }} .krc__card {
+    position: relative;
+    background: var(--soft-gold);
+    border-radius: 12px;
+    padding: 62px 32px;
+    overflow: hidden;
+    isolation: isolate;
+    width: min(540px, 100%);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* White squiggle decoration inside card */
+  #{{ sec_id }} .krc__card-deco {
+    position: absolute;
+    top: -667px;
+    left: -499px;
+    width: 894px;
+    height: 889px;
+    pointer-events: none;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #{{ sec_id }} .krc__card-deco > svg {
+    width: 698px;
+    height: 689px;
+    transform: scaleY(-1) rotate(-20.34deg);
+    transform-origin: center;
+    overflow: visible;
+  }
+
+  /* Card content (455px column) */
+  #{{ sec_id }} .krc__content {
+    width: 455px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  #{{ sec_id }} .krc__top {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #{{ sec_id }} .krc__heading {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--chocolate);
+    text-transform: capitalize;
+  }
+  #{{ sec_id }} .krc__title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--chocolate);
+
+  }
+  #{{ sec_id }} .krc__subtitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  /* Email form */
+  #{{ sec_id }} .krc__form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    justify-content: center;
+  }
+  #{{ sec_id }} .krc__input {
+    width: 280px;
+    height: 48px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #fff;
+    color: var(--chocolate);
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    outline: none;
+    text-transform: capitalize;
+    transition: box-shadow .15s ease;
+  }
+  #{{ sec_id }} .krc__input::placeholder {
+    color: rgba(52, 19, 0, 0.7);
+    text-transform: capitalize;
+  }
+  #{{ sec_id }} .krc__input:focus {
+    box-shadow: 0 0 0 3px rgba(244, 89, 1, 0.25);
+  }
+  #{{ sec_id }} .krc__submit {
+    width: 164px;
+    height: 48px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: var(--gold);
+    color: var(--chocolate);
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    text-transform: capitalize;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter .15s ease, transform .15s ease;
+  }
+  #{{ sec_id }} .krc__submit:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+  }
+  #{{ sec_id }} .krc__submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  /* "— or —" divider */
+  #{{ sec_id }} .krc__divider {
+    margin: 0;
+    color: var(--chocolate);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.84px;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+    font-family: "Inter", "Roobert TRIAL", sans-serif;
+  }
+
+  /* Login button */
+  #{{ sec_id }} .krc__login {
+    background: var(--gold-2);
+    color: var(--chocolate);
+    border: none;
+    border-radius: 3px;
+    padding: 12px 24px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.24px;
+    text-transform: uppercase;
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter .15s ease, transform .15s ease;
+  }
+  #{{ sec_id }} .krc__login:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+  }
+
+  /* Share buttons */
+  #{{ sec_id }} .krc__share {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+  #{{ sec_id }} .krc__share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 15px;
+    background: var(--pale-cream);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--chocolate);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.24px;
+    line-height: 1;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition: background .15s ease, transform .15s ease;
+  }
+  #{{ sec_id }} .krc__share-btn:hover {
+    background: var(--cream);
+    transform: translateY(-1px);
+  }
+  #{{ sec_id }} .krc__share-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+  #{{ sec_id }} .krc__share-btn.is-copied {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+  }
+
+  #{{ sec_id }} .krc__sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    #{{ sec_id }} .krc__card {
+      padding: 48px 22px;
+      width: 100%;
+      border-radius: 10px;
+    }
+    #{{ sec_id }} .krc__title { font-size: 26px; }
+    #{{ sec_id }} .krc__subtitle { font-size: 14px; }
+    #{{ sec_id }} .krc__form {
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+    #{{ sec_id }} .krc__input,
+    #{{ sec_id }} .krc__submit { width: 100%; }
+    #{{ sec_id }} .krc__share { gap: 8px; }
+    #{{ sec_id }} .krc__share-btn { padding: 9px 12px; }
+  }
+</style>
+
+<section
+  id="{{ sec_id }}"
+  class="kidsy-referral-card"
+  aria-labelledby="{{ sec_id }}-title">
+
+  <div class="krc__frame">
+
+    {%- comment -%} Top-right cream blob {%- endcomment -%}
+    <div class="krc__deco-tr" aria-hidden="true">
+     <svg xmlns="http://www.w3.org/2000/svg" width="87" height="462" viewBox="0 0 87 462" fill="none" class="desktop-show">
+  <path d="M337.209 411.122C479.308 305.682 418.076 81.0284 413.256 64.299C368.219 -91.9475 215.784 -235.417 105.712 -207.333C43.8368 -191.544 -8.69407 -120.515 4.98817 -79.5002C24.1029 -22.1874 120.352 -25.5949 130.901 21.2786C139.447 59.2568 138.172 97.6798 81.0955 192.076C44.8672 251.997 -31.9769 324.978 14.5302 393.552C72.6631 479.259 239.33 483.751 337.209 411.122Z" fill="#FFDFA8"/>
+</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="52" height="75" viewBox="0 0 52 75" fill="none" class="mb_show">
+  <path d="M88.4691 45.9108C95.38 20.4235 67.4457 -0.247376 65.3349 -1.76261C45.6194 -15.9129 14.4978 -18.642 4.19261 -5.17992C-1.6001 2.38777 -1.19343 15.5661 4.19991 19.1087C11.7358 24.0594 22.7011 14.7666 28.2686 19.2853C32.7794 22.9465 36.1802 27.5675 38.2133 43.9043C39.5041 54.2744 37.2417 69.928 49.0285 73.6674C63.7609 78.3405 83.7088 63.4669 88.4691 45.9108Z" fill="#FFDFA8"/>
+</svg>
+    </div>
+
+    {%- comment -%} Bottom-left cream blob {%- endcomment -%}
+    <div class="krc__deco-bl" aria-hidden="true">
+     <svg xmlns="http://www.w3.org/2000/svg" width="328" height="336" viewBox="0 0 328 336" fill="none" class="desktop-show">
+  <path d="M-211.304 206.57C-212.967 354.842 -32.0131 427.851 -18.4058 433.114C108.69 482.257 281.696 453.254 318.748 365.565C339.574 316.271 318.801 245.213 284.496 233.554C236.56 217.259 190.048 283.216 153.421 266.497C123.745 252.95 98.7513 232.623 64.6887 146.687C43.0652 92.139 33.3134 3.86669 -36.0213 0.143684C-122.682 -4.5054 -210.159 104.439 -211.304 206.57Z" fill="#FFDFA8"/>
+</svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="94" height="83" viewBox="0 0 94 83" fill="none" class="mb_show">
+<path d="M-63.1005 64.7023C-58.4121 106.814 -4.54763 121.224 -0.505042 122.243C37.253 131.758 85.3132 117.511 92.7703 91.3508C96.9618 76.6449 88.597 57.2138 78.4612 55.1009C64.2984 52.1475 53.4017 72.4733 42.4314 69.006C33.543 66.1965 25.7465 61.3011 13.0947 38.1128C5.0633 23.3939 -0.774627 -1.30327 -20.5694 0.0537527C-45.3106 1.75109 -66.33 35.695 -63.1005 64.7023Z" fill="#FFDFA8"/>
+</svg>
+    </div>
+
+    {%- comment -%} Orange squiggle scribble {%- endcomment -%}
+    <div class="krc__deco-squiggle" aria-hidden="true">
+      <svg viewBox="0 0 173 131" xmlns="http://www.w3.org/2000/svg">
+        <path fill="none" stroke="{{ s.color_squiggle | default: '#F45901' }}"
+              stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="
+          M 12 100
+          C 50 80 60 50 40 30
+          C 25 14 50 6 75 18
+          C 105 32 100 60 75 75
+          C 50 90 60 115 90 115
+          C 120 115 145 100 162 80
+        "/>
+      </svg>
+    </div>
+
+    {%- comment -%} Inner soft-gold card {%- endcomment -%}
+    <div class="krc__card">
+
+      {%- comment -%} White squiggle decoration inside card {%- endcomment -%}
+      <div class="krc__card-deco" aria-hidden="true">
+        <svg viewBox="0 0 698 689" xmlns="http://www.w3.org/2000/svg">
+          <path fill="none" stroke="#FFFFFF" stroke-width="14"
+                stroke-linecap="round" stroke-linejoin="round" d="
+            M 100 580
+            C 180 540 220 480 180 420
+            C 140 360 80 360 60 420
+            C 40 480 100 520 180 500
+            C 280 470 360 380 340 290
+            C 320 200 220 180 180 240
+          "/>
+        </svg>
+      </div>
+
+      <div class="krc__content">
+
+        <div class="krc__top">
+
+          <div class="krc__heading">
+            {%- if s.title != blank -%}
+              <h2 id="{{ sec_id }}-title" class="krc__title">{{ s.title }}</h2>
+            {%- endif -%}
+            {%- if s.subtitle != blank -%}
+              <p class="krc__subtitle">{{ s.subtitle }}</p>
+            {%- endif -%}
+          </div>
+
+          <a
+            href="{{ s.cta_link | default: '#smile-referral-program-details' }}"
+            class="krc__submit"
+            style="width:auto;min-width:220px;padding-left:32px;padding-right:32px;text-decoration:none;">
+            {{ s.cta_label | default: 'Get Started' }}
+          </a>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Referral Card",
+  "tag": "section",
+  "class": "section-kidsy-referral-card",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Get Your Referral Link"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Sign in or enter your email to claim your unique link instantly."
+    },
+
+    {
+      "type": "header",
+      "content": "Email Form"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Enter your email address"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button text",
+      "default": "Get My Link"
+    },
+    {
+      "type": "text",
+      "id": "loading_label",
+      "label": "Loading text",
+      "default": "Generating…"
+    },
+    {
+      "type": "text",
+      "id": "success_label",
+      "label": "Success text",
+      "default": "Link ready ✓"
+    },
+    {
+      "type": "url",
+      "id": "form_action",
+      "label": "Form submit URL (optional)",
+      "info": "If set, form posts to this URL. Otherwise uses JS demo handler."
+    },
+    {
+      "type": "url",
+      "id": "fallback_link",
+      "label": "Fallback referral link"
+    },
+
+    {
+      "type": "header",
+      "content": "Divider & Login"
+    },
+    {
+      "type": "text",
+      "id": "divider_text",
+      "label": "Divider text",
+      "default": "— or —"
+    },
+    {
+      "type": "text",
+      "id": "login_label",
+      "label": "Login button text",
+      "default": "Log In to My Account"
+    },
+    {
+      "type": "url",
+      "id": "login_link",
+      "label": "Login link"
+    },
+
+    {
+      "type": "header",
+      "content": "Share Buttons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": "Show share buttons row",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "copy_label",
+      "label": "Copy button label",
+      "default": "Copy Link"
+    },
+    {
+      "type": "text",
+      "id": "copied_label",
+      "label": "Copied confirmation",
+      "default": "Copied!"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email button label",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "share_email_subject",
+      "label": "Email share subject",
+      "default": "Save on baby gear with Kidsy"
+    },
+    {
+      "type": "textarea",
+      "id": "share_email_body",
+      "label": "Email share body",
+      "default": "Hey — I shop on Kidsy for premium baby gear at way below retail. Use my link and we both save: "
+    },
+    {
+      "type": "text",
+      "id": "text_label",
+      "label": "Text button label",
+      "default": "Text"
+    },
+    {
+      "type": "textarea",
+      "id": "share_text_body",
+      "label": "SMS share body",
+      "default": "Hey — I shop on Kidsy for baby gear deals. Use my link and we both save: "
+    },
+    {
+      "type": "text",
+      "id": "share_aria_label",
+      "label": "Share group aria-label",
+      "default": "Share your referral link"
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_outer",
+      "label": "Section outer padding",
+      "min": 0, "max": 80, "step": 5, "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "frame_min_height",
+      "label": "Frame minimum height",
+      "min": 400, "max": 900, "step": 20, "unit": "px",
+      "default": 600
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_outer_bg",
+      "label": "Page background (around frame)",
+      "default": "#FFFBF3"
+    },
+    {
+      "type": "color",
+      "id": "color_frame",
+      "label": "Frame (orange)",
+      "default": "#F45901"
+    },
+    {
+      "type": "color",
+      "id": "color_card",
+      "label": "Inner card (soft gold)",
+      "default": "#FFDFA8"
+    },
+    {
+      "type": "color",
+      "id": "color_blob",
+      "label": "Decorative blobs",
+      "default": "#FFDFA8"
+    },
+    {
+      "type": "color",
+      "id": "color_squiggle",
+      "label": "Orange squiggle",
+      "default": "#F45901"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text",
+      "default": "#341300"
+    },
+    {
+      "type": "color",
+      "id": "color_submit",
+      "label": "Submit button",
+      "default": "#FFBC38"
+    },
+    {
+      "type": "color",
+      "id": "color_login",
+      "label": "Login button",
+      "default": "#FFBF41"
+    },
+    {
+      "type": "color",
+      "id": "color_share",
+      "label": "Share buttons background",
+      "default": "#FFF4E1"
+    },
+    {
+      "type": "color",
+      "id": "color_share_hover",
+      "label": "Share buttons hover background",
+      "default": "#FFFBF3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Referral Card"
+    }
+  ]
+}
+{% endschema %}

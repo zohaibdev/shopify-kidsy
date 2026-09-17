@@ -1,0 +1,373 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "refer_and_earn_hero_fWR6Rk": {
+      "type": "refer-and-earn-hero",
+      "name": "Refer & Earn Hero",
+      "settings": {
+        "tag_label": "Refer & Earn",
+        "title": "Give $20, Get $20 (Minimum $100 Spend)",
+        "description": "Share Kidsy with a parent friend and you both save on strollers, car seats, and baby gear from premium brands - up to 60% off retail.",
+        "primary_btn_label": "Get My Referral Link",
+        "primary_btn_link": "#smile-referral-program-details",
+        "secondary_btn_label": "Already have a link? Log in",
+        "secondary_btn_link": "/account/login",
+        "trust_text": "100,000+ parents already shopping smarter",
+        "trust_icon": "shopify://shop_images/user-multiple.svg",
+        "photo": "shopify://shop_images/steptodown.com607564.jpg",
+        "squiggle_image": "shopify://shop_images/misc-51_1.png",
+        "padding_top": 40,
+        "padding_bottom": 32,
+        "color_bg": "#fffbf3",
+        "color_text": "#341300",
+        "color_tag": "#ffbc38",
+        "color_accent": "#f45901",
+        "color_secondary": "#ffdfa8"
+      }
+    },
+    "how_it_works_NehkY6": {
+      "type": "how-it-works",
+      "blocks": {
+        "step_de4TUy": {
+          "type": "step",
+          "settings": {
+            "title": "GET YOUR REFERRAL LINK",
+            "description": "Sign in to access your unique referral link. Then share it by text, email, Facebook, X, or simply copy and paste it anywhere.",
+            "icon_preset": "gift",
+            "icon_image": "shopify://shop_images/gift_af786de6-b659-47fa-a583-fe67495f856d.svg",
+            "link": "#smile-referral-program-details"
+          }
+        },
+        "step_YmUnMY": {
+          "type": "step",
+          "settings": {
+            "title": "FRIEND CLAIMS THEIR REWARD",
+            "description": "Your friend clicks your link, signs up or logs in, claims their $20 reward, and completes their first qualifying order.",
+            "icon_preset": "user_group",
+            "icon_image": "shopify://shop_images/user-group.svg",
+            "link": "#smile-referral-program-details"
+          }
+        },
+        "step_nqW83x": {
+          "type": "step",
+          "settings": {
+            "title": "YOU BOTH GET SAVINGS",
+            "description": "Your friend saves $20 on their first qualifying order, and your $20 reward is automatically added to your account after their purchase. No claims. No forms.",
+            "icon_preset": "check_badge",
+            "icon_image": "shopify://shop_images/checkmark-badge-02_1.svg",
+            "link": "#smile-referral-program-details"
+          }
+        }
+      },
+      "block_order": [
+        "step_de4TUy",
+        "step_YmUnMY",
+        "step_nqW83x"
+      ],
+      "name": "How It Works (3-Step)",
+      "settings": {
+        "title": "How It Works",
+        "subtitle": "Three steps. No fine print surprises.",
+        "show_numbers": true,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "color_bg": "#ffdfa8",
+        "color_card": "#fff4e1",
+        "color_text": "#341300",
+        "color_accent": "#f45901",
+        "color_badge_brd": "#d9d3cf"
+      }
+    },
+    "referral_modal_CnJ8HK": {
+      "type": "referral-modal",
+      "name": "Referral Modal",
+      "settings": {
+        "title": "Get Your Referral Link",
+        "subtitle": "Grab your unique referral link and  start sharing in seconds, you both save.",
+        "email_placeholder": "Enter your email address",
+        "submit_label": "Get My Link",
+        "loading_label": "Generating…",
+        "success_label": "Link ready ✓",
+        "form_action": "",
+        "fallback_link": "",
+        "divider_text": "— or —",
+        "login_label": "Log In to My Account",
+        "login_link": "/account/login",
+        "show_share_buttons": true,
+        "copy_label": "Copy Link",
+        "copied_label": "Copied!",
+        "email_label": "Email",
+        "share_email_subject": "Save on baby gear with Kidsy",
+        "share_email_body": "Hey — I shop on Kidsy for premium baby gear at way below retail. Use my link and we both save:",
+        "text_label": "Text",
+        "share_text_body": "Hey — I shop on Kidsy for baby gear deals. Use my link and we both save:",
+        "share_aria_label": "Share your referral link",
+        "padding_outer": 60,
+        "frame_min_height": 600,
+        "color_outer_bg": "#fffbf3",
+        "color_frame": "#f45901",
+        "color_card": "#ffdfa8",
+        "color_blob": "#ffdfa8",
+        "color_squiggle": "#f45901",
+        "color_text": "#341300",
+        "color_submit": "#ffbc38",
+        "color_login": "#ffbf41",
+        "color_share": "#fff4e1",
+        "color_share_hover": "#fffbf3"
+      }
+    },
+    "trust_bar_reviews_FtfxXF": {
+      "type": "trust-bar-reviews",
+      "blocks": {
+        "trust_point_pGabfT": {
+          "type": "trust_point",
+          "settings": {
+            "label": "Trusted by 100,000+ parents",
+            "icon_preset": "check",
+            "icon": "shopify://shop_images/Frame_4.svg"
+          }
+        },
+        "trust_point_iyytya": {
+          "type": "trust_point",
+          "settings": {
+            "label": "Excellent rated",
+            "icon_preset": "star",
+            "icon": "shopify://shop_images/Frame_5.svg"
+          }
+        },
+        "trust_point_WDmraP": {
+          "type": "trust_point",
+          "settings": {
+            "label": "Up to 60% off retail on premium baby brands",
+            "icon_preset": "gift",
+            "icon": "shopify://shop_images/Frame_9.svg"
+          }
+        },
+        "trust_badge_pQATqX": {
+          "type": "trust_badge",
+          "settings": {
+            "title": "100,000+ Happy Parents",
+            "description": "Families across the US trust Kidsy for premium baby gear at discounted prices",
+            "icon_preset": "users",
+            "icon": "shopify://shop_images/user-multiple_2.svg"
+          }
+        },
+        "trust_badge_qc4X3Q": {
+          "type": "trust_badge",
+          "settings": {
+            "title": "Excellent Rated",
+            "description": "Consistently top-rated for product quality, shipping speed, and customer support",
+            "icon_preset": "star",
+            "icon": "shopify://shop_images/star_12ecf55a-4488-444b-852e-7ae2c51e7372.svg"
+          }
+        },
+        "trust_badge_wmYYrG": {
+          "type": "trust_badge",
+          "settings": {
+            "title": "Secure & Private",
+            "description": "We never spam your contacts. Your referral link is only shared when YOU choose to share it",
+            "icon_preset": "shield",
+            "icon": "shopify://shop_images/user-multiple_1.svg"
+          }
+        },
+        "trust_badge_j4J9TM": {
+          "type": "trust_badge",
+          "settings": {
+            "title": "Credit Added Automatically",
+            "description": "No claims or forms. Reward is automatically added after your friend's qualifying purchase.",
+            "icon_preset": "check_badge",
+            "icon": "shopify://shop_images/user-multiple_2.svg"
+          }
+        },
+        "review_MtrrJw": {
+          "type": "review",
+          "settings": {
+            "title": "Love shopping on Kidsy",
+            "body": "The price is what made me buy it from here. I bought a stroller for my grandson and I didn't want to spend a lot of money. Because we just needed when he comes over.",
+            "rating": 5,
+            "name": "Judy McDermott",
+            "initials": "MZ",
+            "verified": true,
+            "verified_label": "Verified Buyer"
+          }
+        },
+        "review_yxcXwa": {
+          "type": "review",
+          "settings": {
+            "title": "Premium gear at a fraction of the price",
+            "body": "I saved over $300 on a UPPAbaby car seat. Item arrived perfectly packaged and the points I earned covered most of our next order.",
+            "rating": 5,
+            "name": "Marcus Zhao",
+            "initials": "MZ",
+            "verified": true,
+            "verified_label": "Verified Buyer"
+          }
+        },
+        "review_CkXRUW": {
+          "type": "review",
+          "settings": {
+            "title": "Best baby gear deals online",
+            "body": "Tried a few resale sites but Kidsy beats them on selection and trust. Customer service was responsive and the rewards program is genuinely useful.",
+            "rating": 5,
+            "name": "Priya Shah",
+            "initials": "PS",
+            "verified": true,
+            "verified_label": "Verified Buyer"
+          }
+        }
+      },
+      "block_order": [
+        "trust_point_pGabfT",
+        "trust_point_iyytya",
+        "trust_point_WDmraP",
+        "trust_badge_pQATqX",
+        "trust_badge_qc4X3Q",
+        "trust_badge_wmYYrG",
+        "trust_badge_j4J9TM",
+        "review_MtrrJw",
+        "review_yxcXwa",
+        "review_CkXRUW"
+      ],
+      "name": "Trust Bar + Reviews",
+      "settings": {
+        "padding_bottom": 60,
+        "color_bg_from": "#ffdfa8",
+        "color_bg_to": "#fffbf3",
+        "color_text": "#341300",
+        "color_accent": "#f45901",
+        "color_card": "#ffffff",
+        "color_border": "#574030",
+        "color_star": "#ffbc38",
+        "color_avatar_bg": "#fddecc"
+      }
+    },
+    "faq_CFrKb8": {
+      "type": "faq",
+      "blocks": {
+        "faq_YABQQh": {
+          "type": "faq",
+          "settings": {
+            "question": "Who can I refer?",
+            "answer": "<p>You can refer friends and family who are new to Kidsy and have never placed an order with us before. Share your unique referral link, and once your friend enters their email and completes a qualifying purchase, both of you can earn your referral rewards. </p>",
+            "open_by_default": false
+          }
+        },
+        "faq_HyFb3x": {
+          "type": "faq",
+          "settings": {
+            "question": "How does my friend redeem their $20 discount?",
+            "answer": "<p>Your friend simply clicks your referral link, creates an account (if they don't already have one), and the $20 reward will automatically be applied at checkout on qualifying orders.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_bi86Ni": {
+          "type": "faq",
+          "settings": {
+            "question": "When do I get my store credit?",
+            "answer": "<p>You'll receive your referral reward after your friend completes a qualifying purchase using the referral reward they received. Kidsy automatically issues your reward once the referral is successfully completed. </p>",
+            "open_by_default": false
+          }
+        },
+        "faq_dkQQng": {
+          "type": "faq",
+          "settings": {
+            "question": "Is there $100 minimum order for my friend?",
+            "answer": "<p>Yes. Your friend's order must total at least $100 (before taxes and shipping, if applicable) to qualify for the referral reward.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_3XEqyM": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I refer unlimited people?",
+            "answer": "<p>Yes! There's no limit to how many friends you can refer. You'll earn a referral reward for each qualifying referral that meets the program requirements.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_L7YtPM": {
+          "type": "faq",
+          "settings": {
+            "question": "Does the store credit expire?",
+            "answer": "<p>Yes! Your referral reward is valid for 6 months after it's issued. Be sure to use it before it expires so you don't miss out on your savings.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_CnBbNM": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I combine referral credit with other discounts?",
+            "answer": "<p>Referral rewards can't be combined with order-wide discounts. They may be combined with eligible product and shipping discounts where applicable.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_YABQQh",
+        "faq_HyFb3x",
+        "faq_bi86Ni",
+        "faq_dkQQng",
+        "faq_3XEqyM",
+        "faq_L7YtPM",
+        "faq_CnBbNM"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "cta_label": "Contact Us",
+        "cta_link": "/pages/contact",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "color_bg": "#fffbf3",
+        "color_text": "#341300",
+        "color_accent": "#f45901",
+        "color_border": "#d9d3cf"
+      }
+    },
+    "refer_promo_DQraK3": {
+      "type": "refer-promo",
+      "name": "Refer Promo",
+      "settings": {
+        "title": "Every Parent You Refer  Saves on Baby Essentials",
+        "description": "You're already shopping smarter at Kidsy. Help the parents in your life do the same, and earn store credit every time they do.",
+        "cta_label": "Start Referring Now",
+        "cta_link": "#smile-referral-program-details",
+        "photo": "shopify://shop_images/steptodown.com624820_1.jpg",
+        "mb_photo": "shopify://shop_images/steptodown.com624820_1.jpg",
+        "show_blob": true,
+        "blob_opacity": 1,
+        "padding_top": 40,
+        "padding_bottom": 60,
+        "color_bg": "#fffbf3",
+        "color_text": "#341300",
+        "color_accent": "#f45901",
+        "color_blob": "#ffdfa8"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "refer_and_earn_hero_fWR6Rk",
+    "how_it_works_NehkY6",
+    "referral_modal_CnJ8HK",
+    "trust_bar_reviews_FtfxXF",
+    "faq_CFrKb8",
+    "refer_promo_DQraK3"
+  ]
+}

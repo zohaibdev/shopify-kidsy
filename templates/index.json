@@ -1,0 +1,2085 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "labor_day_hero_section": {
+      "type": "labor-day-hero",
+      "name": "Labor Day Hero",
+      "settings": {
+        "eyebrow": "The Long Weekend Starts Now",
+        "title": "$15 OFF + FREE SHIPPING ON ORDERS OVER $100",
+        "subheading": "Big savings on premium baby & kids gear",
+        "button_label": "Shop labor day sale",
+        "button_link": "shopify://collections/best-sellers",
+        "note": "Ends Monday At 11:59 PM CST",
+        "code_text": "Use code [code] at checkout",
+        "promo_code": "KIDSYLABORDAY15",
+        "show_decorations": true,
+        "color_section_bg": "#fffbf3",
+        "color_card_gradient": "#ffdfa8",
+        "color_card_mobile": "#ffe9bd",
+        "color_accent": "#f45901",
+        "color_btn_text": "#ffffff",
+        "color_text": "#341300",
+        "color_note": "#563a2a",
+        "color_squiggle": "#ffbc38",
+        "padding_top": 0,
+        "padding_bottom": 5,
+        "padding_top_mobile": 5,
+        "padding_bottom_mobile": 5
+      }
+    },
+    "custom_banner_GKf6WC": {
+      "type": "custom-banner",
+      "blocks": {
+        "sale_banner_CWPcMw": {
+          "type": "sale_banner",
+          "name": "BF  Banner",
+          "disabled": true,
+          "settings": {
+            "image_desktop_large": "shopify://shop_images/BF_Banner_1200px.jpg",
+            "image_desktop": "shopify://shop_images/BF_Banner_992px.png",
+            "image_tablet_landscape": "shopify://shop_images/BF_Banner_750px.png",
+            "image_tablet_portrait": "shopify://shop_images/BF_Banner_574px.png",
+            "image_mobile": "shopify://shop_images/BF_Banner_Mobile.png",
+            "image_desktop_height": 50,
+            "image_mobile_height": 33.5,
+            "enable_overlay": false,
+            "overlay_color": "#000000",
+            "overlay_opacity": 40,
+            "button_1_label": "Shop Now",
+            "button_1_link": "shopify://collections/best-sellers",
+            "button_2_label": "Shop  Car seats",
+            "button_2_link": "shopify://collections/car-seats"
+          }
+        },
+        "sale_banner_tw84xt": {
+          "type": "sale_banner",
+          "name": "CM Banner",
+          "disabled": true,
+          "settings": {
+            "image_desktop_large": "shopify://shop_images/CM_Banner_1200px.png",
+            "image_desktop": "shopify://shop_images/CM_Banner_992px.png",
+            "image_tablet_landscape": "shopify://shop_images/CM_Banner_750px.png",
+            "image_tablet_portrait": "shopify://shop_images/CM_Banner_574px.png",
+            "image_mobile": "shopify://shop_images/CM_Banner_Mobile.png",
+            "image_desktop_height": 50,
+            "image_mobile_height": 33.5,
+            "enable_overlay": false,
+            "overlay_color": "#000000",
+            "overlay_opacity": 40,
+            "button_1_label": "Shop Now",
+            "button_1_link": "shopify://collections/best-sellers",
+            "button_2_label": "Shop  Car seats",
+            "button_2_link": "shopify://collections/car-seats"
+          }
+        },
+        "image_dcitxL": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image_desktop": "shopify://shop_images/hero-slide-img-2.webp",
+            "image_desktop_height": 50,
+            "image_mobile": "shopify://shop_images/hero-slide-mobile-2.webp",
+            "image_mobile_height": 33.5,
+            "enable_overlay": true,
+            "overlay_color": "#341300",
+            "overlay_opacity": 25,
+            "star_count": 5,
+            "star_rating": "EXCELLENT | 100,000+ CUSTOMERS",
+            "title": "DEALS UP TO 60% OFF",
+            "description": "<p>DECEMBER DEALS: UP TO 60% OFF STROLLERS, SLEEP, PLAY & MORE</p>",
+            "button_label": "Shop Deals Now",
+            "button_link": "shopify://collections/december-deals"
+          }
+        },
+        "image_CkPMY7": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/hero-slide-img-3.webp",
+            "image_desktop_height": 50,
+            "image_mobile": "shopify://shop_images/hero-slide-mobile-3.webp",
+            "image_mobile_height": 33.5,
+            "enable_overlay": true,
+            "overlay_color": "#341300",
+            "overlay_opacity": 50,
+            "star_count": 5,
+            "star_rating": "HELPING PARENTS SHOP SMARTER & SUSTAINABLY",
+            "title": "THE LEADING BABY & KIDS DISCOUNT STORE",
+            "description": "<h4><strong>UP TO 60% OFF PREMIUM BRANDS SUCH AS GRACO, EVENFLO, UPPABABY, CHICCO, INGLESINA, AND MORE!</strong></h4>",
+            "button_label": "SHOP DEALS",
+            "button_link": "https://kidsy.co/collections/best-sellers"
+          }
+        },
+        "image_XWQwFx": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/ff8474fb-22dd-41f2-a29d-a3ccf246704a.png",
+            "image_mobile": "shopify://shop_images/pampers-mobile-3.png",
+            "enable_overlay": true,
+            "overlay_color": "#341300",
+            "overlay_opacity": 40,
+            "star_count": 5,
+            "star_rating": "EXCELLENT 4.6 | 100,000+ CUSTOMERS",
+            "title": "Easy Ups For Every Big Step",
+            "description": "<p>Trusted Protection For Every Step Forward</p>",
+            "button_label": "Shop Pampers",
+            "button_link": "shopify://products/new-pampers-easy-ups-disposable-training-pants-size-3t-4t-124ct"
+          }
+        },
+        "image_tDRxMA": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image_desktop": "shopify://shop_images/hero-slide-img-3.webp",
+            "image_desktop_height": 50,
+            "image_mobile": "shopify://shop_images/hero-slide-mobile-3.webp",
+            "image_mobile_height": 33.5,
+            "enable_overlay": true,
+            "overlay_color": "#341300",
+            "overlay_opacity": 50,
+            "star_count": 5,
+            "star_rating": "EXCELLENT | 100,000+ CUSTOMERS",
+            "title": "Buckle Up For Big Savings",
+            "description": "<p>Top-rated brands at unbeatable prices, for tiny travelers</p>",
+            "button_label": "Shop Car seats",
+            "button_link": "shopify://collections/car-seats"
+          }
+        },
+        "image_gehybd": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/hero-slide-img-4.webp",
+            "image_desktop_height": 50,
+            "image_mobile": "shopify://shop_images/hero-slide-mobile-4.webp",
+            "image_mobile_height": 33.5,
+            "enable_overlay": true,
+            "overlay_color": "#341300",
+            "overlay_opacity": 50,
+            "star_count": 5,
+            "star_rating": "EXCELLENT | 100,000+ CUSTOMERS",
+            "title": "Stroll Into Savings",
+            "description": "<p>Designed for comfort, priced for parents.</p>",
+            "button_label": "Shop Strollers",
+            "button_link": "shopify://collections/strollers"
+          }
+        },
+        "image_8NthyG": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image_desktop": "shopify://shop_images/Untitled_design_7.png",
+            "image_desktop_height": 50,
+            "image_mobile": "shopify://shop_images/Untitled_design_7.png",
+            "image_mobile_height": 33.5,
+            "enable_overlay": true,
+            "overlay_color": "#341300",
+            "overlay_opacity": 50,
+            "star_count": 5,
+            "star_rating": "EXCELLENT | 100,000+ CUSTOMERS",
+            "title": "5/$195 SIMILAC Alimentum DEAL 🍼",
+            "description": "<p>Stock up on Similac Alimentum and save. 8 FL OZ, Pack of 24. 5 for $195 or 10 for $360.  44% off Retail. Discount applies automatically.</p>",
+            "button_label": "Shop Similac Alimentum Now!",
+            "button_link": "shopify://collections/similac-alimentum"
+          }
+        },
+        "image_cmbqMX": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/hero-slide-img-5.webp",
+            "image_desktop_height": 50,
+            "image_mobile": "shopify://shop_images/hero-slide-mobile-5.webp",
+            "image_mobile_height": 33.5,
+            "enable_overlay": true,
+            "overlay_color": "#341300",
+            "overlay_opacity": 50,
+            "star_count": 5,
+            "star_rating": "EXCELLENT | 100,000+ CUSTOMERS",
+            "title": "SKIP THE MARKUP. KEEP THE MAGIC.",
+            "description": "<h4><strong>TOYS THEY'LL LOVE - ALL UP TO 60%. </strong></h4>",
+            "button_label": "Shop Toys",
+            "button_link": "shopify://collections/toys"
+          }
+        }
+      },
+      "block_order": [
+        "sale_banner_CWPcMw",
+        "sale_banner_tw84xt",
+        "image_dcitxL",
+        "image_CkPMY7",
+        "image_XWQwFx",
+        "image_tDRxMA",
+        "image_gehybd",
+        "image_8NthyG",
+        "image_cmbqMX"
+      ],
+      "disabled": true,
+      "name": "Hero Slideshow",
+      "settings": {
+        "section_color_scheme": "scheme-884fc54e-fc55-4ea5-91d6-0d60b8fb7cbf",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "scrolling_brand_icons_section": {
+      "type": "scrolling-brand-icons",
+      "blocks": {
+        "brand_icon_2": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Graco_Small_Desktop.png",
+            "brand_name": "Graco",
+            "brand_url": "shopify://collections/graco"
+          }
+        },
+        "brand_icon_3": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Owlet_Small_Desktop.png",
+            "brand_name": "Owlet",
+            "brand_url": "shopify://collections/owlet"
+          }
+        },
+        "brand_icon_1": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Mima_Small_Desktop.png",
+            "brand_name": "Mima",
+            "brand_url": "shopify://collections/mima-products"
+          }
+        },
+        "brand_icon_4": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Evenflo_Small_Desktop.png",
+            "brand_name": "Evenflo",
+            "brand_url": "https://kidsy.co/collections/evenflo"
+          }
+        },
+        "brand_icon_5": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Baby_Jogger_Small_Desktop.png",
+            "brand_name": "Baby Jogger",
+            "brand_url": "shopify://collections/baby-jogger"
+          }
+        },
+        "brand_icon_6": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Chicco_Small_Desktop.png",
+            "brand_name": "Chicco",
+            "brand_url": "shopify://collections/chicco"
+          }
+        },
+        "brand_icon_7": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Doona_Small_Desktop.png",
+            "brand_name": "Doona",
+            "brand_url": "shopify://collections/doona"
+          }
+        },
+        "brand_icon_8": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/UPPA_Baby_Small_Desktop.png",
+            "brand_name": "UPPAbaby",
+            "brand_url": "shopify://collections/uppababy"
+          }
+        },
+        "brand_icon_9": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Similac_Small_Desktop.png",
+            "brand_name": "Similac",
+            "brand_url": "shopify://collections/similac"
+          }
+        },
+        "brand_icon_10": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Fisher_Price_Small_Desktop.png",
+            "brand_name": "Fisher-Price",
+            "brand_url": "shopify://collections/fisher-price"
+          }
+        },
+        "brand_icon_11": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Melissa_Doug_Small_Desktop.png",
+            "brand_name": "Melissa & Doug",
+            "brand_url": "shopify://collections/melissa-doug"
+          }
+        },
+        "brand_icon_12": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Maxi_Cosi_Small_Desktop.png",
+            "brand_name": "Maxi-Cosi",
+            "brand_url": "shopify://collections/maxi-cosi"
+          }
+        },
+        "brand_icon_6tVB9k": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Lego_Small_Desktop.png",
+            "brand_name": "lego",
+            "brand_url": "shopify://collections/lego"
+          }
+        },
+        "brand_icon_13": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Britax_Small_Desktop.png",
+            "brand_name": "Britax",
+            "brand_url": "shopify://collections/britax"
+          }
+        },
+        "brand_icon_14": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Baby_Bjorn_Small_Desktop.png",
+            "brand_name": "BabyBjorn",
+            "brand_url": "shopify://collections/babybjorn"
+          }
+        },
+        "brand_icon_qYtR4w": {
+          "type": "brand_icon",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Cosco_Kids_Small_Desktop.png",
+            "brand_name": "cosco",
+            "brand_url": "shopify://collections/cosco"
+          }
+        }
+      },
+      "block_order": [
+        "brand_icon_2",
+        "brand_icon_3",
+        "brand_icon_1",
+        "brand_icon_4",
+        "brand_icon_5",
+        "brand_icon_6",
+        "brand_icon_7",
+        "brand_icon_8",
+        "brand_icon_9",
+        "brand_icon_10",
+        "brand_icon_11",
+        "brand_icon_12",
+        "brand_icon_6tVB9k",
+        "brand_icon_13",
+        "brand_icon_14",
+        "brand_icon_qYtR4w"
+      ],
+      "settings": {
+        "icon_gap": 5,
+        "icon_height": 55,
+        "icon_padding": 8,
+        "icon_min_width": 130,
+        "icon_min_width_img": 110,
+        "icon_min_width_img_mob": 90,
+        "icon_border_width": 1,
+        "icon_border_radius": 6,
+        "icon_bg_color": "#fff4e1",
+        "icon_height_mobile": 40,
+        "icon_padding_mobile": 6,
+        "icon_min_width_mobile": 90,
+        "autoplay": true,
+        "scroll_speed": 50,
+        "scrollbar_color": "#cccccc",
+        "section_color_scheme": "background-2",
+        "padding_top": 5,
+        "padding_bottom": 0,
+        "padding_top_mobile": 5,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "kidsy_dynamic_collection_tab_Q3pQfw": {
+      "type": "Kidsy-dynamic-collection-tab",
+      "blocks": {
+        "collection_hfLdcT": {
+          "type": "collection",
+          "settings": {
+            "collection": "car-seats-copy",
+            "title": "Car seats",
+            "button_text": "Shop all Car seats",
+            "button_url": "",
+            "sort_by": "default"
+          }
+        },
+        "collection_xMqBtD": {
+          "type": "collection",
+          "settings": {
+            "collection": "strollers-copy",
+            "title": "Strollers",
+            "button_text": "Shop all Strollers",
+            "button_url": "",
+            "sort_by": "default"
+          }
+        },
+        "collection_99cT9M": {
+          "type": "collection",
+          "settings": {
+            "collection": "toys-copy",
+            "title": "Toys",
+            "button_text": "Shop all Toys",
+            "button_url": "",
+            "sort_by": "default"
+          }
+        },
+        "collection_GGinLt": {
+          "type": "collection",
+          "settings": {
+            "collection": "travel-with-toddlers",
+            "title": "Travel Essentials",
+            "button_text": "Shop All",
+            "button_url": "",
+            "sort_by": "default"
+          }
+        },
+        "collection_fDJYBF": {
+          "type": "collection",
+          "settings": {
+            "collection": "sleeping",
+            "title": "Sleeping",
+            "button_text": "Shop all Sleeping",
+            "button_url": "",
+            "sort_by": "default"
+          }
+        },
+        "collection_hEdMDf": {
+          "type": "collection",
+          "settings": {
+            "collection": "feeding",
+            "title": "Feeding",
+            "button_text": "Shop all Feeding",
+            "button_url": "",
+            "sort_by": "default"
+          }
+        },
+        "collection_34aHyK": {
+          "type": "collection",
+          "settings": {
+            "collection": "december-deals",
+            "title": "Warehouse Steals",
+            "button_text": "Shop all Warehouse Steals",
+            "button_url": "",
+            "sort_by": "default"
+          }
+        }
+      },
+      "block_order": [
+        "collection_hfLdcT",
+        "collection_xMqBtD",
+        "collection_99cT9M",
+        "collection_GGinLt",
+        "collection_fDJYBF",
+        "collection_hEdMDf",
+        "collection_34aHyK"
+      ],
+      "name": "Best sellers",
+      "settings": {
+        "color_scheme": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "title": "Best sellers on kidsy",
+        "heading_link": "shopify://collections/best-sellers",
+        "subtitle": "",
+        "cta_label": "Shop all Best Sellers",
+        "cta_link": "shopify://collections/best-sellers",
+        "cta_button_style": "primary",
+        "max_products": 12,
+        "desktop_card": 6,
+        "mobile_card": 2,
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": false,
+        "quick_add": "standard",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "kidsy_dynamic_collection_tab_t34fji": {
+      "type": "Kidsy-dynamic-collection-tab",
+      "blocks": {
+        "collection_4JR4rH": {
+          "type": "collection",
+          "settings": {
+            "collection": "am-baby-toddler-toys",
+            "title": "Baby Activity Centers",
+            "button_text": "Shop all Baby Activity Centers",
+            "button_url": "https://kidsy.co/collections/am-baby-toddler-toys",
+            "sort_by": "default"
+          }
+        },
+        "collection_ixRVQC": {
+          "type": "collection",
+          "settings": {
+            "collection": "dolls-plush-toys",
+            "title": "Dolls & Plush",
+            "button_text": "Shop All Dolls & Plush",
+            "button_url": "https://kidsy.co/collections/dolls-plush-toys",
+            "sort_by": "created-descending"
+          }
+        },
+        "collection_N899BU": {
+          "type": "collection",
+          "settings": {
+            "collection": "stocking-stuffers",
+            "title": "Stocking Stuffers",
+            "button_text": "Shop all Stocking Stuffers",
+            "button_url": "https://kidsy.co/collections/stocking-stuffers",
+            "sort_by": "created-descending"
+          }
+        },
+        "collection_dbAMmL": {
+          "type": "collection",
+          "settings": {
+            "collection": "am-games-puzzles",
+            "title": "Games & Puzzles",
+            "button_text": "Shop all Games & Puzzles",
+            "button_url": "https://kidsy.co/collections/am-games-puzzles",
+            "sort_by": "created-descending"
+          }
+        },
+        "collection_BwNbTy": {
+          "type": "collection",
+          "settings": {
+            "collection": "sports-outdoors",
+            "title": "Sports & Outdoors",
+            "button_text": "Shop all Sports & Outdoors",
+            "button_url": "https://kidsy.co/collections/sports-outdoors",
+            "sort_by": "created-descending"
+          }
+        },
+        "collection_QaJ7pF": {
+          "type": "collection",
+          "settings": {
+            "collection": "am-stem-building-toys",
+            "title": "STEM & Learning Toys",
+            "button_text": "Shop all STEM & Learning",
+            "button_url": "https://kidsy.co/collections/am-stem-building-toys",
+            "sort_by": "created-descending"
+          }
+        },
+        "collection_FPUj8V": {
+          "type": "collection",
+          "settings": {
+            "collection": "home-kitchen",
+            "title": "Gifts for Parents",
+            "button_text": "Shop all Gifts for Parents",
+            "button_url": "https://kidsy.co/collections/home-kitchen",
+            "sort_by": "created-descending"
+          }
+        }
+      },
+      "block_order": [
+        "collection_4JR4rH",
+        "collection_ixRVQC",
+        "collection_N899BU",
+        "collection_dbAMmL",
+        "collection_BwNbTy",
+        "collection_QaJ7pF",
+        "collection_FPUj8V"
+      ],
+      "disabled": true,
+      "name": "Kidsy Gift Guide ",
+      "settings": {
+        "color_scheme": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "title": "Kidsy Gift Guide: Gifts for Every Age & Stage",
+        "heading_link": "shopify://collections/toys",
+        "subtitle": "",
+        "cta_label": "Shop Toys for All Ages",
+        "cta_link": "shopify://collections/toys",
+        "cta_button_style": "primary",
+        "max_products": 12,
+        "desktop_card": 6,
+        "mobile_card": 2,
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": false,
+        "quick_add": "standard",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "kidsy_dynamic_collection_tab_qgz3aa": {
+      "type": "Kidsy-dynamic-collection-tab",
+      "blocks": {
+        "collection_7beH3G": {
+          "type": "collection",
+          "settings": {
+            "collection": "car-seats",
+            "title": "Car seats",
+            "button_text": "Shop all Car seats",
+            "button_url": "",
+            "sort_by": "default"
+          }
+        },
+        "collection_BxrGyt": {
+          "type": "collection",
+          "settings": {
+            "collection": "strollers",
+            "title": "Strollers",
+            "button_text": "Shop all Strollers",
+            "button_url": "",
+            "sort_by": "created-descending"
+          }
+        },
+        "collection_dWFi4U": {
+          "type": "collection",
+          "settings": {
+            "collection": "toys",
+            "title": "Toys",
+            "button_text": "Shop all Toys",
+            "button_url": "",
+            "sort_by": "created-descending"
+          }
+        }
+      },
+      "block_order": [
+        "collection_7beH3G",
+        "collection_BxrGyt",
+        "collection_dWFi4U"
+      ],
+      "name": "New Arrivals",
+      "settings": {
+        "color_scheme": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "title": "New Arrivals On Kidsy",
+        "heading_link": "shopify://collections/new-arrivals",
+        "subtitle": "",
+        "cta_label": "Shop all New Arrivals",
+        "cta_link": "shopify://collections/new-arrivals",
+        "cta_button_style": "primary",
+        "max_products": 12,
+        "desktop_card": 6,
+        "mobile_card": 2,
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": false,
+        "quick_add": "standard",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "kidsy_dynamic_collection_tab_hY8qFJ": {
+      "type": "Kidsy-dynamic-collection-tab",
+      "blocks": {
+        "collection_zYyxGX": {
+          "type": "collection",
+          "settings": {
+            "collection": "toys",
+            "title": "Baby & Toddler Activity Centers",
+            "button_text": "Shop all Baby & Toddler Toys",
+            "button_url": "https://kidsy.co/collections/am-baby-toddler-toys",
+            "sort_by": "created-descending"
+          }
+        },
+        "collection_7ztpiy": {
+          "type": "collection",
+          "settings": {
+            "collection": "car-seats",
+            "title": "Dolls & Plush",
+            "button_text": "Shop Dolls & Plush",
+            "button_url": "https://kidsy.co/collections/dolls-plush-toys",
+            "sort_by": "created-descending"
+          }
+        },
+        "collection_9yRMmk": {
+          "type": "collection",
+          "settings": {
+            "collection": "strollers",
+            "title": "Stocking Stuffers",
+            "button_text": "Shop all Stocking Stuffers",
+            "button_url": "https://kidsy.co/collections/stocking-stuffers",
+            "sort_by": "created-descending"
+          }
+        },
+        "collection_i8BpDB": {
+          "type": "collection",
+          "settings": {
+            "collection": "home-kitchen",
+            "title": "Games & Puzzles",
+            "button_text": "Shop all Games & Puzzles",
+            "button_url": "https://kidsy.co/collections/am-games-puzzles",
+            "sort_by": "created-descending"
+          }
+        },
+        "collection_CY4gqQ": {
+          "type": "collection",
+          "settings": {
+            "collection": "am-stem-building-toys",
+            "title": "STEM & Learning Toys",
+            "button_text": "Shop all STEM & Learning",
+            "button_url": "https://kidsy.co/collections/am-stem-building-toys",
+            "sort_by": "created-descending"
+          }
+        }
+      },
+      "block_order": [
+        "collection_zYyxGX",
+        "collection_7ztpiy",
+        "collection_9yRMmk",
+        "collection_i8BpDB",
+        "collection_CY4gqQ"
+      ],
+      "disabled": true,
+      "name": "Kidsy Gift Guide ",
+      "settings": {
+        "color_scheme": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "title": "Deal Hub",
+        "heading_link": "shopify://collections/final-sale",
+        "subtitle": "",
+        "cta_label": "Shop Biggest Deals",
+        "cta_link": "shopify://collections/toys",
+        "cta_button_style": "primary",
+        "max_products": 12,
+        "desktop_card": 6,
+        "mobile_card": 2,
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": false,
+        "quick_add": "standard",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "kidsy_dynamic_collection_tab_AxkQzq": {
+      "type": "Kidsy-dynamic-collection-tab",
+      "blocks": {
+        "collection_mmPKXU": {
+          "type": "collection",
+          "settings": {
+            "collection": "graco",
+            "title": "Graco",
+            "button_text": "Shop all Graco",
+            "button_url": "",
+            "sort_by": "best-selling"
+          }
+        },
+        "collection_FKpQGY": {
+          "type": "collection",
+          "settings": {
+            "collection": "evenflo",
+            "title": "Evenflo",
+            "button_text": "Shop all Evenflo",
+            "button_url": "",
+            "sort_by": "best-selling"
+          }
+        },
+        "collection_8zW6dB": {
+          "type": "collection",
+          "settings": {
+            "collection": "uppababy",
+            "title": "UPPAbaby",
+            "button_text": "Shop all UPPAbaby",
+            "button_url": "",
+            "sort_by": "best-selling"
+          }
+        },
+        "collection_8dJtGN": {
+          "type": "collection",
+          "settings": {
+            "collection": "chicco",
+            "title": "Chicco",
+            "button_text": "Shop all Chicco",
+            "button_url": "",
+            "sort_by": "best-selling"
+          }
+        },
+        "collection_UfRMFC": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "bugaboo",
+            "title": "Bugaboo",
+            "button_text": "Shop all Bugaboo",
+            "button_url": "",
+            "sort_by": "best-selling"
+          }
+        },
+        "collection_kPQeTY": {
+          "type": "collection",
+          "settings": {
+            "collection": "cyber",
+            "title": "Cybex",
+            "button_text": "Shop all Cybex",
+            "button_url": "",
+            "sort_by": "best-selling"
+          }
+        },
+        "collection_M9WCML": {
+          "type": "collection",
+          "settings": {
+            "collection": "mima-products",
+            "title": "Mima",
+            "button_text": "Shop all Mima",
+            "button_url": "",
+            "sort_by": "best-selling"
+          }
+        },
+        "collection_RFY6Ep": {
+          "type": "collection",
+          "settings": {
+            "collection": "baby-jogger",
+            "title": "Baby Jogger",
+            "button_text": "Shop all Baby Jogger",
+            "button_url": "",
+            "sort_by": "best-selling"
+          }
+        }
+      },
+      "block_order": [
+        "collection_mmPKXU",
+        "collection_FKpQGY",
+        "collection_8zW6dB",
+        "collection_8dJtGN",
+        "collection_UfRMFC",
+        "collection_kPQeTY",
+        "collection_M9WCML",
+        "collection_RFY6Ep"
+      ],
+      "name": "Trending",
+      "settings": {
+        "color_scheme": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "title": "Trending Brands on Kidsy",
+        "heading_link": "shopify://collections/all",
+        "subtitle": "",
+        "cta_label": "Shop all Trending",
+        "cta_link": "shopify://collections/all",
+        "cta_button_style": "primary",
+        "max_products": 12,
+        "desktop_card": 6,
+        "mobile_card": 2,
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": false,
+        "quick_add": "standard",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "collections_slider_section": {
+      "type": "collections-slider",
+      "blocks": {
+        "slider_item_AXGNdP": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Car_seats_a3301e1d-3064-4340-8686-fa6c7e2688ec.webp",
+            "title": "Car Seats",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/car-seats"
+          }
+        },
+        "slider_item_WHnmer": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Strollers.webp",
+            "title": "strollers",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/strollers"
+          }
+        },
+        "slider_item_WkF7Xe": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Toys.webp",
+            "title": "Toys",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/toys"
+          }
+        },
+        "slider_item_ELXWAR": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Sleeping.webp",
+            "title": "Sleeping",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/sleeping"
+          }
+        },
+        "slider_item_3iygzp": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Wagons.webp",
+            "title": "Wagons",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/wagon"
+          }
+        },
+        "slider_item_rQ33Rm": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Nursery.webp",
+            "title": "Nursery",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/nursery"
+          }
+        },
+        "slider_item_yY6c7P": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Feeding.webp",
+            "title": "Feeding",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/feeding"
+          }
+        },
+        "slider_item_9B9iUj": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Baby_Kids_Gear.webp",
+            "title": "Baby Kids & Gear",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/baby-kids-gear"
+          }
+        },
+        "slider_item_p7CRqq": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Diapering.webp",
+            "title": "Diapering",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/diapering"
+          }
+        },
+        "slider_item_daN7LJ": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Sports_Outdoors.webp",
+            "title": "Sports & Outdoors",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/sports-outdoors"
+          }
+        },
+        "slider_item_KTrLae": {
+          "type": "slider_item",
+          "settings": {
+            "image": "shopify://shop_images/Safety.webp",
+            "title": "Safety",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/safety"
+          }
+        },
+        "card_item_nLpHee": {
+          "type": "card_item",
+          "settings": {
+            "image_icon": "shopify://shop_images/Premium_Savings_Desktop.png",
+            "title": "Premium Savings",
+            "text": "<p>Save up to 70% off retail </p>"
+          }
+        },
+        "card_item_peDr6k": {
+          "type": "card_item",
+          "settings": {
+            "image_icon": "shopify://shop_images/Expert-Checked_Safety_Desktop.png",
+            "title": "Expert-Checked Safety",
+            "text": "<p>Inspected, tested, trusted.</p>"
+          }
+        },
+        "card_item_YgwGWK": {
+          "type": "card_item",
+          "settings": {
+            "image_icon": "shopify://shop_images/Group.png",
+            "title": "Ships fast from USA",
+            "text": "<p>Quick shipping, no delays.</p>"
+          }
+        },
+        "card_item_Wtq84J": {
+          "type": "card_item",
+          "settings": {
+            "image_icon": "shopify://shop_images/Sustainable-Smart.png",
+            "title": "Sustainable & Smart",
+            "text": "<p>Planet-friendly baby gear.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "slider_item_AXGNdP",
+        "slider_item_WHnmer",
+        "slider_item_WkF7Xe",
+        "slider_item_ELXWAR",
+        "slider_item_3iygzp",
+        "slider_item_rQ33Rm",
+        "slider_item_yY6c7P",
+        "slider_item_9B9iUj",
+        "slider_item_p7CRqq",
+        "slider_item_daN7LJ",
+        "slider_item_KTrLae",
+        "card_item_nLpHee",
+        "card_item_peDr6k",
+        "card_item_YgwGWK",
+        "card_item_Wtq84J"
+      ],
+      "settings": {
+        "section_color_scheme": "accent-1",
+        "title": "Everything Baby At Prices You'll Love",
+        "heading_link": "",
+        "slider_slides_per_view": 6.4,
+        "slider_space_between": 10,
+        "card_slides_per_view": 4,
+        "card_space_between": 10,
+        "card_slides_per_view_mobile": 2.2,
+        "card_space_between_mobile": 10,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "kidsy_static_customer_testimonial_7q3raX": {
+      "type": "Kidsy-static-customer-testimonial",
+      "blocks": {
+        "testimonial_wJ8NnB": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Kidsy had exactly the baby/pet gates we…",
+            "text": "<p>Kidsy had exactly the baby/pet gates we needed...good price...good shipping...good items. If you have children or know someone who has children...this site is a keeper! They get 10 stars!!</p>",
+            "author": "Eileen W",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_gewprH": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Quick response",
+            "text": "<p>Ordered a gate prior to this one, UPS lost it on route. I reached out to Kidsy via email and they secured a refund from UPS. Was hesitant to order again, but I couldn't find the gate at a more reasonable price. 2nd order arrived with no issues. Gate is sturdy and the dog (Husky) hasn't gotten through it (he's an escape artist). Quick delivery from start to finish.</p>",
+            "author": "Shelli F.",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_9NH4qJ": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Great, trustworthy experience",
+            "text": "<p>Great deals, easy checkout with lots of payment options, shipped very quickly, and everything was packed well and looked exactly as it was described! I didn't end up needing any intervention with my shipping experience but appreciate the option to cover lost packages for a minimal fee, especially as we get into the late and lost package holiday season. I'll definitely be getting more of my baby gear from Kidsy.</p>",
+            "author": "Lydia M",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_qc9MbE": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "The best prices going and shipping is…",
+            "text": "<p>The best prices going and shipping is fast.</p>",
+            "author": "Tanya and Gina Hill",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_CYMLeN": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Great price and fast delivery.",
+            "text": "<p>Great price and fast delivery.</p>",
+            "author": "Alan Brown",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_P6wEnL": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "I appreciated the detailed description",
+            "text": "<p>I appreciated the detailed description, I knew I was getting a floor model and it came in perfect shape at a much reduced cost. When I thought the cupholders weren't included, I reached out to them and then we found them and they were very responsive and thankful that I let them know. Everything is fine.</p>",
+            "author": "Carol",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_Qx66bd": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Bouncer worked fine",
+            "text": "<p>Bouncer worked fine. Was a little worried when it showed up but it was perfectly fine!</p>",
+            "author": "SE",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_fFcgnz": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Quick delivery and items in great…",
+            "text": "<p>Quick delivery and items in great condition!</p>",
+            "author": "Heather Clarke",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_UgBnHG": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "less money less hassle",
+            "text": "<p>Found an item still in its original packaging for 2/3 of the original pricing.</p>",
+            "author": "viki",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_bzCtUj": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Good prices and fast shipping",
+            "text": "<p>Good prices and fast shipping</p>",
+            "author": "Jay Kristov",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_bezE3X": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "My item shipped very quickly and I…",
+            "text": "<p>My item shipped very quickly and I received it about 3 days after I ordered it! It came in an extra protected box as well! Very pleased with my purchase!</p>",
+            "author": "Amanda Almanza",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_NpCPhx": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Was pleased with the car seat I bought…",
+            "text": "<p>Was pleased with the car seat I bought from Kidsy. It was in the condition they described and arrived quickly. Thank you!</p>",
+            "author": "Melissa Weaver",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_zjRRGc": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "The products were very good",
+            "text": "<p>The products were very good. More than I’d expected them to be. The color of the diaper bag is beautiful and I know my daughter in love will be happy with it.</p>",
+            "author": "SUSAN PASSMORE",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_hyy6rB": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Kidsy Customer Service Review",
+            "text": "<p>Kidsy had a great selection of deeply discounted baby gates. Unfortunately, there was a piece missing when I received my package. I didn't realize it until after the 14 day return/exchange window. But I reached out, and they were willing to send me the piece anyway at no extra charge. I really appreciated the customer service.</p>",
+            "author": "Josh Radcliff",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_XLWgb3": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Great product",
+            "text": "<p>I was impressed with the shipping and the item I got looked brand new. Great product and I’ll be ordering again.</p>",
+            "author": "Jessica S",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_G6pHWp": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Easy process",
+            "text": "<p>Super easy to order. Arrived on time and in great shape!</p>",
+            "author": "Jennifer",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_VdTq6n": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Thank you!",
+            "text": "<p>Thank you! Great prices and great items.</p>",
+            "author": "Cheryl",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_tnkDmi": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Stroller came super fast and I love it",
+            "text": "<p>Stroller came super fast and I love it</p>",
+            "author": "Whitney Thomas",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_KqptRk": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Great deals, easy to use site",
+            "text": "<p>Great deals, easy to use site</p>",
+            "author": "ANGELICA ANDRADE",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_hjx8C7": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": " I purchased a glider",
+            "text": "<p>I purchased a glider. It was described accurately, shipping was fast and price was great!</p>",
+            "author": "Jamie",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_Rpwbkj": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Was just as described",
+            "text": "<p>Was just as described. Quick shipping and communication.</p>",
+            "author": "Crystal C",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_tzmPhU": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Great service",
+            "text": "<p>I’m so happy with my experience. Kidsy shipped my order quickly and it was in great condition.</p>",
+            "author": "Brigitte",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_wc3Dfg": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Better than expected",
+            "text": "<p>Everything came packaged well, looked brand new. Super impressed.</p>",
+            "author": "Katie",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_tFebRk": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": " Love my stroller",
+            "text": "<p>Love my stroller. Great deal and great service.</p>",
+            "author": "Maureen",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_gxFLKE": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Good experience",
+            "text": "<p> Item arrived just as described. Couldn’t be happier.</p>",
+            "author": "Brian T",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_Bye4Bz": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Love Kidsy!",
+            "text": "<p> I’ve ordered a few items from Kidsy now and all have been great.</p>",
+            "author": "Rebecca",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_dc4axK": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "So easy to use",
+            "text": "<p>Website is easy to use, items are great quality, and shipping is fast.</p>",
+            "author": "Stacey",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_zt6bE6": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Fast and efficient",
+            "text": "<p>Got my item fast and it was in excellent shape.</p>",
+            "author": "Thomas",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_9VyzPm": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Item was like new",
+            "text": "<p>Bought a swing and it looked untouched. So happy.</p>",
+            "author": "Joanna",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_HDeKEQ": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Great deal",
+            "text": "<p>Got a travel system for a great price. Would recommend Kidsy.</p>",
+            "author": "Lauren D",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_CjthDg": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Looks like new",
+            "text": "<p>Couldn’t believe how good the condition was.</p>",
+            "author": "Jessica T",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_yXcw9J": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Exactly what I needed",
+            "text": "<p>Found the exact baby item I needed for half the cost.</p>",
+            "author": "Megan",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_pMHRg7": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Fast delivery",
+            "text": "<p>Order arrived in 2 days and looked perfect.</p>",
+            "author": "Michael",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_BtN6fD": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Would buy again",
+            "text": "<p> Everything was smooth and the item was as described.</p>",
+            "author": "Kathy",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_rBcmH9": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Highly recommend",
+            "text": "<p>A friend told me about Kidsy and I’ve already ordered twice.</p>",
+            "author": "Rose",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_kPFbDg": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Amazing value",
+            "text": "<p>Saved a ton on a big item. Thank you, Kidsy!</p>",
+            "author": "Janice",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_VTXYz7": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Great for parents",
+            "text": "<p>Shopping for gear doesn’t have to break the bank.</p>",
+            "author": "Joshua",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_WPimXB": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Very happy",
+            "text": "<p>Really happy with my order. Shipped fast and clean.</p>",
+            "author": "Sonia",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_kn4jd4": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Just like described",
+            "text": "<p>Item matched the listing perfectly.</p>",
+            "author": "Lori",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_brwzpa": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Quick and easy",
+            "text": "<p>Couldn’t believe how simple the process was.</p>",
+            "author": "Stephanie",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_xdyF4N": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Better than marketplace",
+            "text": "<p>Safer and easier than buying used on Facebook.</p>",
+            "author": "Wendy",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_E3nad7": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Worth it",
+            "text": "<p>Got a like-new monitor for under $50.</p>",
+            "author": "Nathan",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_TFdTxq": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Perfect",
+            "text": "<p> Everything arrived exactly as expected.</p>",
+            "author": "Maria",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_4And7V": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Good stuff",
+            "text": "<p>Love the gear I got for my twins.</p>",
+            "author": "Leo",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_dr3kNF": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Would recommend",
+            "text": "<p>Already told two friends about Kidsy.</p>",
+            "author": "Casey",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_3B8Kbg": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Everything was great",
+            "text": "<p> Fast shipping, clear product info, no surprises.</p>",
+            "author": "Krista",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_Tthemb": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Looks unused",
+            "text": "<p> Couldn’t even tell the stroller had been returned.</p>",
+            "author": "Omar",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_Xz37Bf": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Smooth purchase",
+            "text": "<p>Smooth from checkout to delivery.</p>",
+            "author": "Denise",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_AReeAX": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "So grateful",
+            "text": "<p>Found what I needed at a price I could afford.</p>",
+            "author": "Ashley",
+            "verify_buyer": true
+          }
+        },
+        "testimonial_6RMWDR": {
+          "type": "testimonial",
+          "settings": {
+            "review_star": 5,
+            "review_title": "Holly",
+            "text": "<p>Stocked my home for visits from the grandkids.</p>",
+            "author": "For grandparents",
+            "verify_buyer": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_wJ8NnB",
+        "testimonial_gewprH",
+        "testimonial_9NH4qJ",
+        "testimonial_qc9MbE",
+        "testimonial_CYMLeN",
+        "testimonial_P6wEnL",
+        "testimonial_Qx66bd",
+        "testimonial_fFcgnz",
+        "testimonial_UgBnHG",
+        "testimonial_bzCtUj",
+        "testimonial_bezE3X",
+        "testimonial_NpCPhx",
+        "testimonial_zjRRGc",
+        "testimonial_hyy6rB",
+        "testimonial_XLWgb3",
+        "testimonial_G6pHWp",
+        "testimonial_VdTq6n",
+        "testimonial_tnkDmi",
+        "testimonial_KqptRk",
+        "testimonial_hjx8C7",
+        "testimonial_Rpwbkj",
+        "testimonial_tzmPhU",
+        "testimonial_wc3Dfg",
+        "testimonial_tFebRk",
+        "testimonial_gxFLKE",
+        "testimonial_Bye4Bz",
+        "testimonial_dc4axK",
+        "testimonial_zt6bE6",
+        "testimonial_9VyzPm",
+        "testimonial_HDeKEQ",
+        "testimonial_CjthDg",
+        "testimonial_yXcw9J",
+        "testimonial_pMHRg7",
+        "testimonial_BtN6fD",
+        "testimonial_rBcmH9",
+        "testimonial_kPFbDg",
+        "testimonial_VTXYz7",
+        "testimonial_WPimXB",
+        "testimonial_kn4jd4",
+        "testimonial_brwzpa",
+        "testimonial_xdyF4N",
+        "testimonial_E3nad7",
+        "testimonial_TFdTxq",
+        "testimonial_4And7V",
+        "testimonial_dr3kNF",
+        "testimonial_3B8Kbg",
+        "testimonial_Tthemb",
+        "testimonial_Xz37Bf",
+        "testimonial_AReeAX",
+        "testimonial_6RMWDR"
+      ],
+      "name": "Happy families",
+      "settings": {
+        "color_scheme": "background-2",
+        "card_color_scheme": "accent-1",
+        "review_eyebrow": true,
+        "eyebrow_star": "shopify://shop_images/star-new.svg",
+        "eyebrow_text": "Excellent | 100,000+ Customers",
+        "title": "Proudly Serving 100k+ Happy Families",
+        "heading_link": "",
+        "subtitle": "",
+        "heading_alignment": "flex-start",
+        "content_alignment": "left",
+        "desktop_card": 3.7,
+        "mobile_card": 1.3,
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "kidsy_static_press_slider_nAPhNd": {
+      "type": "Kidsy-static-press-slider",
+      "blocks": {
+        "press_card_BqqPqk": {
+          "type": "press_card",
+          "settings": {
+            "press_URL": "shopify://pages/press",
+            "press_image": "shopify://shop_images/Motherly.png",
+            "press_content": "“Kidsy is the TJ Maxx of baby gear —affordable, parent-approved finds”"
+          }
+        },
+        "press_card_bNDkdD": {
+          "type": "press_card",
+          "settings": {
+            "press_URL": "shopify://pages/press",
+            "press_image": "shopify://shop_images/Tech-Crunch.png",
+            "press_content": "“Meet Kidsy, a kids’ clothing startup that sells what parents need at a discount”"
+          }
+        },
+        "press_card_cye6Dk": {
+          "type": "press_card",
+          "settings": {
+            "press_URL": "shopify://pages/press",
+            "press_image": "shopify://shop_images/CNBC_cd69eec6-2047-46c1-89e9-bba5aa83b852.png",
+            "press_content": "“Kidsy supports sustainable parenting amid rising baby gear costs”"
+          }
+        },
+        "press_card_7XhDBP": {
+          "type": "press_card",
+          "settings": {
+            "press_URL": "shopify://pages/press",
+            "press_image": "shopify://shop_images/WGN9.png",
+            "press_content": "“Newell Brands and Kidsy Announce Partnership”"
+          }
+        },
+        "press_card_WzHmUm": {
+          "type": "press_card",
+          "settings": {
+            "press_URL": "shopify://pages/press",
+            "press_image": "shopify://shop_images/Modern-Retail.png",
+            "press_content": "“Kidsy expands secondhand kids’ gear options by adding trendy brands”"
+          }
+        },
+        "press_card_LBFQaC": {
+          "type": "press_card",
+          "settings": {
+            "press_URL": "shopify://pages/press",
+            "press_image": "shopify://shop_images/Chicago-Sun-Times.png",
+            "press_content": "“Kidsy uses AI to optimize pricing and improve operations efficiency”"
+          }
+        }
+      },
+      "block_order": [
+        "press_card_BqqPqk",
+        "press_card_bNDkdD",
+        "press_card_cye6Dk",
+        "press_card_7XhDBP",
+        "press_card_WzHmUm",
+        "press_card_LBFQaC"
+      ],
+      "name": "Kidsy News",
+      "settings": {
+        "color_scheme": "background-2",
+        "card_color_scheme": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "title": "Kidsy In The News",
+        "heading_link": "shopify://pages/press",
+        "subtitle": "",
+        "heading_alignment": "flex-start",
+        "content_alignment": "left",
+        "desktop_card": 3,
+        "mobile_card": 2,
+        "card_gap": 24,
+        "card_gap_mobile": 16,
+        "autoplay": true,
+        "scroll_speed": 35,
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "baby_gear_section_WbgfCY": {
+      "type": "baby-gear-section",
+      "blocks": {
+        "content_QfCEea": {
+          "type": "content",
+          "settings": {
+            "icon_image": "shopify://shop_images/1_00000178897229964514397590000017547688893694089874.png",
+            "step": "step 1",
+            "sub_heading": "Partner with Top Retailers",
+            "sub_text": "<p>Source open-box items directly from Top brands & Retailers.</p>"
+          }
+        },
+        "content_ryAfFR": {
+          "type": "content",
+          "settings": {
+            "icon_image": "shopify://shop_images/1_00000082341716369292660940000017257112807603969209.png",
+            "step": "step 2",
+            "sub_heading": "Expert Quality Checks",
+            "sub_text": "<p>Every item is inspected and tested for safety by our team.</p>"
+          }
+        },
+        "content_xjXpFV": {
+          "type": "content",
+          "settings": {
+            "icon_image": "shopify://shop_images/1_00000068648065960655927810000015837626937257394615.png",
+            "step": "step 3",
+            "sub_heading": "Authentic & Baby-Safe",
+            "sub_text": "<p>Guaranteed genuine products that meet baby-safety standards.</p>"
+          }
+        },
+        "content_i9LdGg": {
+          "type": "content",
+          "settings": {
+            "icon_image": "shopify://shop_images/1_00000036941088949738049640000001920987472637641643.png",
+            "step": "step 4",
+            "sub_heading": "Save Up to 70%",
+            "sub_text": "<p>Get premium baby gear without the price tag.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "content_QfCEea",
+        "content_ryAfFR",
+        "content_xjXpFV",
+        "content_i9LdGg"
+      ],
+      "settings": {
+        "color_scheme": "inverse",
+        "color_scheme_2": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "title": "How We Deliver Unbeatable Prices",
+        "heading_link": "shopify://pages/about-us",
+        "subtitle": "We partner with trusted U.S. retailers to bring you The Best, For Less.",
+        "cta_label": "Learn More",
+        "cta_link": "shopify://pages/about-us",
+        "cta_button_style": "primary",
+        "content_text_align": "center",
+        "padding_top": 30,
+        "padding_bottom": 50,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20,
+        "slider_slides_per_view": 4,
+        "slider_mobile_slides_per_view": 1.6,
+        "slider_space_between": 40
+      }
+    },
+    "image_with_icon_text_XdntDT": {
+      "type": "image-with-icon-text",
+      "blocks": {
+        "icon_text_block_PNB4A6": {
+          "type": "icon_text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Dollar.svg",
+            "text": "<p>Earn 10 Points Per $1, That's 10% Back On Every Order</p>",
+            "link": "shopify://pages/kidsy-points"
+          }
+        },
+        "icon_text_block_dfb8ii": {
+          "type": "icon_text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Reward.svg",
+            "text": "<p>Refer A Friend And You Both Get $20 Off</p>",
+            "link": "shopify://pages/kidsy-referral-program"
+          }
+        },
+        "icon_text_block_fF6epn": {
+          "type": "icon_text_block",
+          "settings": {
+            "icon": "shopify://shop_images/Gift.svg",
+            "text": "<p>Get 300 Points For Sign Up, Or Sharing Your Birthday</p>",
+            "link": "shopify://pages/sign-up-form"
+          }
+        }
+      },
+      "block_order": [
+        "icon_text_block_PNB4A6",
+        "icon_text_block_dfb8ii",
+        "icon_text_block_fF6epn"
+      ],
+      "name": "Image With Icon Text",
+      "settings": {
+        "color_scheme": "background-2",
+        "blocks_color_scheme": "accent-2",
+        "title": "Stack The Savings With Kidsy Points",
+        "heading_link": "shopify://pages/kidsy-points",
+        "subtitle": "Earn while you shop your favorite baby brands. Every purchase puts more rewards and more smiles, back in your wallet.",
+        "cta_label": "Join The Community - Shop Now",
+        "cta_link": "shopify://pages/kidsy-points",
+        "cta_button_style": "primary",
+        "image": "shopify://shop_images/kidst_points.webp",
+        "image_radius": 16,
+        "rotating_badge_image": "shopify://shop_images/Stamp_Desktop_big.png",
+        "rotating_badge_size": 113,
+        "rotating_badge_size_mobile": 82,
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "promotional_cards_8kJrjG": {
+      "type": "promotional-cards",
+      "blocks": {
+        "card_7kCJif": {
+          "type": "card",
+          "settings": {
+            "overlay_color": "#000000",
+            "overlay_opacity": 50,
+            "card_color_scheme": "",
+            "heading": "Join Our Newsletter And Get $10 Off Your First $100+ Purchase.",
+            "heading_horizontal_align": "left",
+            "card_link": "#shopify-block-AQnRRenVoay9ST3FlY__klaviyo_email_marketing_sms_form_embed_block_ahrC6r",
+            "shape_bottom_image": "shopify://shop_images/Vector.png",
+            "shape_bottom_width": 185,
+            "shape_bottom_height": 150,
+            "shape_bottom_position": "bottom_left",
+            "shape_top_image": "shopify://shop_images/Vector_top.png",
+            "shape_top_width": 100,
+            "shape_top_height": 95,
+            "shape_top_position": "top_right",
+            "show_badge": true,
+            "badge_color_scheme": "inverse",
+            "badge_save_text": "",
+            "badge_amount": "SAVE",
+            "badge_off_text": "$10"
+          }
+        },
+        "card_h4yGbC": {
+          "type": "card",
+          "settings": {
+            "overlay_color": "#000000",
+            "overlay_opacity": 30,
+            "card_color_scheme": "inverse",
+            "heading": "Discover Open-Box Baby Gear From Top Brands, And Up To 70% Off Retail.",
+            "heading_horizontal_align": "left",
+            "card_link": "shopify://collections/best-sellers",
+            "shape_bottom_image": "shopify://shop_images/Vector_bottom.png",
+            "shape_bottom_width": 115,
+            "shape_bottom_height": 105,
+            "shape_bottom_position": "bottom_left",
+            "shape_top_image": "shopify://shop_images/Vector_top_right.png",
+            "shape_top_width": 375,
+            "shape_top_height": 125,
+            "shape_top_position": "top_right",
+            "show_badge": true,
+            "badge_color_scheme": "",
+            "badge_save_text": "SAVE UPTO",
+            "badge_amount": "70%",
+            "badge_off_text": "OFF"
+          }
+        }
+      },
+      "block_order": [
+        "card_7kCJif",
+        "card_h4yGbC"
+      ],
+      "name": "Promotional Cards",
+      "settings": {
+        "color_scheme": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "title": "",
+        "subtitle": "",
+        "cta_label": "",
+        "cta_link": "",
+        "cta_button_style": "primary",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "kidsy_social_gXJEzj": {
+      "type": "kidsy-social",
+      "blocks": {
+        "youtube_gallery_carousel_widget_block_UDwAxH": {
+          "type": "shopify://apps/youtube-gallery/blocks/carousel-widget-block/20730f6a-6b3e-4beb-9cbf-452a9ade13e3",
+          "settings": {
+            "contentIndex": "1",
+            "themeId": "light",
+            "autoscroll": true,
+            "autoplay": "off",
+            "focus": true
+          }
+        }
+      },
+      "block_order": [
+        "youtube_gallery_carousel_widget_block_UDwAxH"
+      ],
+      "name": "Kidsy Social",
+      "settings": {
+        "color_scheme": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "title": "Join Our Community of Savvy Parents",
+        "heading_link": "",
+        "show_social": true,
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "collapsible_content_JEX3xa": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_UcaAXG": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What is Kidsy?",
+            "icon": "none",
+            "row_content": "<p>We’re a curated destination for premium baby & kids’ gear offered at steep discounts — including new-in-box, open-box, and gently used items — all carefully inspected for safety and function.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_WJBAb8": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is Kidsy a legit website?",
+            "icon": "none",
+            "row_content": "<p><strong>Yes — Kidsy is a 100% legitimate business</strong> specializing in open-box, overstock, and returned baby gear from major retailers and trusted manufacturers. Every item is inspected for safety, function, and completeness before it’s listed. Thousands of families shop Kidsy each month for 20–60% off trusted brands with full transparency on condition and packaging.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_EHwch6": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Are all your products authentic and safe?",
+            "icon": "none",
+            "row_content": "<p>Yes - every item is 100% authentic, comes from trusted manufacturers or major retailers, and is inspected for safety and performance before listing.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_EYFidG": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What do you mean by “open-box”, “floor model”, and “gently used”?",
+            "icon": "none",
+            "row_content": "<p>We use consistent condition labels so you know exactly what to expect:</p><ul><li><strong>Factory Sealed:</strong> Brand new, unopened, untouched.</li><li><strong>New Overstock / Open Box / Imperfect Box: </strong>Brand-new item. The box was opened or has cosmetic damage (e.g., dented corners, torn retail labels, or re-taped packaging).</li><li><strong>Floor Model:</strong> Fully functional item with possible minor cosmetic wear from handling. Original packaging may be missing.</li><li><strong>Gently Used:</strong> Light cosmetic wear, fully functional, carefully inspected. Typically no manufacturer's warranty.</li></ul>",
+            "page": ""
+          }
+        },
+        "collapsible_row_MtNpLz": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do you ship from the U.S. and how fast will my order arrive?",
+            "icon": "none",
+            "row_content": "<p>Yes, we are headquartered in Chicago and fulfill from our U.S.‐based warehouses in the Midwest. Orders ship within 2-3 business days and typically arrive within 3–7 business days depending on location.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_WkxRzR": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What is your return policy?",
+            "icon": "none",
+            "row_content": "<p>Returns are accepted within 14 days if an item arrives damaged or significantly different from its description. Items must be returned in the same condition using our provided label. Refunds are processed after inspection.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_ig8kbq": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Are the warranties still valid on discounted items?",
+            "icon": "none",
+            "row_content": "<p>For “New in Box” and “Open Box” items, manufacturer warranties may apply. For “Floor Model” and “Gently Used” items, warranties typically do not apply. Because warranty rules vary by brand, we always recommend confirming with the manufacturer directly.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_cPVmtH": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Why are your prices so much lower than retail?",
+            "icon": "none",
+            "row_content": "<p>It is because we source overstock, open‐box returns, and floor models that we’re able to pass big savings on to you - all the while maintaining safety and quality standards. </p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_UfKqwx": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How often is your inventory restocked?",
+            "icon": "none",
+            "row_content": "<p>Hundreds of new products are listed daily. Because we offer incredible deals on overstock and open-box quantities, we recommend acting fast when you see something you like.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Fb9RUi": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What makes Kidsy different from other companies or marketplaces?",
+            "icon": "none",
+            "row_content": "<p>Unlike peer-to-peer resale platforms, we partner directly with premium brands and large retailers to resell excess inventory and open-box products from the best brands at incredible prices. We inspect and grade every item, and clearly label the product condition. We are not an open marketplace of random sellers.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_wpHyMV": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How can I contact you if I have questions or issues?",
+            "icon": "none",
+            "row_content": "<p>Email: <a href=\"mailto:hello@kidsy.co\"><span style=\"text-decoration:underline\"><strong>hello@kidsy.co</strong></span></a></p><p>Phone: <a href=\"tel:3129648348\" title=\"tel:3129648348\"><strong>(312) 964-8348</strong></a></p><p>Live chat: available on our website</p><p>Customer service hours: <strong>Mon–Fri, 9am–5pm CST</strong></p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_UcaAXG",
+        "collapsible_row_WJBAb8",
+        "collapsible_row_EHwch6",
+        "collapsible_row_EYFidG",
+        "collapsible_row_MtNpLz",
+        "collapsible_row_WkxRzR",
+        "collapsible_row_ig8kbq",
+        "collapsible_row_cPVmtH",
+        "collapsible_row_UfKqwx",
+        "collapsible_row_Fb9RUi",
+        "collapsible_row_wpHyMV"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "heading_link": "",
+        "subtitle": "",
+        "cta_label": "Contact Us",
+        "cta_link": "shopify://pages/contact",
+        "cta_button_style": "primary",
+        "color_scheme": "accent-1",
+        "open_first_collapsible_row": false,
+        "image_ratio": "small",
+        "desktop_layout": "image_first",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    }
+  },
+  "order": [
+    "labor_day_hero_section",
+    "custom_banner_GKf6WC",
+    "scrolling_brand_icons_section",
+    "kidsy_dynamic_collection_tab_Q3pQfw",
+    "kidsy_dynamic_collection_tab_t34fji",
+    "kidsy_dynamic_collection_tab_qgz3aa",
+    "kidsy_dynamic_collection_tab_hY8qFJ",
+    "kidsy_dynamic_collection_tab_AxkQzq",
+    "collections_slider_section",
+    "kidsy_static_customer_testimonial_7q3raX",
+    "kidsy_static_press_slider_nAPhNd",
+    "baby_gear_section_WbgfCY",
+    "image_with_icon_text_XdntDT",
+    "promotional_cards_8kJrjG",
+    "kidsy_social_gXJEzj",
+    "collapsible_content_JEX3xa"
+  ]
+}

@@ -1,0 +1,27 @@
+{% comment %}
+  Header search bar with Globo + Shopify fallback
+{% endcomment %}
+<div class="header__search-bar header-mobile">
+  <form action="{{ routes.search_url }}" method="get" role="search" class="fallback-search-form check">
+    <label class="visually-hidden" for="fallback-search-input">
+      {{ 'general.search.search' | t }}
+    </label>
+    <input 
+      id="fallback-search-input"
+      type="search"
+      name="q"
+      placeholder="{{ 'general.search.search' | t }}"
+      class="fallback-search-input"
+      value="{{ search.terms | escape }}"
+      required
+      pattern=".*\S.*"
+      title="Please enter a search term"
+      minlength="1"
+      inputmode="search"
+      enterkeyhint="search"
+    >
+    <button type="submit" class="fallback-search-button" aria-label="{{ 'general.search.search' | t }}">
+      <span aria-hidden="true">{{ 'icon-search.svg' | inline_asset_content }}</span>
+    </button>
+  </form>
+</div>

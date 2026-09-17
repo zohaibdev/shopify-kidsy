@@ -1,0 +1,268 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_Chkihn": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_VJfQ4n": {
+          "type": "heading",
+          "settings": {
+            "heading": "Kidsy In The News",
+            "heading_size": "h1"
+          }
+        },
+        "text_JBGw4q": {
+          "type": "text",
+          "settings": {
+            "text": "Since launching, Kidsy has helped 100,000+ families save big on baby and kids' gear, while keeping 1M+ pounds of like-new products out of landfills. Recognized by CNBC, USA Today, and TechCrunch, we’re proud to power the new wave of sustainable parenting. For press inquiries, please contact our PR & Media Director, Claire DeMarco, <a href=\"mailto:claire@kidsy.co\"><span style=\"text-decoration:underline\">claire@kidsy.co</span></a>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VJfQ4n",
+        "text_JBGw4q"
+      ],
+      "custom_css": [
+        ".banner__box {opacity: 0.8;}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Untitled_design_5.png",
+        "image_overlay_opacity": 0,
+        "image_height": "small",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "scheme-ec5d81c0-f9b4-4a02-9a99-f58043a39c67",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "multicolumn_yXqhQ8": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_bjPaNg": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/WSJ_Logo_svg.png",
+            "title": "",
+            "text": "<p>Shraysi Tandon, CEO/Founder of Kidsy, spotlighted in WSJ<br/></p>",
+            "link_label": "The Wall Street Journal",
+            "link": "https://www.wsj.com/personal-finance/taxes/children-tax-breaks-dc626547?gaa_at=eafs&gaa_n=ASWzDAiuI-uqXrMK3lAcZs_UVeBr6cbc38JR7AkgQWdLi7c0TrCUwSAb3JPEOa_GMzk%3D&gaa_ts=68ad42d6&gaa_sig=KeYjQVR3RXX5D1Lxn3GRqvIE8K9YLWznqBMuiOv4KvU63Kll2_CI_eDNpQLlYplHst5eRwWgESzhH8ovHghnXA%3D%3D"
+          }
+        },
+        "column_mzaqHj": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/motherly-logo_v2.webp",
+            "title": "",
+            "text": "<p>Kidsy is the TJ Maxx of baby gear —affordable, parent-approved finds<br/></p><p></p>",
+            "link_label": "MOTHERLY",
+            "link": "https://www.mother.ly/baby/kidsy-baby-gear/"
+          }
+        },
+        "column_tBpFnX": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/desktop-logo.svg",
+            "title": "",
+            "text": "<p>Meet Kidsy, a kids’ clothing startup that sells what parents need at a discount</p><p></p><p></p>",
+            "link_label": "TechCrunch",
+            "link": "https://techcrunch.com/2024/03/28/kidsy-is-a-startup-selling-liquidated-childrens-clothing-and-gear-like-a-tj-maxx-for-kids/"
+          }
+        },
+        "column_jxBm7W": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/CNBC_2023_svg.png",
+            "title": "",
+            "text": "<p>Kidsy supports sustainable parenting amid rising baby gear costs<br/></p>",
+            "link_label": "CNBC",
+            "link": "https://www.cnbc.com/2024/05/29/benefits-of-secondhand-clothing-goods-according-to-alicia-silverstone.html"
+          }
+        },
+        "column_bYcKFJ": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/modern-retail_logo_2f9de356-2a13-4110-ad5f-c579188ec204.svg",
+            "title": "",
+            "text": "<p>Kidsy expands secondhand kids’ gear options by adding trendy brands<br/></p>",
+            "link_label": "Modern Retail",
+            "link": "https://www.modernretail.co/technology/why-secondhand-kids-marketplaces-like-goodbuygear-and-kidsy-are-bringing-on-new-brands/"
+          }
+        },
+        "column_fGpcNy": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/WGN_9_logo_svg.png",
+            "title": "",
+            "text": "<p>Newell Brands and Kidsy Announce Partnership</p>",
+            "link_label": "WGN9",
+            "link": "https://wgntv.com/business/press-releases/cision/20241009LA26611/newell-brands-and-kidsy-announce-partnership-to-divert-graco-and-baby-jogger-returns-from-landfills/"
+          }
+        },
+        "column_KqAUA4": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/cropped-Logo-800x340-1-1.webp",
+            "title": "",
+            "text": "<p>Money optimism, Kidsy, Major League Table Tennis comes to Chicago</p>",
+            "link_label": "WGN RADIO",
+            "link": "https://wgnradio.com/wintrust-business-lunch/wintrust-business-lunch-4-11-24-money-optimism-kidsy-major-league-table-tennis-comes-to-chicago/"
+          }
+        },
+        "column_bRWBY3": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/chicago_sun_times_logo-removebg.png",
+            "title": "",
+            "text": "<p>Kidsy uses AI to optimize pricing and improve operations efficiency<br/></p>",
+            "link_label": "Chicago Sun Times",
+            "link": "https://chicago.suntimes.com/technology/2024/10/25/ai-chicago-businesses-better-software-investment-worth"
+          }
+        },
+        "column_8Nkp6V": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/download_a0b1c5c3-e43f-468a-95dd-3b6c2775c7b0.png",
+            "title": "",
+            "text": "<p>Kidsy's Shraysi Tandon on tariff impact on toy industry</p>",
+            "link_label": "Bloomberg TV",
+            "link": "https://www.youtube.com/watch?v=Ry0_WqAwuuM&t=672s"
+          }
+        },
+        "column_HjRjJC": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Fox_32_Chicago.png",
+            "title": "",
+            "text": "<p> Kidsy is making sustainable shopping easier, more affordable<br/></p>",
+            "link_label": "Fox 32 Good Day Chicago",
+            "link": "https://www.fox32chicago.com/video/1618276"
+          }
+        },
+        "column_cmxcjg": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/cbs-news.png",
+            "title": "",
+            "text": "<p>Kidsy helps parents save as tariffs raise baby gear costs</p>",
+            "link_label": "CBS News",
+            "link": "https://www.cbsnews.com/news/baby-tax-trump-tariffs-parenting-products/"
+          }
+        },
+        "column_pJUqcK": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ca7307c7684436d625ae53a15926ac78755e6fb7-260x30.svg",
+            "title": "",
+            "text": "<p>Kidsy turns premium returns into affordable baby gear<br/></p>",
+            "link_label": "Retail Brew",
+            "link": "https://www.retailbrew.com/stories/2025/03/20/growing-premium-returns-feed-market-for-off-price-kid-and-baby-products"
+          }
+        },
+        "column_NDTBWx": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/inc-500-logo-768x638.png",
+            "title": "",
+            "text": "<p>Kidsy CEO Shraysi Tandon named Inc. Female Founder<br/></p>",
+            "link_label": "Inc. 500 Female Founders",
+            "link": "https://www.inc.com/profile/shraysi-tandon"
+          }
+        },
+        "column_XGg44r": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/USA_Today__2020-01-29__svg.png",
+            "title": "",
+            "text": "<p>Amid TikTok ban fears, Kidsy offers affordable gear alternatives<br/></p>",
+            "link_label": "USA Today",
+            "link": "https://www.usatoday.com/story/tech/news/2025/01/16/tiktok-shop-ban/77743755007/"
+          }
+        },
+        "column_FVc7NA": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/CO-blue.svg",
+            "title": "",
+            "text": "<p>Kidsy built a million‑dollar children’s marketplace in months<br/></p>",
+            "link_label": "CO by The US Chamber of Commerce",
+            "link": "https://www.uschamber.com/co/good-company/the-leap/kidsys-million-dollar-marketplace"
+          }
+        },
+        "column_yfndAE": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/1705334416140.jpg",
+            "title": "",
+            "text": "<p>Kidsy wins SEAL Sustainable Innovation Award for sustainable recommerce<br/></p>",
+            "link_label": "SEAL Award Winner 2025",
+            "link": "https://sealawards.com/sustainability-award-2025/"
+          }
+        }
+      },
+      "block_order": [
+        "column_bjPaNg",
+        "column_mzaqHj",
+        "column_tBpFnX",
+        "column_jxBm7W",
+        "column_bYcKFJ",
+        "column_fGpcNy",
+        "column_KqAUA4",
+        "column_bRWBY3",
+        "column_8Nkp6V",
+        "column_HjRjJC",
+        "column_cmxcjg",
+        "column_pJUqcK",
+        "column_NDTBWx",
+        "column_XGg44r",
+        "column_FVc7NA",
+        "column_yfndAE"
+      ],
+      "custom_css": [
+        ".multicolumn .button {display: none;}"
+      ],
+      "settings": {
+        "title": "As Seen In",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "Button label",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "scheme-ec5d81c0-f9b4-4a02-9a99-f58043a39c67",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_banner_Chkihn",
+    "main",
+    "multicolumn_yXqhQ8"
+  ]
+}

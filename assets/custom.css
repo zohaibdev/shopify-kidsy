@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Roobert TRIAL';
+    src: url('https://cdn.shopify.com/s/files/1/0805/9325/6728/files/RoobertTRIAL-Medium.woff2?v=1777872073') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0805/9325/6728/files/RoobertTRIAL-Medium.woff?v=1777872073') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roobert TRIAL';
+    src: url('https://cdn.shopify.com/s/files/1/0805/9325/6728/files/RoobertTRIAL-Regular_b335fbf7-7435-407e-b3ef-2c92212871d9.woff2?v=1777872073') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0805/9325/6728/files/RoobertTRIAL-Regular_4354c106-c30f-44b6-9a69-efba23b9d01f.woff?v=1777872073') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roobert TRIAL';
+    src: url('https://cdn.shopify.com/s/files/1/0805/9325/6728/files/RoobertTRIAL-SemiBold_5be0d353-045d-4371-bb78-6cfc4569d07f.woff2?v=1777872073') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0805/9325/6728/files/RoobertTRIAL-SemiBold_54a76c56-6527-4ced-9f83-ab17644ed744.woff?v=1777872073') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}

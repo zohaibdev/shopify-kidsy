@@ -1,0 +1,423 @@
+{%- style -%}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } @media screen and (min-width: 750px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } } {%- for block in section.blocks -%} {%- if block.type == 'card' -%} .promotional-card-{{ section.id }}-{{ forloop.index }} .promotional-card__heading { text-align: {{ block.settings.heading_horizontal_align | default: 'left' }}; {%- if block.settings.heading_horizontal_align == 'right' -%} margin-bottom: 20px; {%- endif -%} } .promotional-card-{{ section.id }}-{{ forloop.index }} .promotional-card__content { display: flex; flex-direction: column; justify-content: space-between; } {%- if block.settings.bg_image != blank -%} {%- assign overlay_opacity_value = block.settings.overlay_opacity | default: 50 -%} {%- assign overlay_opacity_decimal = overlay_opacity_value | divided_by: 100.0 -%} .promotional-card-{{ section.id }}-{{ forloop.index }} .promotional-card__inner::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: {{ block.settings.overlay_color | default: '#000000' }}; opacity: {{ overlay_opacity_decimal }}; z-index: 1; pointer-events: none; } .promotional-card-{{ section.id }}-{{ forloop.index }} .promotional-card__content { position: relative; z-index: 2; } {%- elsif block.settings.shape_bottom_image != blank or block.settings.shape_top_image != blank -%} {%- if block.settings.shape_bottom_image != blank -%} .promotional-card-{{ section.id }}-{{ forloop.index }}::before { content: ''; background-image: url('{{ block.settings.shape_bottom_image | image_url: width: 500 }}'); position: absolute; height: {{ block.settings.shape_bottom_height | default: 150 }}px; width: {{ block.settings.shape_bottom_width | default: 185 }}px; {%- if block.settings.shape_bottom_position == 'bottom_left' -%} bottom: -2px; left: 0; {%- elsif block.settings.shape_bottom_position == 'bottom_right' -%} bottom: -2px; right: 0; {%- elsif block.settings.shape_bottom_position == 'bottom_center' -%} bottom: -2px; left: 50%; transform: translateX(-50%); {%- else -%} bottom: -2px; left: 0; {%- endif -%} background-size: contain; background-repeat: no-repeat; z-index: 1; } {%- endif -%} {%- if block.settings.shape_top_image != blank -%} .promotional-card-{{ section.id }}-{{ forloop.index }}::after { content: ''; background-image: url('{{ block.settings.shape_top_image | image_url: width: 500 }}'); position: absolute; height: {{ block.settings.shape_top_height | default: 92 }}px; width: {{ block.settings.shape_top_width | default: 102 }}px; {%- if block.settings.shape_top_position == 'top_left' -%} top: -1px; left: 0; {%- elsif block.settings.shape_top_position == 'top_right' -%} top: 0; right: -1px; {%- elsif block.settings.shape_top_position == 'top_center' -%} top: 0; left: 50%; transform: translateX(-50%); {%- else -%} top: 0; right: 0; {%- endif -%} background-size: contain; background-repeat: no-repeat; z-index: 1; } {%- endif -%} {%- endif -%} {%- endif -%} {%- endfor -%}
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="promotional-cards section-{{ section.id }}-padding isolate">
+    <div class="page-width">
+      {%- unless section.settings.title == blank -%}
+        <div class="title-wrapper {% if section.settings.cta_label != blank %}header-with-CTA{% endif %}">
+          <div class="section-header-content">
+            <h3 class="section--title h3">
+              {{ section.settings.title | escape }}
+            </h3>
+            {%- if section.settings.subtitle != blank -%}
+              <p class="section-description h5">
+                {{ section.settings.subtitle }}
+              </p>
+            {%- endif -%}
+          </div>
+          {%- if section.settings.cta_label != blank -%}
+            <div class="section-header-cta">
+              <a
+                class="button button--{{ section.settings.cta_button_style }} title__button"
+                {%- if section.settings.cta_link != blank -%}
+                  href="{{ section.settings.cta_link }}"
+                {%- endif -%}
+              >
+                {{ section.settings.cta_label | escape }}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endunless -%}
+      <div class="promotional-cards__grid">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'card' -%}
+              <div
+                class="promotional-card promotional-card-{{ section.id }}-{{ forloop.index }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.card_link != blank -%}
+                  <a href="{{ block.settings.card_link }}" class="promotional-card__link">
+                {%- endif -%}
+                <div
+                  class="promotional-card__inner color-{{ block.settings.card_color_scheme | default: section.settings.color_scheme }} gradient"
+                  {%- if block.settings.bg_image != blank -%}
+                    style="background-image: url('{{ block.settings.bg_image | image_url: width: 2000 }}');"
+                  {%- endif -%}
+                >
+                  <div class="promotional-card__content">
+                    {%- if block.settings.heading != blank -%}
+                      <h2 class="promotional-card__heading h2">
+                        {{ block.settings.heading }}
+                      </h2>
+                    {%- endif -%}
+
+                    {%- if block.settings.show_badge -%}
+                      <div class="promotional-card__badge color-{{ block.settings.badge_color_scheme | default: section.settings.color_scheme }} gradient">
+                        {%- if block.settings.badge_save_text != blank -%}
+                          <span class="promotional-card__badge-save">{{ block.settings.badge_save_text }}</span>
+                        {%- endif -%}
+                        {%- if block.settings.badge_amount != blank -%}
+                          <span class="promotional-card__badge-amount h3">{{ block.settings.badge_amount }}</span>
+                        {%- endif -%}
+                        {%- if block.settings.badge_off_text != blank -%}
+                          <span class="promotional-card__badge-off h3">{{ block.settings.badge_off_text }}</span>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+                {%- if block.settings.card_link != blank -%}
+                  </a>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Promotional Cards",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Section color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Best sellers on kidsy"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button text",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    },
+    {
+      "id": "cta_button_style",
+      "type": "select",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding - Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Padding - Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Promotional Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "bg_image",
+          "label": "Background image"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Image overlay color",
+          "info": "Overlay color applied when background image is selected",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Image overlay opacity",
+          "info": "Overlay opacity applied when background image is selected",
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "Card Colors"
+        },
+        {
+          "type": "color_scheme",
+          "id": "card_color_scheme",
+          "label": "Card color scheme",
+          "info": "Color scheme for the card (background and text colors)",
+          "default": "scheme-1"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Join Our Newsletter And Get $10 Off Your First $100+ Purchase."
+        },
+        {
+          "type": "header",
+          "content": "Heading Alignment"
+        },
+        {
+          "type": "select",
+          "id": "heading_horizontal_align",
+          "label": "Heading horizontal alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "url",
+          "id": "card_link",
+          "label": "Card link"
+        },
+        {
+          "type": "header",
+          "content": "Shape Images Settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "shape_bottom_image",
+          "label": "Bottom shape image",
+          "info": "Shape image displayed at the bottom of the card (when no background image is set)"
+        },
+        {
+          "type": "range",
+          "id": "shape_bottom_width",
+          "min": 50,
+          "max": 500,
+          "step": 5,
+          "unit": "px",
+          "label": "Bottom shape width",
+          "default": 185
+        },
+        {
+          "type": "range",
+          "id": "shape_bottom_height",
+          "min": 50,
+          "max": 500,
+          "step": 5,
+          "unit": "px",
+          "label": "Bottom shape height",
+          "default": 150
+        },
+        {
+          "type": "select",
+          "id": "shape_bottom_position",
+          "label": "Bottom shape position",
+          "options": [
+            {
+              "value": "bottom_left",
+              "label": "Bottom Left"
+            },
+            {
+              "value": "bottom_right",
+              "label": "Bottom Right"
+            },
+            {
+              "value": "bottom_center",
+              "label": "Bottom Center"
+            }
+          ],
+          "default": "bottom_left"
+        },
+        {
+          "type": "image_picker",
+          "id": "shape_top_image",
+          "label": "Top shape image",
+          "info": "Shape image displayed at the top of the card (when no background image is set)"
+        },
+        {
+          "type": "range",
+          "id": "shape_top_width",
+          "min": 50,
+          "max": 400,
+          "step": 5,
+          "unit": "px",
+          "label": "Top shape width",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "shape_top_height",
+          "min": 50,
+          "max": 300,
+          "step": 5,
+          "unit": "px",
+          "label": "Top shape height",
+          "default": 90
+        },
+        {
+          "type": "select",
+          "id": "shape_top_position",
+          "label": "Top shape position",
+          "options": [
+            {
+              "value": "top_left",
+              "label": "Top Left"
+            },
+            {
+              "value": "top_right",
+              "label": "Top Right"
+            },
+            {
+              "value": "top_center",
+              "label": "Top Center"
+            }
+          ],
+          "default": "top_right"
+        },
+        {
+          "type": "header",
+          "content": "Badge Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_badge",
+          "label": "Show badge",
+          "default": true,
+          "info": "Enable to display the badge on this card"
+        },
+        {
+          "type": "color_scheme",
+          "id": "badge_color_scheme",
+          "label": "Badge color scheme",
+          "info": "Color scheme for the badge (background and text colors)",
+          "default": "scheme-2"
+        },
+        {
+          "type": "text",
+          "id": "badge_save_text",
+          "label": "Badge save text",
+          "default": "SAVE",
+          "info": "Text above the amount (e.g., 'SAVE', 'SAVE UPTO')"
+        },
+        {
+          "type": "text",
+          "id": "badge_amount",
+          "label": "Badge amount",
+          "default": "$10",
+          "info": "Main amount/percentage (e.g., '$10', '70%')"
+        },
+        {
+          "type": "text",
+          "id": "badge_off_text",
+          "label": "Badge off text",
+          "info": "Text below the amount (e.g., 'OFF')"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 2,
+  "presets": [
+    {
+      "name": "Promotional Cards",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "heading": "Join Our Newsletter And Get $10 Off Your First $100+ Purchase.",
+            "badge_save_text": "SAVE",
+            "badge_amount": "$10"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "heading": "Discover Open-Box Baby Gear From Top Brands, And Up To 70% Off Retail.",
+            "badge_save_text": "SAVE UPTO",
+            "badge_amount": "70%",
+            "badge_off_text": "OFF"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

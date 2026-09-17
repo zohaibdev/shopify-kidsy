@@ -1,0 +1,355 @@
+{% comment %}
+  ============================================================
+  PDP Free Shipping Progress
+  ------------------------------------------------------------
+  Figma: 02. Kidsy | Internal → Product Detail Page (12123:12270)
+    • Desktop 12123:12271 — copy column 660 wide, bar 660 x 10
+    • Mobile  frame        — card content 333 wide, bar 333 x 5
+
+  Sits between the price and the Add to Cart button and shows how close the
+  CURRENT CART TOTAL is to the free-shipping threshold.
+
+  Threshold comes from the theme's existing setting
+  (Theme settings → Free Shipping Bar → "Free Shipping on"), the same value
+  the cart drawer bar uses — it is not duplicated or hard-coded in JS.
+
+  First paint is rendered here from `cart.total_price`; afterwards
+  assets/free-shipping-progress.js keeps it in sync with the theme's existing
+  cart events (no page reload, no second cart state).
+
+  Accepts:
+  - block: {Object} the 'free_shipping_progress' block
+  - section_id: {String}
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign b = block.settings
+
+  # Reuse the store's existing free-shipping threshold (entered as a plain amount).
+  assign threshold_cents = settings.free_shipping_value | plus: 0.0 | times: 100 | round
+
+  # What the progress is measured against.
+  #   product (default) — the selected variant's price, so the message reads
+  #                       "This product is X away from" / "This product qualifies for"
+  #                       and never claims the reward is unlocked before adding to cart.
+  #   cart              — the live cart total.
+  assign basis = b.progress_basis | default: 'product'
+  if basis == 'cart'
+    assign base_amount = cart.total_price
+  else
+    assign base_amount = product.selected_or_first_available_variant.price
+  endif
+  assign base_amount = base_amount | plus: 0
+
+  assign remaining = threshold_cents | minus: base_amount
+  if remaining < 0
+    assign remaining = 0
+  endif
+
+  assign percent = 0
+  if threshold_cents > 0
+    assign percent = base_amount | times: 100.0 | divided_by: threshold_cents
+    if percent > 100
+      assign percent = 100
+    endif
+  endif
+
+  # Fine print line 2 carries the promo code, highlighted.
+  assign note_code_html = ''
+  if b.note_code != blank
+    if b.promo_code != blank
+      assign code_value = b.promo_code | escape
+      assign code_span = '<button type="button" class="kfsp__code" data-promo-code="' | append: code_value
+      assign code_span = code_span | append: '" data-copied-label="Copied!" data-select-label="Copied!" aria-label="Copy promo code ' | append: code_value
+      assign code_span = code_span | append: '">' | append: code_value | append: '</button>'
+      assign note_code_html = b.note_code | escape | replace: '[code]', code_span
+    else
+      assign note_code_html = b.note_code | escape
+    endif
+  endif
+
+  assign remaining_money = remaining | money
+  if remaining > 0
+    assign label_text = b.text_away | replace: '${addMoreForFreeShip}', remaining_money
+  else
+    assign label_text = b.text_complete
+  endif
+-%}
+
+{%- comment -%}
+  Guard: without a usable threshold (0, blank or non-numeric) the maths is
+  meaningless, so render nothing rather than a broken 0-width bar. A merchant
+  who adds this block should always see it, so it is deliberately NOT gated on
+  settings.enable_shipping_bar (that toggle governs the cart-drawer bar) —
+  remove or hide the block in the theme editor to turn it off.
+
+  The comment below makes a skipped render diagnosable from View Source.
+{%- endcomment -%}
+{%- if threshold_cents <= 0 -%}
+  <!-- free-shipping progress skipped: set Theme settings → Free Shipping Bar → "Free Shipping on" to an amount such as 100 (currently {{ settings.free_shipping_value | default: 'empty' }}) -->
+{%- endif -%}
+{%- if threshold_cents > 0 -%}
+  {%- assign kfsp_id = 'kfsp-' | append: section_id -%}
+
+  <style>
+    #{{ kfsp_id }} {
+      --kfsp-fill: {{ b.color_bar | default: '#F45901' }};
+      --kfsp-track: {{ b.color_track | default: '#D9D0C9' }};
+      --kfsp-reward-bg: {{ b.color_reward_bg | default: '#FFBC38' }};
+      --kfsp-text: {{ b.color_text | default: '#341300' }};
+      --kfsp-note: {{ b.color_note | default: '#563A2A' }};
+
+      display: block;
+      margin: 24px 0 20px;
+      font-family: 'Roobert TRIAL', var(--font-body-family), sans-serif;
+    }
+
+    /* Row 1 — message + reward pill, optically centred on each other */
+    #{{ kfsp_id }} .kfsp__row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #{{ kfsp_id }} .kfsp__label {
+      flex: 1 1 auto;
+      min-width: 0;
+      margin: 0;
+      color: var(--kfsp-text);
+      font-size: 20px;
+      font-weight: 650;
+      line-height: 1.25;
+    }
+    #{{ kfsp_id }} .kfsp__reward {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      background: var(--kfsp-reward-bg);
+      color: var(--kfsp-text);
+      border-radius: 999px;
+      padding: 2px 16px;
+      font-size: 20px;
+      font-weight: 650;
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+
+    /* Row 2 — track + fill. The lock badge is taller than the track, so the
+       track must not clip it. */
+    #{{ kfsp_id }} .kfsp__track {
+      position: relative;
+      margin-top: 8px;
+      width: calc(100% - 24px);
+      height: 10px;
+      border-radius: 999px;
+      background: var(--kfsp-track);
+    }
+    #{{ kfsp_id }} .kfsp__fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      max-width: 100%;
+      border-radius: 999px;
+      background: var(--kfsp-fill);
+      transition: width 0.35s ease;
+    }
+    /* Amount-remaining marker riding the fill's leading edge.
+
+       The marker is pinned to the RIGHT edge of a spacer that is as wide as
+       the fill but never narrower than its own content (min-width: max-content).
+       So the badge tracks the fill boundary at normal progress and, near 0%,
+       the spacer stops shrinking and the badge rests flush with the start of
+       the track instead of spilling out of it. Pure CSS -- no width
+       measurement, so it stays correct for any amount or currency. */
+    #{{ kfsp_id }} .kfsp__mwrap {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      /* the badge is IN FLOW here, so max-content resolves to its real width */
+      display: flex;
+      justify-content: flex-end;
+      min-width: max-content;
+      max-width: 100%;
+      pointer-events: none;
+      transition: width 0.35s ease;
+    }
+    #{{ kfsp_id }} .kfsp__marker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      min-width: 45px;
+      height: 24px;
+      padding: 0 11px;
+      border-radius: 999px;
+      background: var(--kfsp-fill);
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    /* nothing left to go, so no amount to show */
+    #{{ kfsp_id }}.kfsp--complete .kfsp__mwrap { display: none; }
+
+    #{{ kfsp_id }} .kfsp__lock {
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--kfsp-fill);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #{{ kfsp_id }} .kfsp__lock svg {
+      display: block;
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Row 3 — fine print */
+    #{{ kfsp_id }} .kfsp__note {
+      margin: 9px 0 0;
+      color: var(--kfsp-note);
+      font-size: 12px;
+      font-weight: 650;
+      line-height: 1.25;
+      letter-spacing: 0.24px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    #{{ kfsp_id }} .kfsp__code { color: var(--kfsp-fill); }
+
+    /* The promo code is a one-click control: clicking (or Enter/Space, since it
+       is a real button) copies it and shows a short confirmation. user-select:
+       all means a single click also selects the whole code, so it can always be
+       copied by hand if the clipboard is unavailable. Reset to be visually
+       identical to the surrounding copy. */
+    #{{ kfsp_id }} [data-promo-code] {
+      appearance: none;
+      -webkit-appearance: none;
+      display: inline;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      text-align: inherit;
+      cursor: pointer;
+      -webkit-user-select: all;
+      user-select: all;
+    }
+    #{{ kfsp_id }} [data-promo-code]:hover,
+    #{{ kfsp_id }} [data-promo-code]:focus-visible {
+      text-decoration: underline;
+    }
+    #{{ kfsp_id }} [data-promo-code]::after {
+      content: attr(data-copied-label);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 6px);
+      transform: translateX(-50%);
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--kfsp-text);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 650;
+      line-height: 1.3;
+      letter-spacing: normal;
+      text-transform: none;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s ease;
+    }
+    #{{ kfsp_id }} [data-promo-code].is-copied::after { opacity: 1; }
+
+
+    /* Mobile — from the mobile Figma frame, not a scaled desktop */
+    @media screen and (max-width: 749px) {
+      #{{ kfsp_id }} { margin: 12px 0 10px; }
+      #{{ kfsp_id }} .kfsp__label { font-size: 16px; }
+      /* 16px x 1.25 line + 3.5px padding = the 27px pill height in Figma */
+      #{{ kfsp_id }} .kfsp__reward { font-size: 16px; padding: 3.5px 12px; }
+      #{{ kfsp_id }} .kfsp__track {
+        margin-top: 7px;
+        width: calc(100% - 15px);
+        height: 5px;
+      }
+      /* Figma's mobile bar carries no amount marker */
+      #{{ kfsp_id }} .kfsp__mwrap { display: none; }
+      #{{ kfsp_id }} .kfsp__lock { width: 15px; height: 15px; }
+      #{{ kfsp_id }} .kfsp__lock svg { width: 8px; height: 8px; }
+      #{{ kfsp_id }} .kfsp__note {
+        margin-top: 10px;
+        font-size: 10px;
+        letter-spacing: 0.2px;
+      }
+      /* two centred lines instead of one, so the " - " joiner is dropped */
+      #{{ kfsp_id }} .kfsp__note-part { display: block; }
+      #{{ kfsp_id }} .kfsp__note-sep { display: none; }
+    }
+  </style>
+
+  <free-shipping-progress
+    id="{{ kfsp_id }}"
+    class="kfsp{% if remaining == 0 %} kfsp--complete{% endif %}"
+    data-threshold="{{ threshold_cents }}"
+    data-basis="{{ basis }}"
+    data-section-id="{{ section_id }}"
+    data-money-format="{{ shop.money_format | strip_html | escape }}"
+    data-text-away="{{ b.text_away | escape }}"
+    data-text-complete="{{ b.text_complete | escape }}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="kfsp__row">
+      {%- if b.text_away != blank or b.text_complete != blank -%}
+        <p class="kfsp__label" data-kfsp-label>{{ label_text }}</p>
+      {%- endif -%}
+      {%- if b.reward_label != blank -%}
+        <span class="kfsp__reward">{{ b.reward_label }}</span>
+      {%- endif -%}
+    </div>
+
+    <div
+      class="kfsp__track"
+      data-kfsp-track
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ percent | round }}"
+      aria-label="{{ b.text_complete | escape }}"
+    >
+      <span class="kfsp__fill" data-kfsp-fill style="width: {{ percent | round: 2 }}%;"></span>
+      <span class="kfsp__mwrap" data-kfsp-mwrap aria-hidden="true" style="width: {{ percent | round: 2 }}%;">
+        <span class="kfsp__marker" data-kfsp-marker>{{ remaining_money }}</span>
+      </span>
+      <span class="kfsp__lock" aria-hidden="true">
+        <svg viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.1 5V3.4a2.9 2.9 0 1 1 5.8 0V5" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round"/>
+          <rect x="0.9" y="5" width="8.2" height="6.2" rx="1.6" fill="#FFFFFF"/>
+        </svg>
+      </span>
+    </div>
+
+    {%- if b.note != blank or note_code_html != blank -%}
+      <p class="kfsp__note">
+        {%- if b.note != blank -%}<span class="kfsp__note-part">{{ b.note }}</span>{%- endif -%}
+        {%- if b.note != blank and note_code_html != blank -%}<span class="kfsp__note-sep"> - </span>{%- endif -%}
+        {%- if note_code_html != blank -%}<span class="kfsp__note-part">{{ note_code_html }}</span>{%- endif -%}
+      </p>
+    {%- endif -%}
+  </free-shipping-progress>
+
+  <script src="{{ 'promo-code.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

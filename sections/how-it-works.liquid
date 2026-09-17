@@ -1,0 +1,559 @@
+{% comment %}
+  ============================================================
+  Section: How It Works (3-Step Referral Flow)
+  ------------------------------------------------------------
+  Three-step section matching Figma design:
+    • Cream wave decoration at top edge
+    • Soft-gold background (#FFDFA8)
+    • Centered header (342px max): title + subtitle
+    • 3 large cream cards (430px × 373px), each with:
+        - Numbered badge floating above (cream w/ chocolate border)
+        - Orange icon block
+        - Uppercase title + body copy
+    • No CTA buttons (different from Three-Steps-to-Savings variant)
+
+  Cards are managed as section blocks. Numbers auto-increment.
+  ============================================================
+{% endcomment %}
+<link rel="preload" href="{{ 'custom.css' | asset_url }}" as="style">
+
+{%- liquid
+  assign s = section.settings
+  assign sec_id = 'kidsy-howitworks-' | append: section.id
+-%}
+
+<style>
+  #{{ sec_id }} {
+    --bg:        {{ s.color_bg        | default: '#FFDFA8' }};
+    --card-bg:   {{ s.color_card      | default: '#FFF4E1' }};
+    --badge-brd: {{ s.color_badge_brd | default: 'rgba(52,19,0,0.19)' }};
+    --text:      {{ s.color_text      | default: '#341300' }};
+    --accent:    {{ s.color_accent    | default: '#F45901' }};
+    --wave:      {{ s.color_wave      | default: '#FFFBF3' }};
+  }
+
+  #{{ sec_id }} {
+    position: relative;
+    background: var(--bg);
+    font-family: "Roobert TRIAL", sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+  }
+
+
+  #{{ sec_id }} img { display: block; max-width: 100%; }
+
+
+
+  /* ============================================================
+     INNER WRAPPER
+     ============================================================ */
+  #{{ sec_id }} .kw__body {
+    padding: {{ s.padding_top | default: 60 }}px 0px {{ s.padding_bottom | default: 60 }}px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+  }
+
+  /* Header */
+  #{{ sec_id }} .kw__header {
+    width: 342px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    text-align: center;
+  }
+  #{{ sec_id }} .kw__title {
+    margin: 0;
+    color: var(--text);
+    font-size: 32px;
+    font-weight: 600;
+    text-transform: capitalize;
+    line-height: 1.1;
+  }
+  #{{ sec_id }} .kw__subtitle {
+    margin: 0;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.75;
+    text-transform: capitalize;
+  }
+
+  /* ============================================================
+     CARD GRID — 3 columns, 25px gap
+     ============================================================ */
+  #{{ sec_id }} .kw__grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+
+  #{{ sec_id }} .kw__card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--card-bg);
+    border-radius: 12px;
+ padding: 20px 32px;
+    min-height: 373px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    text-align: center;
+  }
+
+  /* Full-card clickable link */
+  #{{ sec_id }} .kw__card-link {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: 12px;
+    pointer-events: auto;
+    font-size: 0;
+    line-height: 0;
+    color: transparent;
+    text-decoration: none;
+    text-indent: -9999px;
+    overflow: hidden;
+  }
+  #{{ sec_id }} .kw__card--link {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  #{{ sec_id }} .kw__card--link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(52,19,0,0.12);
+  }
+
+  /* Numbered badge — cream circle with subtle chocolate border, floats above */
+  #{{ sec_id }} .kw__badge {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--badge-brd);
+    color: #000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+    z-index: 3;
+  }
+
+  /* Icon block — 80px orange rounded square */
+  #{{ sec_id }} .kw__icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  #{{ sec_id }} .kw__icon svg,
+  #{{ sec_id }} .kw__icon img {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Card text block */
+  #{{ sec_id }} .kw__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    color: var(--text);
+    width: 100%;
+        min-width: 386px;
+  }
+  #{{ sec_id }} .kw__step-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.36px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: var(--text);
+
+  }
+  #{{ sec_id }} .kw__step-desc {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    text-transform: capitalize;
+    max-width: 100%;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 1100px) {
+    #{{ sec_id }} .kw__body { padding: 56px 0; }
+    #{{ sec_id }} .kw__grid { gap: 20px; }
+    #{{ sec_id }} .kw__card { padding: 20px 24px; }
+  }
+
+  @media (max-width: 900px) {
+    #{{ sec_id }} .kw__grid {
+      grid-template-columns: 1fr;
+      max-width: 480px;
+      margin: 0 auto;
+      gap: 40px;
+    }
+      #{{ sec_id }}  .kw__text {
+    gap: 12px;
+    min-width:auto;
+}
+    #{{ sec_id }} .kw__card { min-height: auto; padding: 28px 24px; }
+    #{{ sec_id }} .kw__wave,
+    #{{ sec_id }} .kw__wave svg { height: 70px; }
+  }
+
+  @media (max-width: 768px) {
+    #{{ sec_id }} .kw__body { padding: 40px 0; gap: 40px; }
+    #{{ sec_id }} .page-width{
+padding:0 16px;
+}
+    #{{ sec_id }} .kw__title { font-size: 24px;
+font-style: normal;
+font-weight: 650;
+line-height: normal;
+text-transform: capitalize; }
+    #{{ sec_id }} .kw__subtitle { font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal; }
+    #{{ sec_id }} .kw__grid { gap: 32px; }
+    #{{ sec_id }} .kw__card { padding: 48px 16px 32px 16px; gap: 32px; }
+    #{{ sec_id }} .kw__icon { width: 56px; height: 56px; }
+    #{{ sec_id }} .kw__icon svg,
+    #{{ sec_id }} .kw__icon img { width: 32px; height: 32px; }
+       #{{ sec_id }}  .kw__step-title {
+  font-size: 16px;
+font-style: normal;
+font-weight: 650;
+line-height: normal;
+letter-spacing: 0.32px;
+text-transform: uppercase;
+}
+    #{{ sec_id }}  .kw__text {
+    gap: 12px;
+    min-width:auto;
+}
+    #{{ sec_id }} .kw__step-desc { font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: capitalize; }
+    #{{ sec_id }} .kw__badge { width: 42px; height: 42px; top: -21px; font-size: 20px; }
+    #{{ sec_id }} .kw__wave,
+    #{{ sec_id }} .kw__wave svg { height: 50px; }
+  }
+</style>
+
+<section
+  id="{{ sec_id }}"
+  class="kidsy-howitworks"
+  aria-labelledby="{{ sec_id }}-title">
+
+<div class="page-width">
+  <div class="kw__body">
+
+    {%- comment -%} Header {%- endcomment -%}
+    {%- if s.title != blank or s.subtitle != blank -%}
+      <header class="kw__header">
+        {%- if s.title != blank -%}
+          <h2 id="{{ sec_id }}-title" class="kw__title">{{ s.title }}</h2>
+        {%- endif -%}
+        {%- if s.subtitle != blank -%}
+          <p class="kw__subtitle">{{ s.subtitle }}</p>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- comment -%} Step cards (managed via blocks) {%- endcomment -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="kw__grid" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            {%- assign b = block.settings -%}
+            {%- assign step_num = forloop.index -%}
+            <article class="kw__card{% if b.link != blank %} kw__card--link{% endif %}" role="listitem" {{ block.shopify_attributes }}>
+
+              {%- if b.link != blank -%}
+                <a class="kw__card-link" href="{{ b.link }}" aria-label="{{ b.title | escape }}">&nbsp;</a>
+              {%- endif -%}
+
+              {%- if s.show_numbers -%}
+                <span class="kw__badge" aria-label="Step {{ step_num }}">{{ step_num }}</span>
+              {%- endif -%}
+
+              <div class="kw__icon">
+                {%- if b.icon_image != blank -%}
+                  <img src="{{ b.icon_image | image_url: width: 96 }}" alt="" width="48" height="48" loading="lazy">
+                {%- else -%}
+                  {%- case b.icon_preset -%}
+
+                    {%- when 'gift' -%}
+                      {%- comment -%} Get your link — gift box {%- endcomment -%}
+                      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="6" y="18" width="36" height="24" rx="2" stroke="currentColor" stroke-width="2.4"/>
+                        <rect x="4" y="12" width="40" height="8" rx="1" stroke="currentColor" stroke-width="2.4"/>
+                        <line x1="24" y1="12" x2="24" y2="42" stroke="currentColor" stroke-width="2.4"/>
+                        <path d="M24 12c-4-6-10-6-10-2s4 2 10 2zM24 12c4-6 10-6 10-2s-4 2-10 2z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+                      </svg>
+
+                    {%- when 'user_group' -%}
+                      {%- comment -%} Share with a friend — group of users {%- endcomment -%}
+                      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="24" cy="18" r="6" stroke="currentColor" stroke-width="2.4"/>
+                        <path d="M12 38c0-6.6 5.4-12 12-12s12 5.4 12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                        <circle cx="10" cy="20" r="4" stroke="currentColor" stroke-width="2.2"/>
+                        <circle cx="38" cy="20" r="4" stroke="currentColor" stroke-width="2.2"/>
+                        <path d="M2 36c0-4.4 3.6-8 8-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                        <path d="M46 36c0-4.4-3.6-8-8-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                      </svg>
+
+                    {%- when 'check_badge' -%}
+                      {%- comment -%} Both save — checkmark in scalloped badge {%- endcomment -%}
+                      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M24 4l3.6 3 4.6-.7 1.6 4.4 4.4 1.6-.7 4.6 3 3.6-3 3.6.7 4.6-4.4 1.6-1.6 4.4-4.6-.7-3.6 3-3.6-3-4.6.7-1.6-4.4-4.4-1.6.7-4.6-3-3.6 3-3.6-.7-4.6 4.4-1.6 1.6-4.4 4.6.7L24 4z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+                        <path d="M16 24l6 6 12-12" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+
+                    {%- when 'qr_code' -%}
+                      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="6"  y="6"  width="14" height="14" stroke="currentColor" stroke-width="2.2"/>
+                        <rect x="28" y="6"  width="14" height="14" stroke="currentColor" stroke-width="2.2"/>
+                        <rect x="6"  y="28" width="14" height="14" stroke="currentColor" stroke-width="2.2"/>
+                        <rect x="11" y="11" width="4"  height="4"  fill="currentColor"/>
+                        <rect x="33" y="11" width="4"  height="4"  fill="currentColor"/>
+                        <rect x="11" y="33" width="4"  height="4"  fill="currentColor"/>
+                        <rect x="28" y="28" width="4"  height="4"  fill="currentColor"/>
+                        <rect x="38" y="28" width="4"  height="4"  fill="currentColor"/>
+                        <rect x="28" y="38" width="4"  height="4"  fill="currentColor"/>
+                        <rect x="38" y="38" width="4"  height="4"  fill="currentColor"/>
+                      </svg>
+
+                    {%- when 'send' -%}
+                      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M44 4L4 22l16 4 4 16L44 4z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+                        <line x1="20" y1="26" x2="44" y2="4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                      </svg>
+
+                    {%- when 'wallet' -%}
+                      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="4" y="10" width="40" height="30" rx="3" stroke="currentColor" stroke-width="2.4"/>
+                        <path d="M4 18h36a4 4 0 014 4v0a4 4 0 01-4 4H4" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+                        <circle cx="36" cy="22" r="2" fill="currentColor"/>
+                      </svg>
+
+                  {%- endcase -%}
+                {%- endif -%}
+              </div>
+
+              <div class="kw__text">
+                {%- if b.title != blank -%}
+                  <h3 class="kw__step-title">{{ b.title }}</h3>
+                {%- endif -%}
+                {%- if b.description != blank -%}
+                  <p class="kw__step-desc">{{ b.description }}</p>
+                {%- endif -%}
+              </div>
+
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How It Works (3-Step)",
+  "tag": "section",
+  "class": "section-kidsy-howitworks",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Heading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "How It Works"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Three steps. No fine print surprises."
+    },
+
+    {
+      "type": "header",
+      "content": "Step Numbering"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_numbers",
+      "label": "Show numbered badges",
+      "default": true,
+      "info": "Auto-numbered 1, 2, 3 based on card order"
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0, "max": 160, "step": 4, "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0, "max": 160, "step": 4, "unit": "px",
+      "default": 60
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Section background",
+      "default": "#FFDFA8"
+    },
+    {
+      "type": "color",
+      "id": "color_card",
+      "label": "Card background",
+      "default": "#FFF4E1"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text",
+      "default": "#341300"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Icon block (accent)",
+      "default": "#F45901"
+    },
+    {
+      "type": "color",
+      "id": "color_badge_brd",
+      "label": "Number badge border",
+      "default": "#574030"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "Get Your Link"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Sign in or sign up to claim your unique referral link — or add a QR code to your Apple or Google Wallet for in-person sharing."
+        },
+        {
+          "type": "select",
+          "id": "icon_preset",
+          "label": "Icon preset",
+          "options": [
+            { "value": "gift",        "label": "Gift (Get your link)" },
+            { "value": "user_group",  "label": "User group (Share with friend)" },
+            { "value": "check_badge", "label": "Check badge (Both save)" },
+            { "value": "qr_code",     "label": "QR code" },
+            { "value": "send",        "label": "Send / Paper plane" },
+            { "value": "wallet",      "label": "Wallet" }
+          ],
+          "default": "gift"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Custom icon (optional)",
+          "info": "Overrides the preset. White-on-transparent works best."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card link",
+          "info": "Optional. Makes the whole card clickable."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How It Works (3-Step)",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Get Your Link",
+            "description": "Sign in or sign up to claim your unique referral link — or add a QR code to your Apple or Google Wallet for in-person sharing.",
+            "icon_preset": "gift"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Share With a Parent Friend",
+            "description": "Send your link via text, email, or scan your QR code in person — at the playground, playgroup, pediatrician's waiting room, wherever parents meet.",
+            "icon_preset": "user_group"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Both of You Save",
+            "description": "Your friend gets $15 off their first order. Once they purchase, your store credit is automatically added to your Kidsy account — no waiting, no forms.",
+            "icon_preset": "check_badge"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,381 @@
+{% style %}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } @media (max-width: 768px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } } .js-category-image:not([src]) { opacity: 0; }
+{% endstyle %}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="subcollection-carousel-wrapper page-width section-{{ section.id }}-padding">
+    {%- unless section.settings.title == blank -%}
+      <div class="title-wrapper {% if section.settings.cta_label != blank %}header-with-CTA{% endif %}">
+        <div class="section-header-content">
+          <h3 class="section--title h3">
+            {{ section.settings.title | escape }}
+          </h3>
+          {% if section.settings.subtitle != blank %}
+            <p class="section-description h5">
+              {{ section.settings.subtitle }}
+            </p>
+          {% endif %}
+        </div>
+        <div class="subcollection-swiper-navigation swiper-navigation">
+          <div class="navigation-arrows">
+            <div class="swiper-arrow swiper-button-prev">{{ 'left-arrow.svg' | inline_asset_content }}</div>
+            <div class="swiper-arrow swiper-button-next">{{ 'right-arrow.svg' | inline_asset_content }}</div>
+          </div>
+        </div>
+      </div>
+    {%- endunless -%}
+    
+    <div class="subcollection-wrapper">
+      <div class="subcollection-swiper swiper">
+        <div class="swiper-wrapper">
+          {%- comment -%} Find the Category filter and get its values {%- endcomment -%}
+          {%- assign category_filter = null -%}
+          {%- for filter in collection.filters -%}
+            {%- assign param_lower = filter.param_name | downcase -%}
+            {%- if filter.label == 'Category' or param_lower contains 'category' -%}
+              {%- assign category_filter = filter -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if category_filter and category_filter.values.size > 0 -%}
+            {%- for filter_value in category_filter.values -%}
+              {%- comment -%} Skip if no products available for this filter value {%- endcomment -%}
+              {%- if filter_value.count > 0 -%}
+                {%- capture filter_url -%}{{ collection.url }}?{{ category_filter.param_name }}={{ filter_value.value | url_param_escape }}{%- endcapture -%}
+                <div
+                  class="swiper-slide color-{{ section.settings.card_color_scheme }} gradient"
+                  data-filter-url="{{ filter_url }}"
+                >
+                  <a
+                    href="{{ filter_url }}"
+                    class="collection-card"
+                  >
+                    <div class="card--image">
+                      <img
+                        class="card--image-img js-category-image"
+                        alt="{{ filter_value.label | escape }}"
+                        loading="lazy"
+                        width=""
+                        height=""
+                      >
+                    </div>
+                    <h6 class="card--title h6">{{ filter_value.label }}</h6>
+                  </a>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- comment -%} Fallback: Show first few products if no category filter found {%- endcomment -%}
+            {%- for product in collection.products limit: 10 -%}
+              {%- if product.featured_image -%}
+                <div class="swiper-slide color-{{ section.settings.card_color_scheme }} gradient">
+                  <a href="{{ product.url }}" class="collection-card">
+                    <div class="card--image">
+                      {% render 'custom-image', image: product.featured_image, alt: product.title, class: 'card--image-img' %}
+                    </div>
+                    <h6 class="card--title h6">{{ product.title }}</h6>
+                  </a>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    var sectionEl = document.querySelector('#shopify-section-{{ section.id }}');
+    if (!sectionEl) return;
+
+    // Initialize Swiper
+    var swiperEl = sectionEl.querySelector('.subcollection-swiper');
+    var prevEl = sectionEl.querySelector('.swiper-button-prev');
+    var nextEl = sectionEl.querySelector('.swiper-button-next');
+
+    var swiper = new Swiper(swiperEl, {
+      loop: true,
+      slidesPerView: {{ section.settings.mobile_card }},
+      slidesPerGroup: 2,
+      spaceBetween: 10,
+      navigation: {
+        prevEl: prevEl || null,
+        nextEl: nextEl || null,
+      },
+      breakpoints: {
+        750: {
+          slidesPerView: 3,
+          slidesPerGroup: 2,
+          spaceBetween: 20,
+        },
+        992: {
+          slidesPerView: {{ section.settings.desktop_card | minus: 1 }},
+          slidesPerGroup: 4,
+        },
+        1200: {
+          slidesPerView: {{ section.settings.desktop_card }},
+          slidesPerGroup: 4,
+        },
+      },
+    });
+    var PRODUCT_GRID_SECTION_ID = 'main-collection-product-grid';
+
+    /* ------------------------------------------------------------------
+       Category thumbnails - lazy, throttled and cached.
+
+       Previously every slide fetched the full product-grid section as soon
+       as the page loaded. On a collection with ~100 category slides that is
+       ~100 requests of roughly 1MB each on every single page view.
+       Cloudflare read that burst as bot traffic and began returning 429
+       challenges, which also broke the collection's continuous scroll: a
+       fetch() cannot solve a JS challenge, so pagination died silently.
+
+       Now only slides actually visible inside the carousel are fetched, at
+       most 2 at a time, results are cached for the session, and everything
+       stops the moment a 429 is seen.
+       ------------------------------------------------------------------ */
+    var MAX_CONCURRENT = 2;
+    var CACHE_PREFIX = 'kidsy:catimg:';
+    var active = 0;
+    var queue = [];
+    var inFlight = {};
+    var halted = false;
+
+    function cacheGet(key) {
+      try { return sessionStorage.getItem(CACHE_PREFIX + key); } catch (e) { return null; }
+    }
+
+    function cacheSet(key, value) {
+      try { sessionStorage.setItem(CACHE_PREFIX + key, value); } catch (e) {}
+    }
+
+    function applyImage(slide, imgEl, src, altAttr) {
+      imgEl.src = src;
+      var titleEl = slide.querySelector('.card--title');
+      var alt = altAttr || (titleEl ? titleEl.textContent.trim() : null);
+      if (alt) imgEl.alt = alt;
+    }
+
+    function pump() {
+      while (!halted && active < MAX_CONCURRENT && queue.length) {
+        var job = queue.shift();
+        active++;
+        job()
+          .catch(function () {})
+          .then(function () {
+            active--;
+            pump();
+          });
+      }
+    }
+
+    function fetchThumb(slide, imgEl, baseUrl) {
+      return function () {
+        var cached = cacheGet(baseUrl);
+        if (cached) {
+          applyImage(slide, imgEl, cached);
+          return Promise.resolve();
+        }
+        if (inFlight[baseUrl]) return Promise.resolve();
+        inFlight[baseUrl] = true;
+
+        var url = baseUrl + (baseUrl.indexOf('?') === -1 ? '?' : '&') + 'section_id=' + PRODUCT_GRID_SECTION_ID;
+
+        return fetch(url)
+          .then(function (res) {
+            if (res.status === 429) {
+              halted = true;
+              queue.length = 0;
+              throw new Error('rate limited, stopping category image prefetch');
+            }
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.text();
+          })
+          .then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var productImg =
+              doc.querySelector('[data-product-id] img') ||
+              doc.querySelector('[data-product-card] img') ||
+              doc.querySelector('.product-card img') ||
+              doc.querySelector('.card__media img') ||
+              doc.querySelector('.grid-product__image') ||
+              doc.querySelector('img');
+
+            if (!productImg) return;
+
+            var src = productImg.getAttribute('src') || productImg.dataset.src || null;
+            if (!src) return;
+
+            cacheSet(baseUrl, src);
+            applyImage(slide, imgEl, src, productImg.getAttribute('alt'));
+          })
+          .catch(function (err) {
+            console.warn('Failed to load category image for', baseUrl, err);
+          })
+          .then(function () {
+            delete inFlight[baseUrl];
+          });
+      };
+    }
+
+    function enqueueSlide(slide) {
+      var baseUrl = slide.getAttribute('data-filter-url');
+      if (!baseUrl) return;
+
+      var imgEl = slide.querySelector('.js-category-image');
+      if (!imgEl || imgEl.getAttribute('src')) return;
+
+      var cached = cacheGet(baseUrl);
+      if (cached) {
+        applyImage(slide, imgEl, cached);
+        return;
+      }
+
+      queue.push(fetchThumb(slide, imgEl, baseUrl));
+      pump();
+    }
+
+    function currentSlides() {
+      return sectionEl.querySelectorAll('.swiper-slide[data-filter-url]');
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            io.unobserve(entry.target);
+            enqueueSlide(entry.target);
+          });
+        },
+        { root: swiperEl, rootMargin: '150px' }
+      );
+
+      Array.prototype.forEach.call(currentSlides(), function (slide) {
+        io.observe(slide);
+      });
+
+      // Loop mode clones slides, and navigation reveals new ones.
+      if (swiper && typeof swiper.on === 'function') {
+        swiper.on('slideChange', function () {
+          Array.prototype.forEach.call(currentSlides(), function (slide) {
+            var img = slide.querySelector('.js-category-image');
+            if (img && !img.getAttribute('src')) io.observe(slide);
+          });
+        });
+      }
+    } else {
+      // No IntersectionObserver support: load roughly one screenful.
+      Array.prototype.slice.call(currentSlides(), 0, 10).forEach(enqueueSlide);
+    }
+  });
+</script> 
+
+
+{% schema %}
+  {
+    "name": "Subcollection Carousel",
+    "class": "subcollection--section",
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "Color Scheme"
+      },
+      {
+        "type": "color_scheme",
+        "id": "card_color_scheme",
+        "label": "Card Color Scheme"
+      },
+      {
+        "type": "header",
+        "content": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Subcollection"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "subtitle",
+        "label": "Subtitle"
+      },
+      {
+        "type": "header",
+        "content": "Collection Card"
+      },
+      {
+        "type": "range",
+        "id": "desktop_card",
+        "label": "Desktop card",
+        "min": 2,
+        "max": 7,
+        "step": 0.1,
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "mobile_card",
+        "label": "Mobile card",
+        "min": 1,
+        "max": 4,
+        "step": 0.1,
+        "default": 2
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Mobile"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Padding Top (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Padding Bottom (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      }
+    ],
+    "presets": [
+      {
+        "name": "Subcollection Carousel"
+      }
+    ]
+  }
+{% endschema %}

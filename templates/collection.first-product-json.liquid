@@ -1,0 +1,16 @@
+{% layout none %}
+
+{%- assign first_product = collection.products.first -%}
+
+{
+  "image": {% if first_product and first_product.featured_image %}
+    "{{ first_product.featured_image | img_url: '300x' }}"
+  {% else %}
+    null
+  {% endif %},
+  "product_url": {% if first_product %}
+    "{{ first_product.url }}"
+  {% else %}
+    null
+  {% endif %}
+}

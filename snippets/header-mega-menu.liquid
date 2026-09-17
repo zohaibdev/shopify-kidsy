@@ -1,0 +1,316 @@
+
+{% comment %}
+  Renders a custom megamenu for the header with 3-level support.
+
+  Usage:
+  {% render 'header-mega-menu' %}
+{% endcomment %}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+      <li>
+        {%- if link.links != blank -%}
+          <header-menu>
+            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
+              <summary
+                id="HeaderMenu-{{ link.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+                role="button"
+                aria-expanded="false"
+                aria-controls="MegaMenu-Content-{{ forloop.index }}"
+              >
+                <span
+                  {%- if link.child_active %}
+                    class="header__active-menu-item"
+                  {% endif %}
+                >
+                  {{- link.title | escape -}}
+                </span>
+                <span aria-hidden="true">
+                  {{- 'icon-caret.svg' | inline_asset_content -}}
+                </span>
+              </summary>
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                role="region"
+                aria-label="{{ link.title | escape }} menu"
+                tabindex="-1"
+              >
+                {%- comment -%} Check if this is a 3-level mega menu {%- endcomment -%}
+                {%- assign has_grandchildren = false -%}
+                {%- for childlink in link.links -%}
+                  {%- if childlink.links != blank -%}
+                    {%- assign has_grandchildren = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- comment -%} Check for simple mega menu block (Type 2) {%- endcomment -%}
+                {%- assign has_simple_block = false -%}
+                {%- assign simple_block = null -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'mega_menu_simple' -%}
+                    {%- assign block_title = block.settings.menu_item_title | handleize -%}
+                    {%- assign link_handle = link.title | handleize -%}
+                    {%- if block_title == link_handle -%}
+                      {%- assign has_simple_block = true -%}
+                      {%- assign simple_block = block -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- if has_simple_block -%}
+                  {%- comment -%} Type 2: Simple mega menu with child links + images {%- endcomment -%}
+                  <div class="page-width">
+                    <div class="custom-mega-menu">
+                      <div class="custom-mega-menu__wrapper">
+                        {%- comment -%} Left Sidebar - Child Links {%- endcomment -%}
+                        <div class="custom-mega-menu__sidebar custom-mega-menu__sidebar--left">
+                          <div class="custom-mega-menu__categories">
+                            {%- for childlink in link.links -%}
+                              <a 
+                                href="{{ childlink.url }}" 
+                                class="custom-mega-menu__category-link custom-mega-menu__category-link--simple{% if childlink.current %} current{% endif %}"
+                              >
+                                {{ childlink.title | escape }}
+                              </a>
+                            {%- endfor -%}
+                          </div>
+                        </div>
+
+                        {%- comment -%} Right Side - Images from Block {%- endcomment -%}
+                        <div class="custom-mega-menu__sidebar custom-mega-menu__sidebar--right block__2-image">
+                          <div class="custom-mega-menu__actions">
+                            {%- for i in (1..4) -%}
+                              {%- assign image_setting = 'image_' | append: i -%}
+                              {%- assign image = simple_block.settings[image_setting] -%}
+                              {%- assign link_setting = 'link_' | append: i -%}
+                              {%- assign image_link = simple_block.settings[link_setting] -%}
+                              {%- assign title_setting = 'title_' | append: i -%}
+                              {%- assign image_title = simple_block.settings[title_setting] -%}
+
+                              {%- if image != blank -%}
+                                <a href="{{ image_link }}" class="custom-mega-menu__action-item" {% if image_title != blank %}aria-label="{{ image_title }}"{% endif %}>
+                                  <div class="custom-mega-menu__action-icon" aria-hidden="true">
+                                   {% render 'custom-image', image: image, alt: image_title %}
+                                  </div>
+                                  {%- if image_title != blank -%}
+                                    <h4 class="custom-mega-menu__action-title">{{ image_title }}</h4>
+                                  {%- endif -%}
+                                </a>
+                              {%- endif -%}
+                            {%- endfor -%}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {%- elsif has_grandchildren -%}
+                  {%- comment -%} Type 1: Custom 3-level mega menu layout {%- endcomment -%}
+                  <div class="page-width">
+                    <div class="custom-mega-menu" data-mega-menu-interactive>
+                    <div class="custom-mega-menu__wrapper">
+                      {%- comment -%} Left Sidebar - Child Categories {%- endcomment -%}
+                      <div class="custom-mega-menu__sidebar custom-mega-menu__sidebar--left">
+                        <div class="custom-mega-menu__categories">
+                          {%- assign first_child_index = null -%}
+                          
+                          {%- comment -%} Find first child link {%- endcomment -%}
+                          {%- for childlink in link.links -%}
+                            {%- if first_child_index == null -%}
+                              {%- assign first_child_index = forloop.index -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                          
+                          {%- comment -%} Show ALL child links {%- endcomment -%}
+                          {%- for childlink in link.links -%}
+                            {%- assign child_handle = childlink.handle | downcase -%}
+                            {%- assign is_all_categories = false -%}
+                            {%- if child_handle contains 'all-categories' or child_handle contains 'all-cat' or childlink.title contains 'All Cat' -%}
+                              {%- assign is_all_categories = true -%}
+                            {%- endif -%}
+                            
+                            <a 
+                              href="{{ childlink.url }}" 
+                              class="custom-mega-menu__category-link{% if forloop.index == first_child_index %} active{% endif %}{% if childlink.current %} current{% endif %}{% if is_all_categories %} all-categories-link{% endif %}{% if childlink.links == blank %} no-grandchildren{% endif %}"
+                              data-category-index="{{ forloop.index }}"
+                              data-category-handle="{{ childlink.handle }}"
+                              {% if is_all_categories %}data-show-all="true"{% endif %}
+                              {% if childlink.links == blank %}data-no-grandchildren="true"{% endif %}
+                              {% if childlink.current %}aria-current="page"{% endif %}
+                            >
+                              {{ childlink.title | escape }}
+                              {%- if childlink.links != blank -%}
+                                <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                  <path d="M1.5 1.5L6.5 6.5L1.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                              {%- endif -%}
+                            </a>
+                          {%- endfor -%}
+                        </div>
+                      </div>
+
+                      {%- comment -%} Main Content - Grandchild Links (separated by category) {%- endcomment -%}
+                      <div class="custom-mega-menu__main">
+                        {%- for childlink in link.links -%}
+                          {%- assign child_handle = childlink.handle | downcase -%}
+                          {%- assign is_all_categories = false -%}
+                          {%- if child_handle contains 'all-categories' or child_handle contains 'all-cat' or childlink.title contains 'All Cat' -%}
+                            {%- assign is_all_categories = true -%}
+                          {%- endif -%}
+                          
+                          {%- if childlink.links != blank -%}
+                            {%- if is_all_categories -%}
+                              {%- comment -%} Show all categories together {%- endcomment -%}
+                              <div 
+                                class="custom-mega-menu__content-section custom-mega-menu__content-section--all{% if forloop.index == first_child_index %} active{% endif %}" 
+                                data-category-content="{{ forloop.index }}"
+                                data-category-handle="{{ childlink.handle }}"
+                                data-show-all="true"
+                                role="region"
+                                aria-label="{{ childlink.title | escape }} subcategories"
+                              >
+                                <div class="custom-mega-menu__content-grid custom-mega-menu__content-grid--multi">
+                                  {%- for otherchild in link.links -%}
+                                    {%- if otherchild.links != blank -%}
+                                      {%- assign other_handle = otherchild.handle | downcase -%}
+                                      {%- unless other_handle contains 'all-categories' or other_handle contains 'all-cat' or otherchild.title contains 'All Cat' -%}
+                                        <div class="custom-mega-menu__column">
+                                          <ul class="custom-mega-menu__grandchild-list">
+                                            {%- for grandchildlink in otherchild.links -%}
+                                              <li>
+                                                <a
+                                                  href="{{ grandchildlink.url }}"
+                                                  class="custom-mega-menu__grandchild-link{% if grandchildlink.current %} active{% endif %}"
+                                                >
+                                                  {{ grandchildlink.title | escape }}
+                                                </a>
+                                              </li>
+                                            {%- endfor -%}
+                                          </ul>
+                                        </div>
+                                      {%- endunless -%}
+                                    {%- endif -%}
+                                  {%- endfor -%}
+                                </div>
+                              </div>
+                            {%- else -%}
+                              {%- comment -%} Show single category with grandchildren {%- endcomment -%}
+                              <div 
+                                class="custom-mega-menu__content-section{% if forloop.index == first_child_index %} active{% endif %}" 
+                                data-category-content="{{ forloop.index }}"
+                                data-category-handle="{{ childlink.handle }}"
+                                role="region"
+                                aria-label="{{ childlink.title | escape }} subcategories"
+                              >
+                                <div class="custom-mega-menu__content-grid">
+                                  <div class="custom-mega-menu__column">
+                                    
+                                    <ul class="custom-mega-menu__grandchild-list">
+                                      {%- for grandchildlink in childlink.links -%}
+                                        <li>
+                                          <a
+                                            href="{{ grandchildlink.url }}"
+                                            class="custom-mega-menu__grandchild-link{% if grandchildlink.current %} active{% endif %}"
+                                          >
+                                            {{ grandchildlink.title | escape }}
+                                          </a>
+                                        </li>
+                                      {%- endfor -%}
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            {%- endif -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+
+                      {%- comment -%} Right Sidebar - Featured Content from blocks {%- endcomment -%}
+                      {%- for block in section.blocks -%}
+                        {%- if block.type == 'mega_menu_sidebar' -%}
+                          {%- assign block_title = block.settings.menu_item_title | handleize -%}
+                          {%- assign link_handle = link.title | handleize -%}
+                          {%- if block_title == link_handle or block.settings.menu_item_title == blank -%}
+                            <div class="custom-mega-menu__sidebar custom-mega-menu__sidebar--right {{ block.type }}">
+                              <div class="custom-mega-menu__actions">
+                                {%- for i in (1..4) -%}
+                                  {%- assign icon_setting = 'icon_' | append: i -%}
+                                  {%- assign icon_image = block.settings[icon_setting] -%}
+                                  {%- assign icon_title_setting = 'icon_title_' | append: i -%}
+                                  {%- assign icon_title = block.settings[icon_title_setting] -%}
+                                  {%- assign icon_link_setting = 'icon_link_' | append: i -%}
+                                  {%- assign icon_link = block.settings[icon_link_setting] -%}
+
+                                  {%- if icon_image != blank or icon_title != blank -%}
+                                    <a href="{{ icon_link }}" class="custom-mega-menu__action-item" {% if icon_title != blank %}aria-label="{{ icon_title }}"{% endif %}>
+                                      {%- if icon_image != blank -%}
+                                        <div class="custom-mega-menu__action-icon" aria-hidden="true">
+                                          {% render 'custom-image', image: icon_image, alt: icon_title %}
+                                        </div>
+                                      {%- endif -%}
+                                      {%- if icon_title != blank -%}
+                                        <h4 class="custom-mega-menu__action-title">{{ icon_title }}</h4>
+                                      {%- endif -%}
+                                    </a>
+                                  {%- endif -%}
+                                {%- endfor -%}
+                              </div>
+                            </div>
+                            {%- break -%}
+                          {%- endif -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                  </div>
+                {%- else -%}
+                  {%- comment -%} Standard 2-level mega menu {%- endcomment -%}
+                  <ul
+                    class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
+                    role="list"
+                  >
+                    {%- for childlink in link.links -%}
+                      <li>
+                        <a
+                          id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                          href="{{ childlink.url }}"
+                          class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                          {% if childlink.current %}
+                            aria-current="page"
+                          {% endif %}
+                        >
+                          {{ childlink.title | escape }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </div>
+            </details>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}"
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            <span
+              {%- if link.current %}
+                class="header__active-menu-item"
+              {% endif %}
+            >
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+      {%- endfor -%}
+  </ul>
+</nav>

@@ -1,0 +1,162 @@
+{% style %}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } @media (max-width: 768px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } }
+{% endstyle %}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="breadcrumbs-wrapper page-width section-{{ section.id }}-padding">
+    {%- unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' -%}
+    {%- assign t = template | split: '.' | first -%}
+    {%- capture breadcrumb_separator -%}
+      <div class="svg-wrapper">
+        <svg width="5" height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.500838 8.5L4.5006 4.49958L0.5 0.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    {%- endcapture -%}
+
+    <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+      <ol class="breadcrumbs__list">
+        <li class="breadcrumbs__item">
+          <a class="breadcrumbs__link" href="/">Home</a>
+        </li>
+        {%- case t -%}
+          {%- when 'page' -%}
+            {{ breadcrumb_separator }}
+            <li class="breadcrumbs__item">
+              <a class="breadcrumbs__link" href="{{ page.url }}" aria-current="page">
+                {% if request.page_type == 'search' %}
+                  Search
+                {% else %}
+                  {{ page.title }}
+                {% endif %}
+              </a>
+            </li>
+          {%- when 'product' -%}
+            {%- if collection.url -%}
+              {{ breadcrumb_separator }}
+            <li class="breadcrumbs__item">
+                {{ collection.title | link_to: collection.url }}
+              </li>
+            {%- endif -%}
+            {{ breadcrumb_separator }}
+            <li class="breadcrumbs__item">
+              <a class="breadcrumbs__link" href="{{ product.url }}" aria-current="page">{{ product.title }}</a>
+            </li>
+          {%- when 'collection' and collection.handle -%}
+            {%- if current_tags -%}
+              {{ breadcrumb_separator }}
+              <li class="breadcrumbs__item">
+                {{ collection.title | link_to: collection.url }}
+              </li>
+              {{ breadcrumb_separator }}
+              <li class="breadcrumbs__item">
+                {%- capture tag_url -%}{{ collection.url }}/{{ current_tags | join: "+"}}{%- endcapture -%}
+                <a class="breadcrumbs__link" href="{{ tag_url }}" aria-current="page">{{ current_tags | join: " + "}}</a>
+              </li>
+            {%- else -%}
+              {{ breadcrumb_separator }}
+              <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="{{ collection.url }}" aria-current="page">{{ collection.title }}</a>
+              </li>
+            {%- endif -%}
+          {%- when 'blog' -%}
+            {%- if current_tags -%}
+              {{ breadcrumb_separator }}
+              <li class="breadcrumbs__item">
+                {{ blog.title | link_to: blog.url }}
+              </li>
+              {{ breadcrumb_separator }}
+              <li class="breadcrumbs__item">
+                {%- capture tag_url -%}{{blog.url}}/tagged/{{ current_tags | join: "+" }}{%- endcapture -%}
+                <a class="breadcrumbs__link" href="{{ tag_url }}" aria-current="page">{{ current_tags | join: " + " }}</a>
+              </li>
+            {%- else -%}
+              {{ breadcrumb_separator }}
+              <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="{{ blog.url }}" aria-current="page">{{ blog.title }}</a>
+              </li>
+            {%- endif -%}
+          {%- when 'article' -%}
+            {{ breadcrumb_separator }}
+            <li class="breadcrumbs__item">
+              {{ blog.title | link_to: blog.url }}
+            </li>
+            {{ breadcrumb_separator }}
+            <li class="breadcrumbs__item">
+              <a class="breadcrumbs__link" href="{{ article.url }}" aria-current="page">{{ article.title }}</a>
+            </li>
+          {%- else -%}
+            {{ breadcrumb_separator }}
+            <li class="breadcrumbs__item">
+              <a class="breadcrumbs__link" href="{{ request.path }}" aria-current="page">{{ page_title }}</a>
+            </li>
+        {%- endcase -%}
+      </ol>
+    </nav>
+    {%- endunless -%}
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Kidsy Breadcrumbs",
+    "class": "kidsy-breadcrumbs",
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "Color Scheme"
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Mobile"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Padding Top (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Padding Bottom (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      }
+    ],
+    "presets": [
+      {
+        "name": "Kidsy Breadcrumbs"
+      }
+    ]
+  }
+{% endschema %}

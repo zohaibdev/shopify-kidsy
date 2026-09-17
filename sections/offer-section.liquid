@@ -1,0 +1,210 @@
+<style>
+    .offer-popup { display: none; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1050; overflow: hidden; background-color: rgb(0 0 0 / 50%); opacity: 0; visibility: hidden; transition: opacity ease-in-out 0.25s; } .offer-popup.open { display: block; opacity: 1; visibility: visible; overflow-x: hidden; overflow-y: auto; } .offer-popup .offer-popup-box { border: 1px solid #000000; border-radius: 24px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 700px; width: 90%; padding: 38px 15px 50px; background: #fff; /* Ensure background is visible */ } .offer-popup-box .popup-close-btn { position: absolute; top: -30px; right: 15px; z-index: 3; } .offer-popup-wrapper { width: 100%; max-width: 458px; margin-inline: auto; } .offer-popup-wrapper .rating { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #000; letter-spacing: 0; font-weight: 400; justify-content: center; margin-bottom: 20px; } .offer-popup-wrapper .heading { font-family: "Poppins", sans-serif; font-size: 40px; color: #000000; text-align: center; font-weight: 700; letter-spacing: 0; line-height: 1.275; } .offer-popup-wrapper .popup-image { width: calc(100% + 34px) ; height: auto; margin-block: -47px -47px; margin-inline: -15px -19px; } .popup-icon-list { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; } .popup-icon-list .popup-icon-item { display: flex; align-items: center; gap: 8px; } .popup-icon-list .popup-icon-item span { border-bottom: 1px solid; color: #000; font-weight: 500; font-size: 16px; letter-spacing: 0; line-height: 1.1; padding-bottom: 5px; } .popup-btn-wrapper { text-align: center; margin-top: 20px; } .popup-btn-wrapper .btn { display: inline-flex; justify-content: center; align-items: center; max-width: 256px; border: 1px solid #000; height: 53px; background-color: #fff; color: #000; text-decoration: none; font-size: 20px; line-height: 1; letter-spacing: 0; font-weight: 600; text-transform: uppercase; border-radius: 50px; box-shadow: 4px 6px 0px 0px #000; margin-bottom: 6px; width: 100%; } @media (max-width:700px) { .offer-popup .offer-popup-box { padding: 15px; } .offer-popup-wrapper .rating { gap: 6px; font-size: 12px; margin-bottom: 8px; flex-wrap: wrap; } .offer-popup-wrapper .heading { font-size: 26px; line-height:1.1; } .offer-popup-wrapper .popup-image { width: calc(100% + 29px); margin-inline: -10px -19px; } .popup-icon-list .popup-icon-item span { font-size: 10px; } }
+</style>
+<div class="offer-popup">
+    <div class="offer-popup-box" style="background: {{ section.settings.bg_color }};">
+        <a href="#" class="popup-close-btn">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#fff"/>
+            </svg>
+        </a>
+        <div class="offer-popup-wrapper">
+            <div class="rating">
+                <div class="rating-svg">
+                    {% assign rating = section.settings.star_rating %}
+                    <div class="star-rating">
+                        {% for i in (1..5) %}
+                        {% if i <= rating %}
+                            <!-- Filled star -->
+                            <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24.8696 0H0V24.8696H24.8696V0Z" fill="#00B67A"/>
+                            <path d="M12.1749 16.5797L16.0608 15.5435L17.6151 20.4656L12.1749 16.5797ZM20.9829 10.3623H14.2473L12.1749 4.14493L10.1024 10.3623H3.62598L9.06619 14.2482L6.99373 20.4656L12.4339 16.5797L15.8017 14.2482L20.9829 10.3623Z" fill="white"/>
+                            </svg>
+
+                        {% else %}
+                            <!-- Unfilled star -->
+                            <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24.8696 0H0V24.8696H24.8696V0Z" fill="#E0E0E0"/>
+                            <path d="M12.1749 16.5797L16.0608 15.5435L17.6151 20.4656L12.1749 16.5797ZM20.9829 10.3623H14.2473L12.1749 4.14493L10.1024 10.3623H3.62598L9.06619 14.2482L6.99373 20.4656L12.4339 16.5797L15.8017 14.2482L20.9829 10.3623Z" fill="white"/>
+                            </svg>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="svg_text">{{ section.settings.ratign_text }}</div>
+            </div>
+            {% if section.settings.heading != blank %}
+                <div class="heading">{{ section.settings.heading }}</div>
+            {% endif %}
+            {%- if section.settings.image != blank -%}
+                <img
+                    srcset="
+                        {%- if section.settings.image.width >= 375 -%}{{ section.settings.image | image_url: width: 375 }} 375w,{%- endif -%}
+                        {%- if section.settings.image.width >= 750 -%}{{ section.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+                        {%- if section.settings.image.width >= 1100 -%}{{ section.settings.image | image_url: width: 1100 }} 1100w,{%- endif -%}
+                        {%- if section.settings.image.width >= 1500 -%}{{ section.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                        {%- if section.settings.image.width >= 1780 -%}{{ section.settings.image | image_url: width: 1780 }} 1780w,{%- endif -%}
+                        {%- if section.settings.image.width >= 2000 -%}{{ section.settings.image | image_url: width: 2000 }} 2000w,{%- endif -%}
+                        {%- if section.settings.image.width >= 3000 -%}{{ section.settings.image | image_url: width: 3000 }} 3000w,{%- endif -%}
+                        {%- if section.settings.image.width >= 3840 -%}{{ section.settings.image | image_url: width: 3840 }} 3840w,{%- endif -%}
+                        {{ section.settings.image | image_url }} {{ section.settings.image.width }}w"
+                    sizes="500"
+                    src="{{ section.settings.image | image_url: width: 150 }}"
+                    loading="lazy" class="popup-image"
+                    alt="{{ section.settings.heading | escape }}"
+                    width="{{ section.settings.image.width }}"
+                    height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"
+                    >
+            {%- endif -%}
+            <div class="popup-icon-list">
+                {%- if section.settings.logo_1 != blank or section.settings.logo_txt_1 != blank -%}
+                <div class="popup-icon-item">
+                    {%- if section.settings.logo_1 != blank -%}
+                        <img
+                            src="{{ section.settings.logo_1 | image_url }}"
+                            alt="{{ section.settings.logo_txt_1 | escape }}"
+                            loading="lazy"
+                            width="{{ section.settings.logo_1.width }}"
+                            height="{{ section.settings.logo_1.width | divided_by: section.settings.logo_1.aspect_ratio }}" />
+                    {%- endif -%}
+                    <span>{{ section.settings.logo_txt_1 }}</span>
+                </div>
+                {%- endif -%}
+                {%- if section.settings.logo_2 != blank or section.settings.logo_txt_2 != blank -%}
+                <div class="popup-icon-item">
+                    {%- if section.settings.logo_2 != blank -%}
+                        <img
+                            src="{{ section.settings.logo_2 | image_url }}"
+                            alt="{{ section.settings.logo_txt_2 | escape }}"
+                            loading="lazy"
+                            width="{{ section.settings.logo_2.width }}"
+                            height="{{ section.settings.logo_2.width | divided_by: section.settings.logo_2.aspect_ratio }}" />
+                    {%- endif -%}
+                    <span>{{ section.settings.logo_txt_2 }}</span>
+                </div>
+                {%- endif -%}
+                {%- if section.settings.logo_3 != blank or section.settings.logo_txt_3 != blank -%}
+                <div class="popup-icon-item">
+                    {%- if section.settings.logo_3 != blank -%}
+                        <img
+                            src="{{ section.settings.logo_3 | image_url }}"
+                            alt="{{ section.settings.logo_txt_3 | escape }}"
+                            loading="lazy"
+                            width="{{ section.settings.logo_3.width }}"
+                            height="{{ section.settings.logo_3.width | divided_by: section.settings.logo_3.aspect_ratio }}" />
+                    {%- endif -%}
+                    <span>{{ section.settings.logo_txt_3 }}</span>
+                </div>
+                {%- endif -%}
+            </div>
+            {%- if section.settings.btn_txt != blank -%}
+                <div class="popup-btn-wrapper">
+                    <a href="{{ section.settings.btn_url }}" class="btn">{{ section.settings.btn_txt }}</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Check session storage to see if the popup has already been shown
+    if (!sessionStorage.getItem("offerPopupShown")) {
+      setTimeout(function () {
+        const popup = document.querySelector(".offer-popup");
+        if (popup) {
+          popup.classList.add("open");
+          sessionStorage.setItem("offerPopupShown", "true"); // Mark as shown
+        }
+      }, 3000); // 3 seconds
+    }
+
+    // Optional: Close button handler
+    document.querySelectorAll(".popup-close-btn").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        const popup = document.querySelector(".offer-popup");
+        if (popup) popup.classList.remove("open");
+      });
+    });
+  });
+</script>
+
+
+{% schema %}
+{
+    "name": "Offer Popup",
+    "settings": [
+        {
+            "type": "color",
+            "id":"bg_color",
+            "label":"Select Background Color",
+            "default":"#F7B801"
+        },
+        {
+            "type": "range",
+            "id": "star_rating",
+            "label": "Star Rating",
+            "min": 0,
+            "max": 5,
+            "step": 1,
+            "default": 5
+        },
+        {
+            "type": "inline_richtext",
+            "id": "ratign_text",
+            "label": "Rating Text",
+        },
+        {
+            "type": "inline_richtext",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Select Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "logo_1",
+            "label": "Logo 1"
+        },
+        {
+            "type": "text",
+            "id": "logo_txt_1",
+            "label": "Info Text 1"
+        },
+        {
+            "type": "image_picker",
+            "id": "logo_2",
+            "label": "Logo 2"
+        },
+        {
+            "type": "text",
+            "id": "logo_txt_2",
+            "label": "Info Text 2"
+        },
+        {
+            "type": "image_picker",
+            "id": "logo_3",
+            "label": "Logo 3"
+        },
+        {
+            "type": "text",
+            "id": "logo_txt_3",
+            "label": "Info Text 3"
+        },
+        {
+            "type": "text",
+            "id": "btn_txt",
+            "label": "Button Text"
+        },
+        {
+            "type": "url",
+            "id": "btn_url",
+            "label": "Button Url"
+        }
+    ]
+}
+{% endschema %}

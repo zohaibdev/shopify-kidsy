@@ -1,0 +1,593 @@
+{% style %}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } @media screen and (max-width: 749px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } }
+{% endstyle %}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="collection-tab-wrapper page-width {% if section.settings.title == blank %} no-heading{% endif %} section-{{ section.id }}-padding">
+    <div class="collection-tabs-wrapper">
+      <div class="collection-tabs-info">
+        {%- unless section.settings.title == blank -%}
+          <div class="title-wrapper">
+            <div class="section-header-content">
+              {% if section.settings.heading_link != blank %}
+                <a href="{{ section.settings.heading_link }}" class="section--title h3" title="{{ section.settings.title | escape }}">
+                  {{ section.settings.title | escape }}
+                </a>
+              {% else %}
+                <h3 class="section--title h3">
+                  {{ section.settings.title | escape }}
+                </h3>
+              {% endif %}
+              {% if section.settings.subtitle != blank %}
+                <p class="section-description h5">
+                  {{ section.settings.subtitle }}
+                </p>
+              {% endif %}
+            </div>
+          </div>
+        {%- endunless -%}
+        <div class="collection-tabs">
+          <div class="collection-tabs-scroller">
+            {% for block in section.blocks %}
+              <div
+                class="button button--secondary collection-tab-link{% if forloop.first %} current{% endif %}"
+                data-tab="tab-{{ section.id }}-{{ forloop.index }}"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.title | default: 'Tab ' }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="collection-tab-cta">
+        {% for block in section.blocks %}
+          {%- assign collection_url = block.settings.collection.url -%}
+
+          {% if block.settings.sort_by and block.settings.sort_by != 'default' %}
+            {% if collection_url contains '?' %}
+              {%- assign collection_url = collection_url | append: '&sort_by=' | append: block.settings.sort_by -%}
+            {% else %}
+              {%- assign collection_url = collection_url | append: '?sort_by=' | append: block.settings.sort_by -%}
+            {% endif %}
+          {% endif %}
+
+          <div
+            class="collection-tab__button{% if forloop.first %} active{% endif %}"
+            data-tab-button="tab-{{ section.id }}-{{ forloop.index }}"
+          >
+            {% if section.settings.cta_label != blank %}
+              <a
+                class="button button--{{ section.settings.cta_button_style }} title__button"
+                {% if section.settings.cta_link != blank %}
+                  href="{{ section.settings.cta_link }}"
+                {% endif %}
+              >
+                {{ section.settings.cta_label | escape }}
+              </a>
+            {% endif %}
+            <a
+              class="button button--shadow"
+              href="{% if block.settings.button_url != blank %}{{ block.settings.button_url }}{% else %}{{ collection_url }}{% endif %}"
+            >
+              {{ block.settings.button_text | default: 'Shop All' | escape }}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="collection-tab-content-wrapper">
+      {% for block in section.blocks %}
+        {% assign collection = block.settings.collection %}
+        {% assign max_products = section.settings.max_products | default: 4 %}
+        {%- assign collection_url = collection.url -%}
+        {% if block.settings.sort_by and block.settings.sort_by != 'default' %}
+          {% if collection_url contains '?' %}
+            {%- assign collection_url = collection_url | append: '&sort_by=' | append: block.settings.sort_by -%}
+          {% else %}
+            {%- assign collection_url = collection_url | append: '?sort_by=' | append: block.settings.sort_by -%}
+          {% endif %}
+        {% endif %}
+        <div
+          id="tab-{{ section.id }}-{{ forloop.index }}"
+          class="tab-content {% if forloop.first %} current{% endif %}"
+        >
+          <div class="tab-product-wrapper">
+            <div class="tab-product-swiper swiper full_height__swiper">
+              <div class="swiper-wrapper">
+                {% liquid
+                  assign sort_option = block.settings.sort_by
+
+                  case sort_option
+                    when 'price-ascending'
+                      assign sorted_products = collection.products | sort: 'price'
+                    when 'price-descending'
+                      assign sorted_products = collection.products | sort: 'price' | reverse
+                    when 'title-ascending'
+                      assign sorted_products = collection.products | sort: 'title'
+                    when 'title-descending'
+                      assign sorted_products = collection.products | sort: 'title' | reverse
+                    when 'created-ascending'
+                      assign sorted_products = collection.products | sort: 'created_at'
+                    when 'created-descending'
+                      assign sorted_products = collection.products | sort: 'created_at' | reverse
+                    when 'best-selling'
+                      assign sorted_products = collection.products
+                    else
+                      assign sorted_products = collection.products
+                  endcase
+                %}
+
+                {% for product in sorted_products limit: max_products %}
+                  <div class="swiper-slide">
+                    {% liquid
+                      assign ridx = forloop.rindex
+                      case ridx
+                        when 5
+                          assign ridx = 1
+                        when 6
+                          assign ridx = 2
+                      endcase
+                    %}
+                    {%- assign placeholder_image = 'product-apparel-' | append: ridx -%}
+                    {% render 'card-product',
+                      card_product: product,
+                      media_aspect_ratio: section.settings.image_ratio,
+                      image_shape: section.settings.image_shape,
+                      show_secondary_image: section.settings.show_secondary_image,
+                      show_vendor: section.settings.show_vendor,
+                      show_rating: section.settings.show_rating,
+                      skip_styles: skip_card_product_styles,
+                      section_id: section.id,
+                      quick_add: section.settings.quick_add,
+                      placeholder_image: placeholder_image
+                    %}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="tab-swiper-navigation swiper-navigation">
+              <div class="swiper-pagination"></div>
+              <div class="navigation-arrows">
+                <div class="swiper-arrow swiper-button-prev">
+                  <span aria-hidden="true">{{ 'left-arrow.svg' | inline_asset_content }}</span>
+                </div>
+                <div class="swiper-arrow swiper-button-next">
+                  <span aria-hidden="true">{{ 'right-arrow.svg' | inline_asset_content }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-mobile-button-wrapper">
+            <a
+              class="button button--shadow"
+              href="{% if block.settings.button_url != blank %}{{ block.settings.button_url }}{% else %}{{ collection_url }}{% endif %}"
+            >
+              {{ block.settings.button_text | default: 'Shop All' | escape }}
+            </a>
+            {% if section.settings.cta_label != blank %}
+              <a
+                class="button button--{{ section.settings.cta_button_style }} title__button"
+                {% if section.settings.cta_link != blank %}
+                  href="{{ section.settings.cta_link }}"
+                {% endif %}
+              >
+                {{ section.settings.cta_label | escape }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sectionId = "#shopify-section-{{ section.id }}";
+    const tabs = document.querySelectorAll(`${sectionId} .collection-tabs .collection-tab-link`);
+    const contents = document.querySelectorAll(`${sectionId} .tab-content`);
+    const allButtons = document.querySelectorAll(`${sectionId} .collection-tab__button`);
+
+    function initSwiper(content) {
+      const swiperEl = content.querySelector(".swiper");
+      if (!swiperEl || swiperEl._swiper) return;
+
+      const prevEl = content.querySelector('.swiper-button-prev');
+      const nextEl = content.querySelector('.swiper-button-next');
+      const paginationEl = content.querySelector('.swiper-pagination');
+
+      const swiperInstance = new Swiper(swiperEl, {
+        loop: true,
+        slidesPerView: {{ section.settings.mobile_card }},
+        slidesPerGroup: {{ section.settings.mobile_card }},
+        spaceBetween: 9,
+        navigation: {
+          prevEl: prevEl || null,
+          nextEl: nextEl || null,
+        },
+        pagination: paginationEl ? {
+          el: paginationEl,
+          clickable: true,
+        } : {},
+        breakpoints: {
+          750: { 
+            slidesPerView: 3,
+            slidesPerGroup: 2,
+            spaceBetween: 6,
+          },
+          992: { 
+            slidesPerView: {{ section.settings.desktop_card | minus: 1 }},
+            slidesPerGroup: {{ section.settings.desktop_card | minus: 2 }},
+          },
+          1200: {
+            slidesPerView: {{ section.settings.desktop_card }},
+            slidesPerGroup: {{ section.settings.desktop_card | minus: 1 }},
+          },
+        },
+      });
+      swiperEl._swiper = swiperInstance;
+    }
+
+    // Initialize Swiper for the first visible tab
+    contents.forEach(content => {
+      if (content.classList.contains('current')) {
+        initSwiper(content);
+      }
+    });
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const tabId = tab.getAttribute("data-tab");
+        tabs.forEach(t => t.classList.remove("current"));
+        contents.forEach(c => c.classList.remove("current"));
+        tab.classList.add("current");
+        const target = document.querySelector("#" + tabId);
+        if (target) {
+          target.classList.add('current');
+
+          // Lazy-load Swiper if not already initialized
+          initSwiper(target);
+
+          const swiperEl = target.querySelector('.tab-product-swiper');
+          if (swiperEl && swiperEl._swiper) {
+            swiperEl._swiper.update();
+          }
+        }
+
+        // --- Show/hide buttons based on active tab ---
+        allButtons.forEach(btn => btn.classList.remove('active'));
+
+        const activeButton = document.querySelector(`[data-tab-button="${tabId}"]`);
+        if (activeButton) {
+          activeButton.classList.add('active');
+        }
+        
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Collection Tab",
+  "class": "collection-tab--section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Best sellers on kidsy"
+    },
+    {
+      "type": "url",
+      "id": "heading_link",
+      "label": "Heading link URL"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button text",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    },
+    {
+      "id": "cta_button_style",
+      "type": "select",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "Product Card"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products to show",
+      "default": 4,
+      "step": 1,
+      "min": 1,
+      "max": 20
+    },
+    {
+      "type": "range",
+      "id": "desktop_card",
+      "label": "Desktop card",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "mobile_card",
+      "label": "Mobile card",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "t:sections.featured-collection.settings.header.content"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.featured-collection.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.featured-collection.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.featured-collection.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.featured-collection.settings.image_ratio.label"
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.all.image_shape.options__1.label"
+        },
+        {
+          "value": "arch",
+          "label": "t:sections.all.image_shape.options__2.label"
+        },
+        {
+          "value": "blob",
+          "label": "t:sections.all.image_shape.options__3.label"
+        },
+        {
+          "value": "chevronleft",
+          "label": "t:sections.all.image_shape.options__4.label"
+        },
+        {
+          "value": "chevronright",
+          "label": "t:sections.all.image_shape.options__5.label"
+        },
+        {
+          "value": "diamond",
+          "label": "t:sections.all.image_shape.options__6.label"
+        },
+        {
+          "value": "parallelogram",
+          "label": "t:sections.all.image_shape.options__7.label"
+        },
+        {
+          "value": "round",
+          "label": "t:sections.all.image_shape.options__8.label"
+        }
+      ],
+      "default": "default",
+      "label": "t:sections.all.image_shape.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "t:sections.featured-collection.settings.show_secondary_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.featured-collection.settings.show_vendor.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "t:sections.featured-collection.settings.show_rating.label",
+      "info": "t:sections.featured-collection.settings.show_rating.info"
+    },
+    {
+      "type": "select",
+      "id": "quick_add",
+      "default": "none",
+      "label": "t:sections.main-collection-product-grid.settings.quick_add.label",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.main-collection-product-grid.settings.quick_add.options.option_1"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.main-collection-product-grid.settings.quick_add.options.option_2"
+        },
+        {
+          "value": "bulk",
+          "label": "t:sections.main-collection-product-grid.settings.quick_add.options.option_3"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding - Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Padding - Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "id": "collection",
+          "type": "collection",
+          "label": "Collection"
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Custom title"
+        },
+        {
+          "id": "button_text",
+          "type": "text",
+          "label": "Button text"
+        },
+        {
+          "id": "button_url",
+          "type": "url",
+          "label": "Button URL",
+          "info": "IF URL is blank then it will redirect to the selected collection"
+        },
+        {
+          "type": "select",
+          "id": "sort_by",
+          "label": "Sort products by",
+          "options": [
+            {
+              "value": "default",
+              "label": "Use collection default"
+            },
+            {
+              "value": "best-selling",
+              "label": "Best selling"
+            },
+            {
+              "value": "price-ascending",
+              "label": "Price: Low to High"
+            },
+            {
+              "value": "price-descending",
+              "label": "Price: High to Low"
+            },
+            {
+              "value": "title-ascending",
+              "label": "Alphabetically, A–Z"
+            },
+            {
+              "value": "title-descending",
+              "label": "Alphabetically, Z–A"
+            },
+            {
+              "value": "created-descending",
+              "label": "Date, New to Old"
+            },
+            {
+              "value": "created-ascending",
+              "label": "Date, Old to New"
+            }
+          ],
+          "default": "default"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Tab",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

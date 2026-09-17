@@ -1,0 +1,434 @@
+{% comment %}
+============================================================
+Section: Frequently Asked Questions
+------------------------------------------------------------
+Two-column FAQ section matching Figma design:
+• Left column (340px): H2 title + "Contact Us" CTA button
+• Right column (950px): expandable accordion rows
+• Each row: question + chevron arrow that rotates on open,
+revealing the answer below
+• Bottom border on each row at rgba(52,19,0,0.19)
+
+Built with native <details>/<summary> elements — fully
+accessible, keyboard-navigable, no JavaScript required.
+Each Q&A is a section block so merchants can add, remove,
+reorder, and edit any question from the theme editor.
+============================================================
+{% endcomment %}
+<link rel="preload" href="{{ 'custom.css' | asset_url }}" as="style">
+
+{%- liquid
+assign s = section.settings
+assign sec_id = 'kidsy-faq-' | append: section.id
+-%}
+
+<style>
+#{{ sec_id }} {
+--bg:        {{ s.color_bg     | default: '#FFF4E1' }};
+--text:      {{ s.color_text   | default: '#341300' }};
+--accent:    {{ s.color_accent | default: '#F45901' }};
+--border:    {{ s.color_border | default: 'rgba(52,19,0,0.19)' }};
+}
+.mb_show{
+display:none !important;
+}
+#{{ sec_id }} {
+background: var(--bg);
+padding: {{ s.padding_top | default: 30 }}px 0px {{ s.padding_bottom | default: 30 }}px;
+font-family: "Roobert TRIAL", Roboto, sans-serif;
+color: var(--text);
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+#{{ sec_id }} .kf__inner {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+gap: 50px;
+}
+
+/* ============================================================
+LEFT COLUMN — title + CTA (340px)
+============================================================ */
+#{{ sec_id }} .kf__intro {
+width: 340px;
+flex-shrink: 0;
+display: flex;
+flex-direction: column;
+gap: 20px;
+align-items: flex-start;
+justify-content: center;
+}
+
+#{{ sec_id }} .kf__title {
+margin: 0;
+color: var(--text);
+font-size: 32px;
+font-weight: 600;
+line-height: 1.1;
+text-transform: capitalize;
+width: 100%;
+}
+
+#{{ sec_id }} .kf__cta {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+padding: 15px 20px;
+border-radius: 6px;
+font-size: 18px;
+font-weight: 600;
+text-decoration: none;
+text-transform: capitalize;
+border: none;
+cursor: pointer;
+line-height: 1;
+font-family: inherit;
+background: var(--accent);
+color: #fff;
+white-space: nowrap;
+transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+#{{ sec_id }} .kf__cta:hover {
+transform: translateY(-1px);
+box-shadow: 0 8px 20px rgba(52,19,0,.18);
+filter: brightness(1.05);
+}
+
+/* ============================================================
+RIGHT COLUMN — accordion list (950px)
+============================================================ */
+#{{ sec_id }} .kf__list {
+flex: 1 1 0;
+min-width: 0;
+max-width: 950px;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+#{{ sec_id }} .kf__item {
+border-bottom: 1px solid var(--border);
+width: 100%;
+}
+
+/* Native <summary> reset so we can fully style it */
+#{{ sec_id }} .kf__q {
+list-style: none;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 24px;
+padding: 15px 20px 15px 0;
+color: var(--text);
+font-size: 16px;
+font-weight: 600;
+text-transform: capitalize;
+line-height: 1.4;
+user-select: none;
+-webkit-tap-highlight-color: transparent;
+}
+
+#{{ sec_id }} .kf__q::-webkit-details-marker { display: none; }
+#{{ sec_id }} .kf__q::marker { content: ""; }
+
+#{{ sec_id }} .kf__q-text {
+flex: 1 1 0;
+min-width: 0;
+}
+
+/* Chevron icon — rotates when accordion opens */
+#{{ sec_id }} .kf__chev {
+width: 14px;
+height: 14px;
+flex-shrink: 0;
+color: var(--text);
+transition: transform .25s ease;
+}
+#{{ sec_id }} .kf__item[open] .kf__chev {
+transform: rotate(180deg);
+}
+#{{ sec_id }}  .kf__item:last-child {
+border-bottom: 0;
+}
+/* Answer block */
+#{{ sec_id }} .kf__a {
+padding: 0 20px 20px 0;
+color: var(--text);
+font-size: 15px;
+font-weight: 400;
+line-height: 1.6;
+max-width: 760px;
+}
+#{{ sec_id }} .kf__a > *:first-child { margin-top: 0; }
+#{{ sec_id }} .kf__a > *:last-child  { margin-bottom: 0; }
+#{{ sec_id }} .kf__a a {
+color: var(--accent);
+text-decoration: underline;
+text-underline-offset: 2px;
+}
+
+/* Smooth open animation (modern browsers) */
+@supports (interpolate-size: allow-keywords) {
+#{{ sec_id }} .kf__item {
+interpolate-size: allow-keywords;
+}
+#{{ sec_id }} .kf__item::details-content {
+block-size: 0;
+overflow: clip;
+transition: block-size .3s ease, content-visibility .3s allow-discrete;
+}
+#{{ sec_id }} .kf__item[open]::details-content {
+block-size: auto;
+}
+}
+
+/* Focus state for keyboard users */
+#{{ sec_id }} .kf__q:focus-visible {
+outline: 2px solid var(--accent);
+outline-offset: 4px;
+border-radius: 4px;
+}
+
+/* ============================================================
+RESPONSIVE
+============================================================ */
+@media (max-width: 1024px) {
+#{{ sec_id }} { padding: 28px 0; }
+#{{ sec_id }} .kf__inner { gap: 32px; }
+#{{ sec_id }} .kf__intro { width: 280px; }
+#{{ sec_id }} .kf__title { font-size: 28px; }
+}
+
+@media (max-width: 800px) {
+#{{ sec_id }} { padding: 32px 0; }
+#{{ sec_id }} .kf__inner {
+flex-direction: column;
+gap: 10px;
+}
+#{{ sec_id }} .kf__intro {
+width: 100%;
+gap: 10px;
+}
+#{{ sec_id }} .kf__title { font-size: 26px; }
+#{{ sec_id }} .kf__list { max-width: 100%; width:100%; }
+}
+
+@media (max-width: 768px) {
+#{{ sec_id }} { padding: 20px  0; }
+#{{ sec_id }} .kf__title {font-size: 24px;
+font-style: normal;
+font-weight: 650;
+line-height: normal;
+text-transform: capitalize;
+}
+#{{ sec_id }} .kf__cta { 
+max-width: 335px;
+padding: 15px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 650;
+line-height: 100%;
+text-transform: capitalize;
+width:100%;
+}
+#{{ sec_id }} .kf__q {
+font-size: 14px;
+font-style: normal;
+font-weight: 650;
+line-height: normal;
+text-transform: capitalize;
+padding: 10px 15px 10px 0;
+gap: 10px;
+}
+#{{ sec_id }} .kf__a {
+font-size: 14px;
+padding: 0 12px 16px 0;
+}
+.mb_show{
+display:block !important;
+}
+.desktop_show{
+display:none !important;
+}
+}
+</style>
+
+<section
+id="{{ sec_id }}"
+class="kidsy-faq"
+aria-labelledby="{{ sec_id }}-title">
+<div class="page-width">
+
+<div class="kf__inner">
+
+{%- comment -%} LEFT — title + CTA {%- endcomment -%}
+<div class="kf__intro">
+{%- if s.title != blank -%}
+<h2 id="{{ sec_id }}-title" class="kf__title">{{ s.title }}</h2>
+{%- endif -%}
+
+{%- if s.cta_label != blank -%}
+<a href="{{ s.cta_link | default: '#' }}" class="kf__cta desktop_show">{{ s.cta_label }}</a>
+{%- endif -%}
+</div>
+
+{%- comment -%} RIGHT — accordion list (managed via blocks) {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+<div class="kf__list">
+{%- for block in section.blocks -%}
+{%- if block.type == 'faq' -%}
+{%- assign b = block.settings -%}
+<details
+class="kf__item"
+{% if b.open_by_default %}open{% endif %}
+{{ block.shopify_attributes }}>
+
+<summary class="kf__q">
+<span class="kf__q-text">{{ b.question }}</span>
+<svg class="kf__chev"  xmlns="http://www.w3.org/2000/svg" width="16" height="8" viewBox="0 0 16 8" fill="none">
+<path d="M15 1.00147L7.99937 7.00073L1 1" stroke="#341300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</summary>
+
+{%- if b.answer != blank -%}
+<div class="kf__a">{{ b.answer }}</div>
+{%- endif -%}
+
+</details>
+{%- endif -%}
+{%- endfor -%}
+</div>
+{%- endif -%}
+{%- if s.cta_label != blank -%}
+<a href="{{ s.cta_link | default: '#' }}" class="kf__cta mb_show">{{ s.cta_label }}</a>
+{%- endif -%}
+</div>
+
+</div>
+</section>
+
+{% schema %}
+{
+"name": "FAQ",
+"tag": "section",
+"class": "section-kidsy-faq",
+"settings": [
+{
+"type": "header",
+"content": "Heading & CTA"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "Frequently Asked Questions"
+},
+{
+"type": "text",
+"id": "cta_label",
+"label": "Button text",
+"default": "Contact Us"
+},
+{
+"type": "url",
+"id": "cta_link",
+"label": "Button link"
+},
+
+{
+"type": "header",
+"content": "Spacing"
+},
+{
+"type": "range",
+"id": "padding_top",
+"label": "Top padding",
+"min": 0, "max": 120, "step": 5, "unit": "px",
+"default": 30
+},
+{
+"type": "range",
+"id": "padding_bottom",
+"label": "Bottom padding",
+"min": 0, "max": 120, "step": 5, "unit": "px",
+"default": 30
+},
+
+{
+"type": "header",
+"content": "Colors"
+},
+{
+"type": "color",
+"id": "color_bg",
+"label": "Section background",
+"default": "#FFF4E1"
+},
+{
+"type": "color",
+"id": "color_text",
+"label": "Text",
+"default": "#341300"
+},
+{
+"type": "color",
+"id": "color_accent",
+"label": "Button & link accent",
+"default": "#F45901"
+},
+{
+"type": "color",
+"id": "color_border",
+"label": "Row divider",
+"default": "#574030"
+}
+],
+"blocks": [
+{
+"type": "faq",
+"name": "Question",
+"limit": 20,
+"settings": [
+{
+"type": "text",
+"id": "question",
+"label": "Question",
+"default": "Is Kidsy Points free to join?"
+},
+{
+"type": "richtext",
+"id": "answer",
+"label": "Answer",
+"default": "<p>Yes — joining Kidsy Points is completely free. No credit card or membership fees required.</p>"
+},
+{
+"type": "checkbox",
+"id": "open_by_default",
+"label": "Open by default",
+"default": false
+}
+]
+}
+],
+"presets": [
+{
+"name": "FAQ",
+"blocks": [
+{ "type": "faq", "settings": { "question": "Is Kidsy Points free to join?",          "answer": "<p>Yes — joining Kidsy Points is completely free. No credit card or membership fees required, and you'll earn 100 bonus points the moment your account is confirmed.</p>" } },
+{ "type": "faq", "settings": { "question": "How do I earn points?",                  "answer": "<p>You earn points for shopping (per dollar spent), writing approved reviews, sharing on social, referring friends, and on your birthday. See the rewards grid above for the full list.</p>" } },
+{ "type": "faq", "settings": { "question": "When do my points expire?",              "answer": "<p>Points stay active as long as your account remains active. We may expire points after extended periods of inactivity — we'll always email you before that happens.</p>" } },
+{ "type": "faq", "settings": { "question": "Can I combine points with a promo code?","answer": "<p>Yes — Kidsy Points stack with sitewide sales and most promo codes at checkout for maximum savings.</p>" } },
+{ "type": "faq", "settings": { "question": "What happens if I return an order?",     "answer": "<p>If you return an order, the points earned on that purchase will be deducted from your balance. Points used at checkout will be restored if your refund is processed.</p>" } },
+{ "type": "faq", "settings": { "question": "Do subscription orders earn points?",    "answer": "<p>Yes — every recurring subscription order earns points at the same rate as one-time purchases.</p>" } },
+{ "type": "faq", "settings": { "question": "How do I unlock a higher tier?",         "answer": "<p>Tiers unlock automatically based on your annual spend and engagement. Higher tiers earn points at faster rates and unlock exclusive perks.</p>" } }
+]
+}
+]
+}
+{% endschema %}

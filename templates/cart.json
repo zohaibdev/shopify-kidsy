@@ -1,0 +1,113 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_BPYpNG": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "custom_css": [
+        "#holiday-checkout-msg {text-align: center;}"
+      ],
+      "settings": {
+        "custom_liquid": "<div id=\"holiday-checkout-msg\"><b>Due to increased holiday demand, orders will ship in 5 to 7 business days. We appreciate your understanding and patience.</b></div>",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "17422810649f23730c": {
+      "type": "apps",
+      "blocks": {
+        "hextom_shipping_bar_fsb_custom_placement_FiPjRP": {
+          "type": "shopify://apps/hextom-shipping-bar/blocks/fsb-custom-placement/7ef5d9af-75a2-45c7-9b1b-f9240ee488e9",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "hextom_shipping_bar_fsb_custom_placement_FiPjRP"
+      ],
+      "settings": {
+        "include_margins": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "cart-items": {
+      "type": "main-cart-items",
+      "settings": {
+        "color_scheme": "accent-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "cart-footer": {
+      "type": "main-cart-footer",
+      "blocks": {
+        "subtotal": {
+          "type": "subtotal",
+          "settings": {}
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "subtotal",
+        "buttons"
+      ],
+      "settings": {
+        "color_scheme": "background-2",
+        "padding_top": 20,
+        "padding_bottom": 40
+      }
+    },
+    "17594373909fba40b3": {
+      "type": "apps",
+      "blocks": {
+        "smart_product_filter_search_trending_products_BGCiy6": {
+          "type": "shopify://apps/smart-filter-search/blocks/trending_products/5cc1944c-3014-4a2a-af40-7d65abc0ef73",
+          "settings": {
+            "heading": "Trending products",
+            "layout": "carousel",
+            "limit": 10,
+            "columns_desktop": 6,
+            "columns_tablet": 3,
+            "columns_mobile": 3,
+            "autoplay": true,
+            "loop": false,
+            "pagination": true,
+            "navigation": true
+          }
+        }
+      },
+      "block_order": [
+        "smart_product_filter_search_trending_products_BGCiy6"
+      ],
+      "disabled": true,
+      "settings": {
+        "include_margins": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_BPYpNG",
+    "17422810649f23730c",
+    "cart-items",
+    "cart-footer",
+    "17594373909fba40b3"
+  ]
+}

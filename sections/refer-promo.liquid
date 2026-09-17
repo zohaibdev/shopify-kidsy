@@ -1,0 +1,475 @@
+{% comment %}
+  ============================================================
+  Section: Refer Promo (Every Parent You Refer)
+  ------------------------------------------------------------
+  Two-column promo section matching Figma design:
+    • Cream blob decoration on bottom-left
+    • Left column (646px): H2 title, body copy, CTA button w/ arrow
+    • Right column (590×433): rounded photo
+    • White squiggle decoration top-right corner
+
+  All text, buttons, images, decorations, and colors are dynamic.
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign s = section.settings
+  assign sec_id = 'kidsy-refer-promo-' | append: section.id
+-%}
+ <link rel="preload" href="{{ 'custom.css' | asset_url }}" as="style">
+<style>
+  #{{ sec_id }} {
+    --bg:        {{ s.color_bg     | default: '#FFFBF3' }};
+    --text:      {{ s.color_text   | default: '#341300' }};
+    --accent:    {{ s.color_accent | default: '#F45901' }};
+    --blob:      {{ s.color_blob   | default: '#FFDFA8' }};
+  }
+
+  #{{ sec_id }} {
+    position: relative;
+    background: var(--bg);
+    padding: {{ s.padding_top | default: 40 }}px 0px {{ s.padding_bottom | default: 60 }}px;
+    overflow: hidden;
+    isolation: isolate;
+    font-family: "Roobert TRIAL", sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+
+  #{{ sec_id }} img { display: block;
+    max-width: 100%;
+    height: auto; }
+
+  #{{ sec_id }} .krp__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============================================================
+     DECORATIVE BLOB — bottom-left
+     Figma: 831×825 at left:-459, top:-88, rotated 15deg + flipped vertical
+     ============================================================ */
+  #{{ sec_id }} .krp__blob {
+      position: absolute;
+    left: 0;
+       bottom: -203.349px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 1;
+    {% comment %} transform: rotate(-14.999deg); {% endcomment %}
+  }
+  #{{ sec_id }} .krp__blob svg { width: 100%; height: 100%; display: block; }
+
+  /* ============================================================
+     WHITE SQUIGGLE — top-right of photo
+     Figma: 273×112 at left:1174, top:11, rotated 34.27deg
+     ============================================================ */
+  #{{ sec_id }} .krp__squiggle {
+    position: absolute;
+    right: 60px;
+    top: 30px;
+    width: 200px;
+    height: auto;
+    z-index: 4;
+    pointer-events: none;
+    transform: rotate(34.27deg);
+    transform-origin: center;
+  }
+
+  /* ============================================================
+     LEFT — content (646px)
+     ============================================================ */
+  #{{ sec_id }} .krp__content {
+    max-width: 646px;
+    width:100%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  #{{ sec_id }} .krp__head {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  #{{ sec_id }} .krp__title {
+    margin: 0;
+    color: var(--text);
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.1;
+    text-transform: capitalize;
+    max-width: 427px;
+  }
+
+  #{{ sec_id }} .krp__desc {
+    margin: 0;
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.55;
+  }
+
+  /* CTA button with arrow */
+  #{{ sec_id }} .krp__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 20px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: capitalize;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    font-family: inherit;
+    background: var(--accent);
+    color: #fff;
+    white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  }
+  #{{ sec_id }} .krp__btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(52,19,0,.18);
+    filter: brightness(1.05);
+  }
+  #{{ sec_id }} .krp__btn-icon {
+    flex-shrink: 0;
+  }
+
+  /* ============================================================
+     RIGHT — photo (590 × 433, rounded 24px)
+     ============================================================ */
+  #{{ sec_id }} .krp__visual {
+    max-width: 590px;
+    width:100%;
+    height: 433px;
+    flex-shrink: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    background: #727272;
+    z-index: 3;
+  }
+  #{{ sec_id }} .krp__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 1280px) {
+    #{{ sec_id }} { padding: 40px 0 56px; }
+    #{{ sec_id }} .krp__visual { max-width: 500px; height: 380px; }
+    #{{ sec_id }} .krp__content { width: auto; flex: 1 1 0; }
+    #{{ sec_id }} .krp__squiggle { right: 30px; width: 170px; }
+  }
+
+  @media (max-width: 1024px) {
+    #{{ sec_id }} .krp__visual { max-width: 430px; height: 340px; }
+    #{{ sec_id }} .krp__inner { gap: 32px; }
+    #{{ sec_id }} .krp__title { font-size: 28px; }
+  }
+
+  @media (max-width: 900px) {
+    #{{ sec_id }} { padding: 48px 0 80px; }
+    #{{ sec_id }} .krp__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 32px;
+    }
+    #{{ sec_id }} .krp__content {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      gap:24px;
+    }
+    #{{ sec_id }} .krp__title { max-width: none; }
+    #{{ sec_id }} .krp__visual {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      aspect-ratio: 590 / 433;
+      margin: 0 auto;
+      
+    }
+    #{{ sec_id }} .krp__squiggle { right: 20px; top: 20px; width: 140px; }
+  }
+
+  @media (max-width: 768px) {
+    #{{ sec_id }} { padding: 20px 0 }
+         #{{ sec_id }} .page-width{
+padding:0 16px;
+}
+    #{{ sec_id }} .krp__head { gap: 12px; }
+    #{{ sec_id }} .krp__title { font-family: "Roobert TRIAL";
+font-size: 24px;
+font-style: normal;
+font-weight: 650;
+line-height: normal;
+text-transform: capitalize; }
+    #{{ sec_id }} .krp__desc {font-family: "Roobert TRIAL";
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal; }
+    #{{ sec_id }} .krp__btn { 
+    
+    padding: 15px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+width:100%;
+font-size: 16px;
+font-style: normal;
+font-weight: 650;
+line-height: 100%; /* 16px */
+text-transform: capitalize;
+    }
+    #{{ sec_id }} .krp__visual { border-radius: 18px; }
+    #{{ sec_id }} .krp__blob {
+        left: 0;
+        bottom: 0;
+    }
+    #{{ sec_id }} .krp__squiggle { width: 110px; right: 12px; top: 12px; }
+  }
+</style>
+
+<section
+  id="{{ sec_id }}"
+  class="kidsy-refer-promo"
+  aria-labelledby="{{ sec_id }}-title">
+
+  {%- comment -%} Cream blob — bottom-left decoration {%- endcomment -%}
+  {%- if s.show_blob -%}
+    {%- if s.blob_image != blank -%}
+      <img class="krp__blob" src="{{ s.blob_image | image_url: width: 1200 }}" alt="" aria-hidden="true" loading="lazy">
+    {%- else -%}
+      <div class="krp__blob" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="720" viewBox="0 0 255 720" fill="none" class="desktop-show">
+  <path d="M-356.337 214.291C-426.616 414.935 -240.945 592.33 -226.878 605.361C-95.4862 727.056 127.52 762.475 212.792 659.408C260.726 601.468 268.267 495.984 232.063 465.317C181.476 422.461 94.7446 491.923 58.0567 453.38C28.3316 422.151 7.4016 383.738 5.68827 252.303C4.59844 168.873 33.4215 44.7758 -48.886 9.73989C-151.763 -34.0453 -307.927 76.0842 -356.337 214.291Z" fill="#FFDFA8"/>
+</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="103" height="181" viewBox="0 0 103 181" fill="none" class="mb_show">
+  <path d="M-107.376 75.3579C-128.42 143.69 -63.7442 200.924 -58.8496 205.123C-13.1308 244.335 62.2695 253.375 89.604 217.643C104.969 197.556 106.15 162.009 93.589 152.168C76.0381 138.415 47.7821 162.872 34.9577 150.39C24.5671 140.276 17.0402 127.635 14.7774 83.4859C13.3403 55.4615 21.434 13.3864 -6.67668 2.66826C-41.8125 -10.7262 -92.8811 28.2894 -107.376 75.3579Z" fill="#FFDFA8"/>
+</svg>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+
+  <div class="page-width">
+  <div class="krp__inner">
+
+    {%- comment -%} LEFT — content {%- endcomment -%}
+    <div class="krp__content">
+
+      <div class="krp__head">
+        {%- if s.title != blank -%}
+          <h2 id="{{ sec_id }}-title" class="krp__title">{{ s.title }}</h2>
+        {%- endif -%}
+
+        {%- if s.description != blank -%}
+          <p class="krp__desc">{{ s.description }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if s.cta_label != blank -%}
+        <a href="{{ s.cta_link | default: '#' }}" class="krp__btn">
+          <span>{{ s.cta_label }}</span>
+          {% comment %} <svg   class="krp__btn-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M19.0002 12L4.00024 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15 7L19.2929 11.2929C19.6262 11.6262 19.7929 11.7929 19.7929 12C19.7929 12.2071 19.6262 12.3738 19.2929 12.7071L15 17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> {% endcomment %}
+        </a>
+      {%- endif -%}
+
+    </div>
+
+    {%- comment -%} RIGHT — photo {%- endcomment -%}
+
+     <picture>
+      {%- if s.mb_photo != blank -%}
+        <source
+          media="(max-width: 768px)"
+          srcset="
+            {{ s.mb_photo | image_url: width: 400 }} 400w,
+            {{ s.mb_photo | image_url: width: 600 }} 600w,
+            {{ s.mb_photo | image_url: width: 800 }} 800w
+          "
+          sizes="100vw">
+      {%- endif -%}
+      <source
+        media="(min-width: 769px)"
+        srcset="
+          {{ s.photo | image_url: width: 900 }} 900w,
+          {{ s.photo | image_url: width: 1000 }} 1000w,
+          {{ s.photo | image_url: width: 1400 }} 1400w
+        "
+        sizes="(max-width: 1100px) 90vw, 50vw">
+      <img
+        src="{{ s.photo | image_url: width: 1200 }}"
+          srcset="
+            {{ s.photo | image_url: width: 590 }} 590w,
+            {{ s.photo | image_url: width: 900 }} 900w,
+            {{ s.photo | image_url: width: 1200 }} 1200w
+          "
+          sizes="(max-width: 900px) 90vw, 590px"
+          alt="{{ s.photo.alt | default: s.title | escape }}"
+          width="590" height="433"
+          loading="lazy">
+    </picture>
+
+  </div>
+</div>
+</section>
+
+{% schema %}
+{
+  "name": "Refer Promo",
+  "tag": "section",
+  "class": "section-kidsy-refer-promo",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading & Copy"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Every Parent You Refer Saves on Baby Essentials"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "You're already shopping smarter at Kidsy. Help the parents in your life do the same — and earn store credit every time they do. No limits, no expiry on referrals, no spam."
+    },
+
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button text",
+      "default": "Start Referring Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+
+    {
+      "type": "header",
+      "content": "Right Photo"
+    },
+    {
+      "type": "image_picker",
+      "id": "photo",
+      "label": "Hero photo",
+      "info": "Right-side photo, ideally 1200×880 or 590×433 ratio"
+    },
+ {
+      "type": "image_picker",
+      "id": "mb_photo",
+      "label": "Hero photo",
+      "info": "Right-side photo, ideally 1200×880 or 590×433 ratio"
+    },
+    {
+      "type": "header",
+      "content": "Decorations"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blob",
+      "label": "Show cream blob (bottom-left)",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "blob_image",
+      "label": "Custom blob image (optional)",
+      "info": "Defaults to a built-in cream shape"
+    },
+    {
+      "type": "range",
+      "id": "blob_opacity",
+      "label": "Blob opacity",
+      "min": 0, "max": 1, "step": 0.1,
+      "default": 1
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0, "max": 160, "step": 4, "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0, "max": 160, "step": 4, "unit": "px",
+      "default": 60
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Section background",
+      "default": "#FFFBF3"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text",
+      "default": "#341300"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Button accent",
+      "default": "#F45901"
+    },
+    {
+      "type": "color",
+      "id": "color_blob",
+      "label": "Blob color",
+      "default": "#FFDFA8"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Refer Promo"
+    }
+  ]
+}
+{% endschema %}

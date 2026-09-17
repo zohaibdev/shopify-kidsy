@@ -1,0 +1,402 @@
+{% comment %}{{ 'custom-banner.css' | asset_url | stylesheet_tag }}{% endcomment %}
+<link rel="preload" href="{{ 'custom-banner.css' | asset_url }}" as="style">
+<link rel="stylesheet" href="{{ 'custom-banner.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'custom-banner.css' | asset_url }}"></noscript>
+
+
+{%- style -%}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } @media screen and (min-width: 750px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } }
+{%- endstyle -%}
+
+<div class="block__custom-banner--wrapper section-{{ section.id }}-padding gradient color-{{ section.settings.section_color_scheme }}">
+    <div class="page-width">
+        <div class="block__custom-banner-inner">
+            <div class="block__custom-banner-navigation">
+              <button type="button" class="block__custom-banner-navigation-prev swiper-button-prev" aria-label="Previous slide">
+                <span aria-hidden="true">{{ 'left-arrow.svg' | inline_asset_content }}</span>
+              </button>
+              <button type="button" class="block__custom-banner-navigation-next swiper-button-next" aria-label="Next slide">
+                <span aria-hidden="true">{{ 'right-arrow.svg' | inline_asset_content }}</span>
+              </button>
+            </div>
+            <div class="block__custom-banner swiper-class swiper" role="region" aria-roledescription="carousel" aria-label="Customer stories carousel">
+                <div class="block__custom-banner-slides swiper-wrapper">
+                  {% for block in section.blocks %}
+                    {% style %}
+                      .section-{{ section.id }}-padding .block__custom-banner-image-content { position: relative; overflow: hidden; border-radius: 12px; min-height: {{ block.settings.image_desktop_height | default: 54 }}rem; } .section-{{ section.id }}-padding .block__custom-banner-image { position: absolute; inset: 0; } @media screen and (max-width: 749px) { .section-{{ section.id }}-padding .block__custom-banner-image-content { border-radius: 10px; min-height: {{ block.settings.image_mobile_height | default: 70 }}rem; } } .block-{{ block.id }} .block__custom-banner-overlay { position: absolute; top: 0; left: 0; display: block; width: 100%; height: 100%; background-color: {{ block.settings.overlay_color }}; opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }}; pointer-events: none; z-index: 1; border-radius: inherit; {% if block.settings.enable_overlay == false %}display: none;{% endif %} }
+                    {% endstyle %}
+                    <div class="block__custom-banner-image-content swiper-slide block-{{ block.id }}">
+                        <div class="block__custom-banner-image">
+                            {%- case block.type -%}
+                              {%- when 'image' -%}
+                                {% if block.settings.image_desktop != blank %}
+                                {% render 'custom-image', image: block.settings.image_desktop, alt:
+                                block.settings.image_desktop.alt, class: 'block__custom-banner-image-desktop', priority: 'high' %}
+                                {% endif %}
+                                {% if block.settings.image_mobile != blank %}
+                                {% render 'custom-image', image: block.settings.image_mobile, alt:
+                                block.settings.image_mobile.alt, class: 'block__custom-banner-image-mobile', priority: 'high' %}
+                                {% endif %}
+                                {% if block.settings.enable_overlay == true %}
+                                <div class="block__custom-banner-overlay"></div>
+                                {% endif %}
+                              {%- when 'sale_banner' -%}
+                                <picture class="sale-banner-img global-media-settings global-media-settings--no-shadow block__custom-banner-image-desktop">
+                                  {% if block.settings.image_desktop_large != blank %}
+                                  <source media="(min-width:1200px)" srcset="{{ block.settings.image_desktop_large | image_url: width: 1920 }}" fetchpriority="high" loading="eager">
+                                  {% endif %}
+                                  {% if block.settings.image_desktop != blank %}
+                                  <source media="(min-width:992px)" srcset="{{ block.settings.image_desktop | image_url: width: 1440 }}" fetchpriority="high" loading="eager">
+                                  {% endif %}
+                                  {% if block.settings.image_tablet_landscape != blank %}
+                                  <source media="(min-width:750px)" srcset="{{ block.settings.image_tablet_landscape | image_url: width: 1024 }}" fetchpriority="high" loading="eager">
+                                  {% endif %}
+                                  {% if block.settings.image_tablet_portrait != blank %}
+                                  <source media="(min-width:574px)" srcset="{{ block.settings.image_tablet_portrait | image_url: width: 768 }}" fetchpriority="high" loading="eager">
+                                  {% endif %}
+                                  {% if block.settings.image_mobile != blank %}
+                                  <img src="{{ block.settings.image_mobile | image_url: width: 600 }}" height="" width="" fetchpriority="high" loading="eager" alt="{{ block.settings.image_mobile.alt | default: 'Sale banner' }}">
+                                  {% endif %}
+                                </picture>
+                            {%- endcase -%}
+                        </div>
+                        {%- case block.type -%}
+                          {%- when 'image' -%}
+                            <div class="block__custom-banner-content" style=" z-index: 2;">
+                                <div>
+                                    <div class="block__custom-banner-star-content">
+                                        {% assign star_count = block.settings.star_count | default: 5 %}
+                                        {% assign star_count = star_count | plus: 0 %}
+                                        <div class="block__custom-banner-star-rating">
+                                            {% if star_count > 0 %}
+                                            <div class="block__custom-banner-star-rating-icons">
+                                                {% for i in (1..star_count) %}
+                                                <span class="block__custom-banner-star-rating-icon" aria-hidden="true">
+                                                    {{ 'star.svg' | inline_asset_content }}
+                                                </span>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                            {% if block.settings.star_rating != blank %}
+                                            <div class="block__custom-banner-star-rating-text">
+                                                {{ block.settings.star_rating }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="block__custom-banner-title">
+                                            {% if block.settings.title != blank %}
+                                                <h2 class="block__custom-banner-title-text">
+                                                    {{ block.settings.title }}
+                                                </h2>
+                                            {% endif %}
+                                        </div>
+                                        <div class="block__custom-banner-description">
+                                            {% if block.settings.description != blank %}
+                                            <div class="block__custom-banner-description-text">
+                                                {{ block.settings.description }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="block__custom-banner-button">  
+                                            {% if block.settings.button_label != blank %}
+                                            <a class="button block__custom-banner-button block__custom-banner-button-link" href="{{ block.settings.button_link }}">
+                                                {{ block.settings.button_label }}
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          {%- when 'sale_banner' -%}
+                            <div class="sale_block__custom-banner-button">
+                              {% if block.settings.button_1_label != blank %}
+                              <a class="button button--primary block__custom-banner-button block__custom-banner-button-link" href="{{ block.settings.button_1_link | default: '#' }}">
+                                {{ block.settings.button_1_label }}
+                              </a>
+                              {% endif %}
+                              {% if block.settings.button_2_label != blank %}
+                              <a class="button button--primary block__custom-banner-button block__custom-banner-button-link" href="{{ block.settings.button_2_link | default: '#' }}">
+                                {{ block.settings.button_2_label }}
+                              </a>
+                              {% endif %}
+                            </div>
+                        {%- endcase -%}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="block__custom-banner-pagination" role="group" aria-label="Slide pagination">
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+     document.addEventListener("DOMContentLoaded", () => {
+        const swiperElement = document.querySelector('.section-{{ section.id }}-padding .block__custom-banner');
+        if (swiperElement) {
+            new Swiper(swiperElement, {
+                loop: true,
+                spaceBetween: 10,
+                navigation: {
+                    nextEl: '.block__custom-banner-navigation-next',
+                    prevEl: '.block__custom-banner-navigation-prev'
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                },
+                observer: true,
+                observeParents: true
+            });
+        }
+    });
+</script>
+
+{% schema %}
+  {
+    "name": "Custom Banner",
+    "tag": "section",
+    "class": "block__custom-banner--main",
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "section_color_scheme",
+        "label": "t:sections.all.colors.label",
+        "default": "scheme-1"
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Mobile"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Padding Top (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Padding Bottom (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image_desktop",
+            "label": "Image Desktop"
+          },
+          {
+            "type": "number",
+            "id": "image_desktop_height",
+            "label": "Image Desktop Height (%)"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_mobile",
+            "label": "Image Mobile"
+          },
+          {
+            "type": "number",
+            "id": "image_mobile_height",
+            "label": "Image Mobile Height (vh)"
+          },
+          {
+            "type": "header",
+            "content": "Overlay Settings"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_overlay",
+            "label": "Enable Overlay",
+            "default": false
+          },
+          {
+            "type": "color",
+            "id": "overlay_color",
+            "label": "Overlay Color",
+            "default": "#000000"
+          },
+          {
+            "type": "range",
+            "id": "overlay_opacity",
+            "label": "Overlay Opacity (%)",
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "default": 40
+          },
+          {
+            "type": "range",
+            "id": "star_count",
+            "label": "Star count",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "default": 5
+          },
+          {
+            "type": "text",
+            "id": "star_rating",
+            "label": "Star rating text",
+            "default": "EXCELLENT 4.6 | 100,000+ CUSTOMERS"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button Label"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+          }
+        ]
+      },
+      {
+        "type": "sale_banner",
+        "name": "Sale Banner",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Responsive Images"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_desktop_large",
+            "label": "Image Desktop Large (1200px+)"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_desktop",
+            "label": "Image Desktop (992px+)"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_tablet_landscape",
+            "label": "Image Tablet Landscape (750px+)"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_tablet_portrait",
+            "label": "Image Tablet Portrait (574px+)"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_mobile",
+            "label": "Image Mobile (fallback)"
+          },
+          {
+            "type": "number",
+            "id": "image_desktop_height",
+            "label": "Image Desktop Height (%)"
+          },
+          {
+            "type": "number",
+            "id": "image_mobile_height",
+            "label": "Image Mobile Height (vh)"
+          },
+          {
+            "type": "header",
+            "content": "Overlay Settings"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_overlay",
+            "label": "Enable Overlay",
+            "default": false
+          },
+          {
+            "type": "color",
+            "id": "overlay_color",
+            "label": "Overlay Color",
+            "default": "#000000"
+          },
+          {
+            "type": "range",
+            "id": "overlay_opacity",
+            "label": "Overlay Opacity (%)",
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "default": 40
+          },
+          {
+            "type": "header",
+            "content": "Button Settings"
+          },
+          {
+            "type": "text",
+            "id": "button_1_label",
+            "label": "Button 1 Label"
+          },
+          {
+            "type": "url",
+            "id": "button_1_link",
+            "label": "Button 1 Link"
+          },
+          {
+            "type": "text",
+            "id": "button_2_label",
+            "label": "Button 2 Label"
+          },
+          {
+            "type": "url",
+            "id": "button_2_link",
+            "label": "Button 2 Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Banner"
+      }
+    ]
+}
+{% endschema %}

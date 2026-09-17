@@ -1,0 +1,114 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "ea7c96d6-8629-4db3-b133-424ed8fe6642": {
+      "type": "collection-list",
+      "blocks": {
+        "012b9217-c099-4ef0-960c-ae18c0562a3d": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "toys"
+          }
+        },
+        "23989f85-662e-4fb5-9c92-10192ce30d61": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "car-seats"
+          }
+        },
+        "ababb1f5-5703-4d5e-8bd2-3ded30f9ae25": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "strollers"
+          }
+        },
+        "3c3ccdb6-5341-45dc-a093-8cea38677ca2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "baby-kids-gear"
+          }
+        },
+        "728c9eea-0aee-495b-b921-151f3d13b8e2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "feeding"
+          }
+        },
+        "7b629d99-f3ee-4d7c-9723-36b559e66ec5": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "sleeping"
+          }
+        },
+        "138146a7-0b6e-49b8-a7a9-79756c3a8b54": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "diapering"
+          }
+        },
+        "3fad767f-903d-449d-84fa-c53b446414c8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bathing"
+          }
+        },
+        "30493749-1eff-4a7a-a184-06d846495ee1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "sports-outdoors"
+          }
+        },
+        "417bd6e4-472b-4b40-a9a0-d9f77ca72c5d": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "safety"
+          }
+        }
+      },
+      "block_order": [
+        "012b9217-c099-4ef0-960c-ae18c0562a3d",
+        "23989f85-662e-4fb5-9c92-10192ce30d61",
+        "ababb1f5-5703-4d5e-8bd2-3ded30f9ae25",
+        "3c3ccdb6-5341-45dc-a093-8cea38677ca2",
+        "728c9eea-0aee-495b-b921-151f3d13b8e2",
+        "7b629d99-f3ee-4d7c-9723-36b559e66ec5",
+        "138146a7-0b6e-49b8-a7a9-79756c3a8b54",
+        "3fad767f-903d-449d-84fa-c53b446414c8",
+        "30493749-1eff-4a7a-a184-06d846495ee1",
+        "417bd6e4-472b-4b40-a9a0-d9f77ca72c5d"
+      ],
+      "settings": {
+        "title": "All Categories",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 5,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ea7c96d6-8629-4db3-b133-424ed8fe6642"
+  ]
+}

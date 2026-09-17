@@ -1,0 +1,179 @@
+{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+{% comment %}{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}{% endcomment %}
+<link rel="preload" href="{{ 'component-collection-hero.css' | asset_url }}" as="style">
+<link rel="stylesheet" href="{{ 'component-collection-hero.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'component-collection-hero.css' | asset_url }}"></noscript>
+
+{%- style -%}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px!important; padding-bottom: {{ section.settings.padding_bottom }}px!important; } @media screen and (max-width: 749px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } }
+{%- endstyle -%}
+
+{%- comment -%} Get banner image: use collection.image or fallback to first product featured image {%- endcomment -%}
+{%- assign banner_image = collection.image -%}
+{%- unless banner_image -%}
+  {%- assign first_product = collection.products.first -%}
+  {%- if first_product and first_product.featured_image -%}
+    {%- assign banner_image = first_product.featured_image -%}
+  {%- endif -%}
+{%- endunless -%}
+
+<div class="collection-hero{% if section.settings.show_collection_image and banner_image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding {% if section.settings.show_banner_mobile == false %}hide_mobile_banner{% endif %}">
+  <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %} {% if section.settings.show_collection_image and banner_image %} show_collection-img{% endif %}">
+    <div class="collection-hero__text-wrapper">
+      <h1 class="collection-hero__title h1">
+        {{ section.settings.title | escape }}
+      </h1>
+
+      {%- if section.settings.show_collection_description and collection.description != blank -%}
+        <div class="collection-hero__description rte">{{ collection.description }}</div>
+      {%- endif -%}
+
+      {% if section.blocks.size > 0 %}
+        <div class="collection-hero-lists">
+          {% for block in section.blocks %}
+            <div class="hero-list-item">
+              <div class="hero-list-icon">
+                {% render 'custom-image', image: block.settings.icon, alt: block.settings.icon.alt %}
+              </div>
+              <div class="hero-list-info">
+                <h6 class="list-heading h6">{{ block.settings.title | escape }}</h6>
+                <p class="list-content">{{ block.settings.content | escape }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    {%- if section.settings.show_collection_image and banner_image -%}
+      <div class="collection-hero__image-container media gradient">
+        <img
+          srcset="
+            {%- if banner_image.width >= 165 -%}{{ banner_image | image_url: width: 165 }} 165w,{%- endif -%}
+            {%- if banner_image.width >= 360 -%}{{ banner_image | image_url: width: 360 }} 360w,{%- endif -%}
+            {%- if banner_image.width >= 535 -%}{{ banner_image | image_url: width: 535 }} 535w,{%- endif -%}
+            {%- if banner_image.width >= 750 -%}{{ banner_image | image_url: width: 750 }} 750w,{%- endif -%}
+            {%- if banner_image.width >= 1070 -%}{{ banner_image | image_url: width: 1070 }} 1070w,{%- endif -%}
+            {%- if banner_image.width >= 1500 -%}{{ banner_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+            {{ banner_image | image_url }} {{ banner_image.width }}w
+          "
+          src="{{ banner_image | image_url: width: 750 }}"
+          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
+          alt="{{ banner_image.alt | default: collection.title | escape }}"
+          width="{{ banner_image.width }}"
+          height="{{ banner_image.height }}"
+        >
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-banner.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:sections.main-collection-banner.settings.paragraph.content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Subcollection"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_banner_mobile",
+      "default": false,
+      "label": "Show in mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": true,
+      "label": "t:sections.main-collection-banner.settings.show_collection_description.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "default": false,
+      "label": "t:sections.main-collection-banner.settings.show_collection_image.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding - Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Padding - Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "icon_list",
+      "name": "Icon List",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

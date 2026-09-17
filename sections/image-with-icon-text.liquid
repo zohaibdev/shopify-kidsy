@@ -1,0 +1,328 @@
+{%- style -%}
+    .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } @media screen and (min-width: 750px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } } {%- for block in section.blocks -%} {%- if block.type == 'icon_text_block' -%} .icon-text-block-{{ block.id }} { border-radius: 6px; border-color: rgba(var(--theme_color-body_rgb),0.19)!important; } {%- endif -%} {%- endfor -%} /* Points & Rewards Section Styles */ .points-rewards-section__image { border-radius: {{ section.settings.image_radius | default: 16 }}px; } /* Rotating Image Badge */ .points-rewards-section__rotating-badge { width: {{ section.settings.rotating_badge_size | default: 150 }}px; height: {{ section.settings.rotating_badge_size | default: 150 }}px; } @media screen and (max-width: 749px) { .points-rewards-section__rotating-badge { width: {{ section.settings.rotating_badge_size_mobile | default: 120 }}px; height: {{ section.settings.rotating_badge_size_mobile | default: 120 }}px; } }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="points-rewards-section section-{{ section.id }}-padding isolate">
+    <div class="page-width">
+      <div class="points-rewards-section__grid">
+        <div class="points-rewards-section__image-wrapper">
+          {%- if section.settings.image != blank -%}
+            <div class="points-rewards-section__image">
+              {% render 'custom-image', image: section.settings.image, alt: section.settings.image.alt %}
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} Simple Rotating Image Badge {%- endcomment -%}
+          {%- if section.settings.rotating_badge_image != blank -%}
+            <div class="points-rewards-section__rotating-badge">
+              {% render 'custom-image', image: section.settings.rotating_badge_image, alt: section.settings.rotating_badge_image.alt %}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <div class="points-rewards-section__content">
+           {%- unless section.settings.title == blank -%}
+          <div class="title-wrapper {% if section.settings.cta_label != blank %}header-with-CTA{% endif %}" >
+            <div class="section-header-content">
+              {% if section.settings.heading_link != blank %}
+                <a href="{{ section.settings.heading_link }}" class="section--title h3" title="{{ section.settings.title | escape }}">
+                  {{ section.settings.title | escape }}
+                </a>
+              {% else %}
+                <h3 class="section--title h3">
+                  {{ section.settings.title | escape }}
+                </h3>
+              {% endif %}
+              {% if section.settings.subtitle != blank %}
+                <p class="section-description ">
+                  {{ section.settings.subtitle }}
+                </p>
+              {% endif %}
+            </div>
+          </div>
+        {%- endunless -%}
+        
+            <div class="points-rewards-section__image-wrapper mobile-img-block">
+            {%- if section.settings.image != blank -%}
+              <div class="points-rewards-section__image">
+                {% render 'custom-image', image: section.settings.image, alt: section.settings.image.alt %}
+              </div>
+            {%- endif -%}
+
+            {%- comment -%} Simple Rotating Image Badge {%- endcomment -%}
+            {%- if section.settings.rotating_badge_image != blank -%}
+              <div class="points-rewards-section__rotating-badge">
+                {% render 'custom-image', image: section.settings.rotating_badge_image, alt: section.settings.rotating_badge_image.alt %}
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="points-rewards-section__blocks">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'icon_text_block' -%}
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}" class="icon-text-block icon-text-block-{{ block.id }} color-{{ section.settings.blocks_color_scheme | default: section.settings.color_scheme }} gradient" {{ block.shopify_attributes }}>
+                    {%- if block.settings.icon != blank -%}
+                      <div class="icon-text-block__icon">
+                        {% render 'custom-image', image: block.settings.icon, alt: block.settings.icon.alt %}
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.text != blank -%}
+                      <div class="icon-text-block__text">
+                        {{ block.settings.text }}
+                      </div>
+                    {%- endif -%}
+                  </a>
+                {%- else -%}
+                  <div class="icon-text-block icon-text-block-{{ block.id }} color-{{ section.settings.blocks_color_scheme | default: section.settings.color_scheme }} gradient" {{ block.shopify_attributes }}>
+                    {%- if block.settings.icon != blank -%}
+                      <div class="icon-text-block__icon">
+                        {% render 'custom-image', image: block.settings.icon, alt: block.settings.icon.alt %}
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.text != blank -%}
+                      <div class="icon-text-block__text">
+                        {{ block.settings.text }}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          
+           {% if section.settings.cta_label != blank %}
+              <div class="section-header-cta">
+                <a class="button button--{{ section.settings.cta_button_style }} title__button" {% if section.settings.cta_link != blank %}href="{{ section.settings.cta_link }}"{% endif %}>
+                  {{ section.settings.cta_label | escape }}
+                </a>
+              </div>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Points & Rewards Section",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Section color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "blocks_color_scheme",
+      "label": "Blocks color scheme",
+      "info": "Color scheme for all icon text blocks (background and text colors)",
+      "default": "scheme-1"
+    },
+     {
+        "type": "header",
+        "content": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Best sellers on kidsy"
+      },
+      {
+        "type": "url",
+        "id": "heading_link",
+        "label": "Heading link URL"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "subtitle",
+        "label": "Subtitle"
+      },
+      {
+        "type": "text",
+        "id": "cta_label",
+        "label": "Button text",
+        "default": "View All"
+      },
+      {
+        "type": "url",
+        "id": "cta_link",
+        "label": "Button Link"
+      },
+      {
+        "id": "cta_button_style",
+        "type": "select",
+        "label": "Button Style",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          },
+          {
+            "value": "secondary",
+            "label": "Secondary"
+          }
+        ],
+        "default": "primary"
+      },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Image border radius",
+      "default": 16,
+      "info": "Border radius for the main image"
+    },
+    {
+      "type": "header",
+      "content": "Rotating Badge Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "rotating_badge_image",
+      "label": "Rotating badge image",
+      "info": "Select an image that will rotate smoothly on the section"
+    },
+    {
+      "type": "range",
+      "id": "rotating_badge_size",
+      "min": 80,
+      "max": 180,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge size (desktop)",
+      "default": 150,
+      "info": "Size of the rotating badge on desktop in pixels"
+    },
+    {
+      "type": "range",
+      "id": "rotating_badge_size_mobile",
+      "min": 80,
+      "max": 180,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge size (mobile)",
+      "default": 120,
+      "info": "Size of the rotating badge on mobile in pixels"
+    },
+    {
+        "type": "header",
+        "content": "Section Padding - Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Mobile"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Padding Top (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Padding Bottom (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "icon_text_block",
+      "name": "Icon with Text Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Earn 10 Points Per $1, That's 10% Back On Every Order</p>"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional link for the icon text block"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Image With Icon Text",
+      "blocks": [
+        {
+          "type": "icon_text_block",
+          "settings": {
+            "text": "<p>Earn 10 Points Per $1, That's 10% Back On Every Order</p>"
+          }
+        },
+        {
+          "type": "icon_text_block",
+          "settings": {
+            "text": "<p>Refer A Friend And You Both Get $20 Off</p>"
+          }
+        },
+        {
+          "type": "icon_text_block",
+          "settings": {
+            "text": "<p>Get 300 Points For Sign Up, Or Sharing Your Birthday</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

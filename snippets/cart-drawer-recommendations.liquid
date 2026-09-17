@@ -1,0 +1,60 @@
+{% comment %}
+  Generates and renders cart drawer recommendations
+{% endcomment %}
+
+<div class="cart-drawer__recommendations">
+
+  {% assign products_to_recommend = settings.cart_drawer_recommendations_products_to_recommend %}
+  {% assign products_to_show = settings.cart_drawer_recommendations_products_to_show %}
+  {% assign section_id = "cart-drawer" %}
+  {% capture cart_items_json %}
+    [
+      {% for item in cart.items %}
+        {
+          "product_id": {{ item.product_id | json }},
+          "quantity": {{ item.quantity | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  {% endcapture %}
+ 
+  <div class="cart-drawer__recommendations-heading">{{ settings.cart_drawer_recommendations_heading }}</div>
+  <comprehensive-cart-recommendations
+    class="complementary-products"
+    data-url="{{ routes.product_recommendations_url }}?limit={{ products_to_recommend }}{% if settings.cart_drawer_upsell_type == 'complementary' %}&intent=complementary{% endif %}"
+    data-section-id="{{ section_id }}"
+    data-cart-items="{{ cart_items_json | strip_newlines | strip | escape }}"
+    data-max-position="{{ products_to_recommend }}"
+    data-products-to-show="{{ products_to_show }}"
+    data-weight-quantity="{{ settings.recommendation_weight_quantity }}"
+    data-weight-frequency="{{ settings.recommendation_weight_frequency }}"
+    data-weight-position="{{ settings.recommendation_weight_position }}"
+    >
+      {% if recommendations.performed and recommendations.products_count > 0 %}
+        <ul class="grid product-grid">
+          {% for recommendation in recommendations.products %}
+            {% unless product.title contains 'Shipping Protection' %}
+              <li class="grid__item">
+                {% render 'cart-drawer-upsell-product', card_product: recommendation, section_id: section_id %}
+              </li>
+            {% endunless %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+  </comprehensive-cart-recommendations>
+</div>
+
+
+
+{% comment %}{{ 'section-main-product.css' | asset_url | stylesheet_tag }}{% endcomment %}
+<link rel="preload" href="{{ 'section-main-product.css' | asset_url }}" as="style">
+<link rel="stylesheet" href="{{ 'section-main-product.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'section-main-product.css' | asset_url }}"></noscript>
+{% comment %}{{ 'component-price.css' | asset_url | stylesheet_tag }}{% endcomment %}
+<link rel="preload" href="{{ 'component-price.css' | asset_url }}" as="style">
+<link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}"></noscript>
+{% comment %}{{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}{% endcomment %}
+<link rel="preload" href="{{ 'component-product-variant-picker.css' | asset_url }}" as="style">
+<link rel="stylesheet" href="{{ 'component-product-variant-picker.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'component-product-variant-picker.css' | asset_url }}"></noscript> 

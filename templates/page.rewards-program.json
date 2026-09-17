@@ -1,0 +1,497 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-97942f96-4ece-482c-afe4-9924ef7eec40",
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "kidsy_points_hero_3DMGgk": {
+      "type": "kidsy-points-hero",
+      "blocks": {
+        "trust_item_UDymVJ": {
+          "type": "trust_item",
+          "settings": {
+            "label": "Free to join",
+            "icon_preset": "check",
+            "icon": "shopify://shop_images/Frame_4.svg"
+          }
+        },
+        "trust_item_UtCReG": {
+          "type": "trust_item",
+          "settings": {
+            "label": "No credit card",
+            "icon_preset": "card",
+            "icon": "shopify://shop_images/Frame_5.svg"
+          }
+        },
+        "trust_item_YDNxX6": {
+          "type": "trust_item",
+          "settings": {
+            "label": "100 bonus points on signup",
+            "icon_preset": "star",
+            "icon": "shopify://shop_images/Frame_9.svg"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_UDymVJ",
+        "trust_item_UtCReG",
+        "trust_item_YDNxX6"
+      ],
+      "name": "Kidsy Points Hero",
+      "settings": {
+        "tag_label": "Kidsy Points",
+        "subhead": "Free to Join",
+        "title": "Earn 10% Back On Every Order.",
+        "description": "Shop smarter and save more with Kidsy Points. Earn points on every purchase, then redeem them for real dollar savings on premium baby gear from Graco, UPPAbaby, Chicco, and hundreds more.",
+        "primary_btn_label": "Join Free - Start Earning",
+        "primary_btn_link": "#smile-home",
+        "secondary_btn_label": "Already a member? Log in",
+        "secondary_btn_link": "/account/login",
+        "squiggle_image": "shopify://shop_images/misc-51.png",
+        "visual_image": "shopify://shop_images/Group_1000004058_1.png",
+        "mb_image": "shopify://shop_images/Group_1000004058_1.png",
+        "color_bg": "#fffbf3",
+        "color_text": "#341300",
+        "color_accent": "#f45901",
+        "color_secondary_btn": "#ffdfa8",
+        "color_gold": "#ffbc38",
+        "color_wave": "#ffe0b0"
+      }
+    },
+    "every_action_earns_cFgD4D": {
+      "type": "every-action-earns",
+      "blocks": {
+        "step_card_bjrQbA": {
+          "type": "step_card",
+          "settings": {
+            "title": "Create Account",
+            "description": "One-time bonus",
+            "tag_label": "100 pts = $1",
+            "icon_preset": "user_plus",
+            "icon_image": "shopify://shop_images/UserPlus-2.png",
+            "icon_size": "default",
+            "link": "#smile-home"
+          }
+        },
+        "step_card_LyjFCj": {
+          "type": "step_card",
+          "settings": {
+            "title": "Place an Order",
+            "description": "10 points for every $1 spent",
+            "tag_label": "100 pts = $1",
+            "icon_preset": "shopping_bag",
+            "icon_image": "shopify://shop_images/fi_6713660.svg",
+            "icon_size": "default",
+            "link": "#smile-home"
+          }
+        },
+        "step_card_GQqKxA": {
+          "type": "step_card",
+          "settings": {
+            "title": "Write a Review",
+            "description": "Per approved review",
+            "tag_label": "100 pts = $1",
+            "icon_preset": "review",
+            "icon_image": "shopify://shop_images/fi_8013078.svg",
+            "icon_size": "default",
+            "link": "#smile-home"
+          }
+        },
+        "step_card_GPK8Q9": {
+          "type": "step_card",
+          "settings": {
+            "title": "Birthday Bonus",
+            "description": "By tier",
+            "tag_label": "300 pts = $3",
+            "icon_preset": "birthday",
+            "icon_image": "shopify://shop_images/fi_7589082.svg",
+            "icon_size": "large",
+            "link": "#smile-home"
+          }
+        },
+        "step_card_6FEp9p": {
+          "type": "step_card",
+          "settings": {
+            "title": "Follow on Instagram",
+            "description": "One-time",
+            "tag_label": "100 pts = $1",
+            "icon_preset": "instagram",
+            "icon_image": "shopify://shop_images/fi_15713420.svg",
+            "icon_size": "default",
+            "link": "#smile-home"
+          }
+        },
+        "step_card_UAzXbr": {
+          "type": "step_card",
+          "settings": {
+            "title": "Follow on Facebook",
+            "description": "One-time",
+            "tag_label": "100 pts = $1",
+            "icon_preset": "facebook",
+            "icon_image": "shopify://shop_images/fi_15047435.svg",
+            "icon_size": "default",
+            "link": "#smile-home"
+          }
+        },
+        "step_card_MT9Gqm": {
+          "type": "step_card",
+          "settings": {
+            "title": "Share on Social",
+            "description": "Share Kidsy, earn points",
+            "tag_label": "100 pts = $1",
+            "icon_preset": "share",
+            "icon_image": "shopify://shop_images/fi_2958791.svg",
+            "icon_size": "default",
+            "link": "#smile-home"
+          }
+        },
+        "step_card_BJywbW": {
+          "type": "step_card",
+          "settings": {
+            "title": "Refer a Friend",
+            "description": "When friend orders",
+            "tag_label": "$20 REWARD",
+            "icon_preset": "user_plus",
+            "icon_image": "shopify://shop_images/UserPlus-2.png",
+            "icon_size": "default",
+            "link": "#smile-home"
+          }
+        }
+      },
+      "block_order": [
+        "step_card_bjrQbA",
+        "step_card_LyjFCj",
+        "step_card_GQqKxA",
+        "step_card_GPK8Q9",
+        "step_card_6FEp9p",
+        "step_card_UAzXbr",
+        "step_card_MT9Gqm",
+        "step_card_BJywbW"
+      ],
+      "name": "Every Action Earns",
+      "settings": {
+        "title": "Every Action Earns",
+        "subtitle": "Points for shopping, sharing, and celebrating with Kidsy. Sign up and start earning immediately — 100 bonus points / $1 the moment your account is created.",
+        "columns_desktop": "4",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "color_bg": "#fff4e1",
+        "color_card": "#ffffff",
+        "color_text": "#341300",
+        "color_tag": "#f45901",
+        "color_tag_text": "#ffffff",
+        "color_icon_from": "#f8b086"
+      }
+    },
+    "reviews_stats_carousel_CJm7qT": {
+      "type": "reviews-stats-carousel",
+      "blocks": {
+        "stat_Xqx4i4": {
+          "type": "stat",
+          "settings": {
+            "number": "100K+",
+            "label": "Kidsy Points Members"
+          }
+        },
+        "stat_rkDhjG": {
+          "type": "stat",
+          "settings": {
+            "number": "10%",
+            "label": "Back on Every Order"
+          }
+        },
+        "stat_9WXJzE": {
+          "type": "stat",
+          "settings": {
+            "number": "$200+",
+            "label": "Average Annual Savings"
+          }
+        },
+        "review_dDHgKQ": {
+          "type": "review",
+          "settings": {
+            "title": "What a great idea to resell baby items…",
+            "body": "“What a great idea to resell baby items that are normally so crazy expensive! Plus free shipping over $50 and the merchandise is brand new! OMG you guys are the BEST!!!!”",
+            "name": "Judy Mcdermott",
+            "initials": "JM",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        "review_6qcEQD": {
+          "type": "review",
+          "settings": {
+            "title": "Love shopping on kidsy",
+            "body": "The price is what made me buy it from here. I bought a stroller for my grandson and I didn't want to spend a lot of money. Because we just needed when he comes over.",
+            "name": "Maria Z.",
+            "initials": "MZ",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        "review_YV94bi": {
+          "type": "review",
+          "settings": {
+            "title": "Perfect condition, and fast delivery.",
+            "body": "It came out great and the shipping was very fast. And the product was in perfect condition.",
+            "name": "Erica F.",
+            "initials": "EF",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        "review_WTKAip": {
+          "type": "review",
+          "settings": {
+            "title": "brand new!!!",
+            "body": "Shipping was fast and items were of good Quality",
+            "name": "Pat A.",
+            "initials": "PA",
+            "rating": 5,
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "stat_Xqx4i4",
+        "stat_rkDhjG",
+        "stat_9WXJzE",
+        "review_dDHgKQ",
+        "review_6qcEQD",
+        "review_YV94bi",
+        "review_WTKAip"
+      ],
+      "name": "Reviews & Stats Carousel",
+      "settings": {
+        "show_banner": true,
+        "show_squiggles": true,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "bg_color": "#ffbc38",
+        "card_bg": "#fff4e1",
+        "accent_color": "#f45901",
+        "text_color": "#341300",
+        "avatar_bg": "#fddecc",
+        "border_color": "#d9d3cf",
+        "banner_tint": "rgba(255,255,255,0.46)",
+        "font_family": "'Roobert TRIAL'"
+      }
+    },
+    "three_steps_to_savings_nwy4kH": {
+      "type": "three-steps-to-savings",
+      "blocks": {
+        "step_qbEFUe": {
+          "type": "step",
+          "settings": {
+            "title": "Join Free",
+            "description": "Create a Kidsy account in 30 seconds. No credit card, no fees. You'll get 100 bonus points immediately when your account is confirmed.",
+            "icon_preset": "users",
+            "icon_image": "shopify://shop_images/fi_681494.svg",
+            "btn_label": "Create Account",
+            "btn_link": "#smile-home"
+          }
+        },
+        "step_tmDP4C": {
+          "type": "step",
+          "settings": {
+            "title": "Shop & Earn",
+            "description": "Every $1 spent earns 10 points. That’s 10% back in points toward future savings. Browse open-box deals from Graco, Evenflo, Chicco, and 100+ premium brands.",
+            "icon_preset": "shop",
+            "icon_image": "shopify://shop_images/fi_11442703.svg",
+            "btn_label": "Shop Now",
+            "btn_link": "/collections/best-sellers"
+          }
+        },
+        "step_ha7bCi": {
+          "type": "step",
+          "settings": {
+            "title": "Redeem at Checkout",
+            "description": "Tap Your rewards, then copy or apply your coupon at checkout. Stack with sitewide sales for maximum savings on every order.",
+            "icon_preset": "check_badge",
+            "icon_image": "shopify://shop_images/checkmark-badge-02.svg",
+            "btn_label": "Redeem Points",
+            "btn_link": "#smile-home"
+          }
+        }
+      },
+      "block_order": [
+        "step_qbEFUe",
+        "step_tmDP4C",
+        "step_ha7bCi"
+      ],
+      "name": "Three Steps to Savings",
+      "settings": {
+        "title": "Three Steps to Savings",
+        "subtitle": "Start earning in under 30 seconds.",
+        "show_numbers": true,
+        "show_blobs": true,
+        "blob_opacity": 1,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "color_bg": "#fff4e1",
+        "color_card": "#ffffff",
+        "color_border": "#d9d3cf",
+        "color_text": "#341300",
+        "color_accent": "#f45901",
+        "color_badge": "#ffdfa8",
+        "color_blob": "#ffdfa8"
+      }
+    },
+    "faq_CFrKb8": {
+      "type": "faq",
+      "blocks": {
+        "faq_YABQQh": {
+          "type": "faq",
+          "settings": {
+            "question": "Is Kidsy Points free to join?",
+            "answer": "<p>Yes, joining Kidsy Points is completely free. No credit card or membership fees required, and you'll earn 100 bonus points the moment your account is confirmed.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_HyFb3x": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I earn points?",
+            "answer": "<p>You earn points for shopping (per dollar spent), writing approved reviews, sharing on social, referring friends, and on your birthday. See the rewards grid above for the full list.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_bi86Ni": {
+          "type": "faq",
+          "settings": {
+            "question": "When do my points expire?",
+            "answer": "<p>Your points expire after <strong>3 months of inactivity</strong>, so don’t let your savings sit too long. Earn or redeem points to keep your balance active.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_dkQQng": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I combine points with a promo code?",
+            "answer": "<p>It depends on the discount. Kidsy Points rewards may be combined with eligible discounts when allowed at checkout. Some promo codes or offers may not stack.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_3XEqyM": {
+          "type": "faq",
+          "settings": {
+            "question": "What happens if I return an order?",
+            "answer": "<p>If you return an order, the points earned on that purchase will be deducted from your balance. Points used at checkout will be restored if your refund is processed.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_CnBbNM": {
+          "type": "faq",
+          "settings": {
+            "question": "How Do I Redeem My Points?",
+            "answer": "<p>Log in to your Kidsy account and open the Kidsy Points panel. Go to <strong>Ways to redeem</strong>, choose your reward, then copy or apply your discount code at checkout. Every <strong>100 points = $1 off</strong>.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_bgK4F7": {
+          "type": "faq",
+          "settings": {
+            "question": "Where Can I See My Points And Rewards?",
+            "answer": "<p>Open the <a href=\"#smile-home\" title=\"#smile-home\">Kidsy Points panel</a> anytime to see your points balance, available rewards, ways to earn, and past activity.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_YABQQh",
+        "faq_HyFb3x",
+        "faq_bi86Ni",
+        "faq_dkQQng",
+        "faq_3XEqyM",
+        "faq_CnBbNM",
+        "faq_bgK4F7"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "cta_label": "Contact Us",
+        "cta_link": "/pages/contact",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "color_bg": "#fff4e1",
+        "color_text": "#341300",
+        "color_accent": "#f45901",
+        "color_border": "#d9d3cf"
+      }
+    },
+    "promo_cta_banner_CUUrcw": {
+      "type": "promo-cta-banner",
+      "blocks": {
+        "trust_item_AYj6rR": {
+          "type": "trust_item",
+          "settings": {
+            "label": "100,000+ parents already earning",
+            "icon_preset": "users",
+            "icon_image": "shopify://shop_images/Frame_10.svg"
+          }
+        },
+        "trust_item_6ApRUQ": {
+          "type": "trust_item",
+          "settings": {
+            "label": "Free forever",
+            "icon_preset": "shield",
+            "icon_image": "shopify://shop_images/Frame_11.svg"
+          }
+        },
+        "trust_item_qEqaa3": {
+          "type": "trust_item",
+          "settings": {
+            "label": "100 pts on signup",
+            "icon_preset": "gift",
+            "icon_image": "shopify://shop_images/Frame_12.svg"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_AYj6rR",
+        "trust_item_6ApRUQ",
+        "trust_item_qEqaa3"
+      ],
+      "name": "Promo CTA Banner",
+      "settings": {
+        "title": "Start Earning on Your Next Order",
+        "description": "Every order is worth more with Kidsy Points. Join free in 30 seconds and earn 100 bonus points the moment you sign up. No credit card. No fees. Just savings.",
+        "cta_label": "Join Kidsy Points - It's Free",
+        "cta_link": "#smile-home",
+        "show_blobs": true,
+        "padding_outer": 50,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "color_outer_bg": "#ffffff",
+        "color_bg": "#f45901",
+        "color_text": "#ffffff",
+        "color_btn_bg": "#ffffff",
+        "color_btn_text": "#341300",
+        "color_blob": "#ffdfa8"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "kidsy_points_hero_3DMGgk",
+    "every_action_earns_cFgD4D",
+    "reviews_stats_carousel_CJm7qT",
+    "three_steps_to_savings_nwy4kH",
+    "faq_CFrKb8",
+    "promo_cta_banner_CUUrcw"
+  ]
+}

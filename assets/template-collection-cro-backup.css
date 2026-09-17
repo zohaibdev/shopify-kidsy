@@ -1,0 +1,129 @@
+.main-collection-cro{
+  background: #FFFBF7;
+}
+/* ============================= Filter & Sortby ============================= */
+.main-collection-filters-cotainer{
+  max-width: 1305px;
+  padding: 0 11px;
+}
+.main-collection-filters-cotainer .facets-container{
+  padding: 0;
+  margin: 0 0 2rem;
+}
+.main-collection-filters-cotainer .facets-container .facets__form{
+  margin: 0;
+  grid-template-columns: auto auto;
+}
+.main-collection-filters-cotainer .facets__form .facets__heading,
+.main-collection-filters-cotainer .facets__form .facets__summary,
+.main-collection-filters-cotainer .facets__form .facet-filters__label,
+.facet-filters__field .select__select, 
+.mobile-facets__sort .select__select{
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.4px;
+}
+.main-collection-filters-cotainer .facets__form .facets__heading,
+.main-collection-filters-cotainer .facets__form .facet-filters__label{
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.85);
+  margin: 0 16px 0 0;
+}
+.main-collection-filters-cotainer .facets__form .facets__disclosure{
+  margin-right: 35px;
+}
+.main-collection-filters-cotainer .facets__form .facets__summary,
+.facet-filters__field .select__select, 
+.mobile-facets__sort .select__select{
+  margin: 0;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.75) !important;
+  padding: 0;
+}
+.main-collection-filters-cotainer .facets__form .facets__summary div{
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+}
+.main-collection-filters-cotainer .facets__form .facets__summary .icon-caret{
+  position: unset;
+}
+.main-collection-filters-cotainer .facets__form .facets__summary:hover .facets__summary-label{
+  text-decoration: none;
+}
+
+.main-collection-filters-cotainer .facets__form .facet-filters__field .select{
+  min-width: 157px;
+}
+.main-collection-filters-cotainer .facets__form .select .svg-wrapper{
+  top: 50%;
+  transform: translateY(-50%);
+}
+.main-collection-filters-cotainer .facets__form .facet-filters__sort:focus-visible{
+  outline: none;
+  outline-offset: unset;
+  box-shadow: none;
+}
+.main-collection-filters-cotainer .facets__form .svg-wrapper svg,
+.main-collection-filters-cotainer .facets__form .facets__summary[aria-expanded="false"] svg{
+  transition: all .2s ease-in-out;
+  transform: rotate(0);
+}
+.main-collection-filters-cotainer .facets__form .facet-filters__sort:focus-visible + .svg-wrapper svg,
+.main-collection-filters-cotainer .facets__form .facets__summary[aria-expanded="true"] svg{
+  transform: rotate(180deg);
+}
+@media screen and (max-width: 749px){
+  .main-collection-filters-cotainer .mobile-facets__open{
+    padding: 0;
+  }
+  .main-collection-filters-cotainer .mobile-facets__open svg path{
+    fill: #000;
+  }
+  .main-collection-filters-cotainer .mobile-facets__open .mobile-facets__open-label{
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.313;
+    letter-spacing: 0.4px;
+    color: #000000D9;
+  }
+  .main-collection-filters-cotainer .facets-container {
+    margin: 0 0 16px;
+  }
+}
+/* ============================= Product Grid ============================= */
+aside#main-collection-filters {
+  display: block !important;
+}
+.product-grid-container-cro .collection.page-width{
+  max-width: 1393px;
+  padding: 0 11px;
+}
+.product-grid-container-cro .collection .grid{
+  margin: 0;
+  column-gap: 5px;
+  row-gap: 15px;
+}
+.product-grid-container-cro .collection .grid .grid__item{
+  width: calc(50% - 5px * 3 / 4);
+  max-width: calc(50% - 5px * 3 / 4);
+}
+@media screen and (min-width: 990px) {
+  .main-collection-filters-cotainer .facets__form .facet-filters.sorting{
+    padding-left: 0;
+  }
+  .product-grid-container-cro .collection .grid{
+    column-gap: 22px;
+    row-gap: 47px;
+  }
+  .product-grid-container-cro .collection .grid--4-col-desktop .grid__item{
+    width: calc(33.33% - 22px * 3 / 4);
+    max-width: calc(33.33% - 22px * 3 / 4);
+  }
+}
+@media screen and (min-width: 1200px){
+  .product-grid-container-cro .collection .grid--4-col-desktop .grid__item{
+    width: calc(25% - 22px * 3 / 4);
+    max-width: calc(25% - 22px * 3 / 4);
+  }
+}

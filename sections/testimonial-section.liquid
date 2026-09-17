@@ -1,0 +1,291 @@
+<section class="testimonial-section" data-section-id="{{ section.id }}" >
+  <div class="testimonial-main-box">
+    <div class="testimonial-header-block">
+      <div class="section-header"><h2>{{ section.settings.title }}</h2></div>
+      <div class="slider-controls">
+        <div
+          class="swiper-button-prev swiper-{{ section.id }}-prev"
+          style="transform: rotate(180deg); left: 0px; right: 0; position: relative; top: 0; margin: 0;"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="57" height="57" viewBox="0 0 57 57" fill="none">
+            <circle cx="28.5" cy="28.5" r="28" fill="white" stroke="black"/>
+            <path d="M25.1115 19.3259C25.0401 19.2594 24.9828 19.1792 24.9431 19.0901C24.9034 19.001 24.8821 18.9047 24.8803 18.8072C24.8786 18.7096 24.8966 18.6127 24.9331 18.5223C24.9696 18.4318 25.024 18.3496 25.093 18.2806C25.162 18.2116 25.2442 18.1572 25.3347 18.1207C25.4251 18.0841 25.522 18.0662 25.6196 18.0679C25.7172 18.0696 25.8134 18.091 25.9025 18.1307C25.9916 18.1704 26.0718 18.2277 26.1383 18.2991L35.8258 27.9866C35.9619 28.1228 36.0383 28.3075 36.0383 28.5C36.0383 28.6925 35.9619 28.8772 35.8258 29.0134L26.1383 38.7009C26.0006 38.8293 25.8184 38.8991 25.6302 38.8958C25.442 38.8925 25.2624 38.8162 25.1293 38.6831C24.9962 38.55 24.9199 38.3704 24.9166 38.1822C24.9133 37.994 24.9831 37.8118 25.1115 37.6741L34.2843 28.5L25.1115 19.3259Z" fill="black"/>
+          </svg>
+        </div>
+        <div
+          class="swiper-button-next swiper-{{ section.id }}-next"
+          style="transform: none; left: 0px; right: 0; position: relative; top: 0; margin: 0;"
+        >
+          <!-- SVG Arrow -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="57" height="57" viewBox="0 0 57 57" fill="none">
+            <circle cx="28.5" cy="28.5" r="28" fill="white" stroke="black"/>
+            <path d="M25.1115 19.3259C25.0401 19.2594 24.9828 19.1792 24.9431 19.0901C24.9034 19.001 24.8821 18.9047 24.8803 18.8072C24.8786 18.7096 24.8966 18.6127 24.9331 18.5223C24.9696 18.4318 25.024 18.3496 25.093 18.2806C25.162 18.2116 25.2442 18.1572 25.3347 18.1207C25.4251 18.0841 25.522 18.0662 25.6196 18.0679C25.7172 18.0696 25.8134 18.091 25.9025 18.1307C25.9916 18.1704 26.0718 18.2277 26.1383 18.2991L35.8258 27.9866C35.9619 28.1228 36.0383 28.3075 36.0383 28.5C36.0383 28.6925 35.9619 28.8772 35.8258 29.0134L26.1383 38.7009C26.0006 38.8293 25.8184 38.8991 25.6302 38.8958C25.442 38.8925 25.2624 38.8162 25.1293 38.6831C24.9962 38.55 24.9199 38.3704 24.9166 38.1822C24.9133 37.994 24.9831 37.8118 25.1115 37.6741L34.2843 28.5L25.1115 19.3259Z" fill="black"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-wrapper">
+      <div class="swiper-container">
+        <div class="swiper swiper-slider testimonial-slider-{{ section.id}}">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              <div class="swiper-slide" data-block-id="{{ block.id }}">
+                <div class="card-box">
+                  {%- if block.settings.image != blank -%}
+                    {% liquid
+                      assign videoObj = block.settings.video.sources | where: 'format', 'mp4'
+                      assign videoURL = videoObj[0].url
+                    %}
+                    <div
+                      class="img-block"
+                      {% if block.settings.video != blank %}
+                        data-video="{{ videoURL }}"
+                      {% endif %}
+                    >
+                      <img
+                        srcset="
+                          {%- if block.settings.image.width >= 360 -%}{{ block.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+                          {%- if block.settings.image.width >= 520 -%}{{ block.settings.image | image_url: width: 520 }} 520w,{%- endif -%}
+                          {%- if block.settings.image.width >= 650 -%}{{ block.settings.image | image_url: width: 650 }} 650w,{%- endif -%}
+                          {%- if block.settings.image.width >= 780 -%}{{ block.settings.image | image_url: width: 780 }} 780w,{%- endif -%}
+                          {%- if block.settings.image.width >= 900 -%}{{ block.settings.image | image_url: width: 900 }} 900w,{%- endif -%}
+                          {%- if block.settings.image.width >= 1000 -%}{{ block.settings.image | image_url: width: 1000 }} 1000w,{%- endif -%}
+                        "
+                        src="{{ block.settings.image | image_url: width: 50 }}"
+                        sizes="(min-width: 1440px) 25vw, (min-width: 750px) calc((100vw - 130px) / 2), 100vw"
+                        alt="{{ block.settings.image.alt | default: shop.name | escape }}"
+                        loading="lazy"
+                        width="{{ block.settings.image.width | divided_by: 3 }}"
+                        height="{{ block.settings.image.height | divided_by: 3 }}"
+                      >
+                      {% if block.settings.video != blank %}
+                        <div class="video-overlay" style="background-color: #0000004D;"></div>
+                        <a href="#" class="review-video-trigger">
+                          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                            <path opacity="0.4" d="M22.4309 0C18.1651 0 13.995 1.26498 10.4481 3.63497C6.90111 6.00496 4.13661 9.37352 2.50413 13.3147C0.87165 17.2558 0.444519 21.5925 1.27675 25.7765C2.10898 29.9604 4.16319 33.8035 7.17962 36.8199C10.196 39.8364 14.0392 41.8906 18.2231 42.7228C22.407 43.555 26.7437 43.1279 30.6849 41.4954C34.626 39.863 37.9946 37.0984 40.3646 33.5515C42.7346 30.0046 43.9996 25.8345 43.9996 21.5686C43.9996 15.8483 41.7272 10.3622 37.6823 6.3173C33.6374 2.2724 28.1513 0 22.4309 0ZM17.9375 30.5555V12.5817L32.3166 21.5686L17.9375 30.5555Z" fill="white"/>
+                          </svg>
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  {% else %}
+                    <div class="review-box">
+                      <div class="star">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="106"
+                          height="17"
+                          viewBox="0 0 106 17"
+                          fill="none"
+                        >
+                          <g clip-path="url(#clip0_343_2739)">
+                          <path d="M8.5678 0.53423C8.8677 -0.178077 9.8891 -0.178076 10.189 0.534232L11.959 4.7384C12.0855 5.03869 12.3713 5.24387 12.6995 5.26986L17.2937 5.63373C18.0721 5.69538 18.3877 6.65505 17.7947 7.15693L14.2944 10.1191C14.0444 10.3307 13.9351 10.6627 14.0115 10.979L15.0809 15.4081C15.2621 16.1585 14.4358 16.7516 13.7694 16.3495L9.83602 13.976C9.55507 13.8065 9.20173 13.8065 8.92079 13.976L4.98743 16.3495C4.32099 16.7516 3.49466 16.1585 3.67585 15.4081L4.74527 10.979C4.82165 10.6627 4.71246 10.3307 4.46245 10.1191L0.962076 7.15693C0.369013 6.65505 0.684647 5.69538 1.46305 5.63373L6.05735 5.26986C6.38551 5.24387 6.67137 5.03869 6.7978 4.7384L8.5678 0.53423Z" fill="black"/>
+                          <path d="M30.3786 0.53423C30.6785 -0.178077 31.6999 -0.178076 31.9998 0.534232L33.7698 4.7384C33.8963 5.03869 34.1821 5.24387 34.5103 5.26986L39.1045 5.63373C39.8829 5.69538 40.1985 6.65505 39.6055 7.15693L36.1052 10.1191C35.8552 10.3307 35.7459 10.6627 35.8223 10.979L36.8917 15.4081C37.0729 16.1585 36.2466 16.7516 35.5802 16.3495L31.6468 13.976C31.3659 13.8065 31.0125 13.8065 30.7316 13.976L26.7982 16.3495C26.1318 16.7516 25.3055 16.1585 25.4866 15.4081L26.5561 10.979C26.6324 10.6627 26.5233 10.3307 26.2732 10.1191L22.7729 7.15693C22.1798 6.65505 22.4954 5.69538 23.2738 5.63373L27.8681 5.26986C28.1963 5.24387 28.4822 5.03869 28.6086 4.7384L30.3786 0.53423Z" fill="black"/>
+                          <path d="M52.1894 0.53423C52.4893 -0.178077 53.5107 -0.178076 53.8106 0.534232L55.5805 4.7384C55.7071 5.03869 55.9929 5.24387 56.3211 5.26986L60.9153 5.63373C61.6937 5.69538 62.0093 6.65505 61.4163 7.15693L57.916 10.1191C57.666 10.3307 57.5567 10.6627 57.6331 10.979L58.7025 15.4081C58.8837 16.1585 58.0574 16.7516 57.3909 16.3495L53.4576 13.976C53.1767 13.8065 52.8233 13.8065 52.5424 13.976L48.609 16.3495C47.9426 16.7516 47.1162 16.1585 47.2974 15.4081L48.3668 10.979C48.4432 10.6627 48.334 10.3307 48.084 10.1191L44.5837 7.15693C43.9906 6.65505 44.3062 5.69538 45.0846 5.63373L49.6789 5.26986C50.0071 5.24387 50.293 5.03869 50.4194 4.7384L52.1894 0.53423Z" fill="black"/>
+                          <path d="M74.0003 0.53423C74.3002 -0.178077 75.3216 -0.178076 75.6215 0.534232L77.3915 4.7384C77.518 5.03869 77.8038 5.24387 78.132 5.26986L82.7262 5.63373C83.5046 5.69538 83.8202 6.65505 83.2272 7.15693L79.7269 10.1191C79.4769 10.3307 79.3676 10.6627 79.444 10.979L80.5134 15.4081C80.6946 16.1585 79.8683 16.7516 79.2019 16.3495L75.2685 13.976C74.9876 13.8065 74.6342 13.8065 74.3533 13.976L70.4199 16.3495C69.7535 16.7516 68.9272 16.1585 69.1083 15.4081L70.1778 10.979C70.2541 10.6627 70.145 10.3307 69.8949 10.1191L66.3946 7.15693C65.8015 6.65505 66.1171 5.69538 66.8955 5.63373L71.4898 5.26986C71.818 5.24387 72.1039 5.03869 72.2303 4.7384L74.0003 0.53423Z" fill="black"/>
+                          <path d="M95.8111 0.53423C96.111 -0.178077 97.1324 -0.178076 97.4323 0.534232L99.2023 4.7384C99.3288 5.03869 99.6146 5.24387 99.9428 5.26986L104.537 5.63373C105.315 5.69538 105.631 6.65505 105.038 7.15693L101.538 10.1191C101.288 10.3307 101.178 10.6627 101.255 10.979L102.324 15.4081C102.505 16.1585 101.679 16.7516 101.013 16.3495L97.0793 13.976C96.7984 13.8065 96.445 13.8065 96.1641 13.976L92.2307 16.3495C91.5643 16.7516 90.7379 16.1585 90.9191 15.4081L91.9886 10.979C92.0649 10.6627 91.9558 10.3307 91.7057 10.1191L88.2054 7.15693C87.6123 6.65505 87.9279 5.69538 88.7063 5.63373L93.3006 5.26986C93.6288 5.24387 93.9147 5.03869 94.0411 4.7384L95.8111 0.53423Z" fill="black"/>
+                          </g>
+                          <defs>
+                          <clipPath id="clip0_343_2739">
+                          <rect width="104.692" height="16.4793" fill="white" transform="translate(0.654053)"/>
+                          </clipPath>
+                          </defs>
+                        </svg>
+                      </div>
+                      <div style="color: {{ section.settings.text_color }}">
+                        <p>{{ block.settings.text }}</p>
+                      </div>
+                      <div class="auth-discription">
+                        <img
+                          src="{{ block.settings.auth_img | image_url }}"
+                          alt="{{ block.settings.heading }}"
+                          width="{{ block.settings.auth_img.width }}"
+                          height="{{ block.settings.auth_img.height }}"
+                          loading="lazy"
+                        >
+                        <div class="auth-text">
+                          <span>{{ block.settings.auth }}</span>
+                          <div class="varified-text">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 15 15"
+                              fill="none"
+                            >
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.07666 14.4065C10.9427 14.4065 14.0767 11.2725 14.0767 7.40649C14.0767 3.5405 10.9427 0.406494 7.07666 0.406494C3.21067 0.406494 0.0766602 3.5405 0.0766602 7.40649C0.0766602 11.2725 3.21067 14.4065 7.07666 14.4065ZM5.37902 11.1789C5.52942 11.3304 5.72579 11.4065 5.92295 11.4065C6.11933 11.4065 6.31648 11.3304 6.46688 11.1789L11.8517 5.73414C12.1517 5.43048 12.1517 4.93849 11.8517 4.63483C11.5509 4.33038 11.0638 4.33038 10.7638 4.63483L5.92295 9.52879L3.38954 6.96764C3.08952 6.66397 2.60247 6.66397 2.30167 6.96764C2.00166 7.2713 2.00166 7.76407 2.30167 8.06774L5.37902 11.1789Z" fill="#202123"/>
+                            </svg>
+                            <span>Verified purchase</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }} .testimonial-section .testimonial-main-box { margin: 0 auto; position: relative; max-width: 1372px; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box { border-radius: 25px; overflow: hidden; height: 100%; display: flex; width: 100%; } #shopify-section-{{ section.id }} .testimonial-wrapper .swiper-slide { height: auto; width: auto; padding-bottom: 10px; } #shopify-section-{{ section.id }} .testimonial-wrapper .swiper-slider:not(.swiper-initialized) .swiper-slide { width: calc(28% - 15px); margin-right: 20px; } #shopify-section-{{ section.id }} .testimonial-section h2 { font-size: 48px; color: #000; line-height: 1; margin: 0; text-align: center; font-weight: 500; font-family: "Poppins", sans-serif; position: relative; text-transform: capitalize; } #shopify-section-{{ section.id }} .testimonial-section .btn-link { text-align: center; margin: 0 auto; } #shopify-section-{{ section.id }} .testimonial-section { padding: 7px 0 21px; position: relative; background: #fffbf7; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .img-block img { display: inline-block; width: 100%; height: 100%; object-fit: cover; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .review-box { padding: 30px; border-radius: 25px; width: 376px; background: #fff; display: flex; flex-direction: column; justify-content: center; border: 1px solid #000000; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box p { margin: 16px auto; line-height: 1.3; color: #000; text-align: center; font-size: 16px; font-weight: 400; max-width: 307px; font-family: "Poppins", sans-serif; /* margin: 0 auto; */ letter-spacing: 0; } #shopify-section-{{ section.id }} .testimonial-wrapper .auth-discription { display: flex; gap: 16px; align-items: center; justify-content: center; color: #000; } #shopify-section-{{ section.id }} .testimonial-wrapper .varified-text { display: flex; align-items: center; gap: 5px; } #shopify-section-{{ section.id }} .testimonial-wrapper .star svg { display: block; margin: 0 auto; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box span { line-height: 1; color: #000; font-size: 14px; font-weight: 400; letter-spacing: 0; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .button { height: 42px; max-width: 250px; margin-top: 18px; padding: 0; min-height: inherit; } #shopify-section-{{ section.id }} .testimonial-wrapper .slider-pagination.mobile { display: flex; margin-bottom: 30px; } .add-cart-btn { margin-top: 30px; } #shopify-section-{{ section.id }} .testimonial-wrapper .slider-controls { display: flex; align-items: center; gap: 10px; justify-content: flex-end; margin-top: 32px; max-width: 1100px; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .img-block { width: 202px; position: relative; border: 1px solid #000; border-radius: 25px; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .img-block[data-video] { cursor: pointer; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .img-block .video-overlay { background-color: #0000004D; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; z-index: 1; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .img-block .review-video-trigger { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; z-index: 2; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .img-block video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; z-index: 3; object-fit: cover; } .testimonial-section .testimonial-header-block { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; gap: 10px; } .testimonial-section .slider-controls { display: flex; align-items: center; gap: 10px; } .mobile { display: none; } @media(max-width:991px) { .mobile { display: block; } .dekstop { display: none; } #shopify-section-{{ section.id }} .testimonial-wrapper .swiper-slider:not(.swiper-initialized) .swiper-slide { width: calc(80% - 15px); margin-right: 20px; } #shopify-section-{{ section.id }} .testimonial-section .testimonial-main-box { padding: 0; } #shopify-section-{{ section.id }} .testimonial-section .page-width { padding: 0; margin: 0; } #shopify-section-{{ section.id }} .testimonial-section h2 { font-size: 24px; margin: 0; text-align: left; } #shopify-section-{{ section.id }} .testimonial-section { padding: 20px 0 30px; } #shopify-section-{{ section.id }} .testimonial-section .btn-link { margin-right: auto; display: flex; max-width: max-content; font-size: 15px; margin-left: 16px; padding-inline: 20px; } #shopify-section-{{ section.id }} .testimonial-wrapper { align-items: unset; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box p { margin: 16px 0; color: #000; font-size: 12px; font-weight: 400; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box { border-radius: 15px; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .img-block { width: 121px; border-radius:15px; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box span { font-size: 14px; font-weight: 400; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .review-box { padding: 50px 20px; width: 222px; border-radius: 15px; } #shopify-section-{{ section.id }} .testimonial-wrapper .star svg { max-width: 84px; } #shopify-section-{{ section.id }} .testimonial-section svg.bottom-arrow { display: none; } #shopify-section-{{ section.id }} .testimonial-wrapper .card-box .img-block .review-video-trigger svg { width: 29px; height: auto; } .testimonial-section .testimonial-header-block { padding: 0 15px; } }
+</style>
+
+<script>
+  window.addEventListener("load", (event) => {
+     var slider = new Swiper('.testimonial-slider-{{ section.id}}', {
+       slidesPerView: 'auto',
+       spaceBetween: 18,
+       loop: true,
+        watchOverflow: true,
+        centeredSlides: true,
+         navigation: {
+           prevEl: '.swiper-{{ section.id }}-prev',
+           nextEl: '.swiper-{{ section.id }}-next',
+         },
+          breakpoints: {
+            991: {
+              spaceBetween: 29,
+              centeredSlides: false,
+              watchOverflow: false,
+            }
+        }
+       
+     });
+
+     const triggers = document.querySelectorAll('[data-video]');
+
+     triggers.forEach(trigger => {
+       trigger.addEventListener('click', function (e) {
+         e.preventDefault();
+         const imgBlock = this.closest('.img-block');
+         const videoUrl = imgBlock.getAttribute('data-video');
+         const existingVideo = imgBlock.querySelector('video');
+
+         // If there's already a video in this block
+         if (existingVideo) {
+           // Toggle play/pause
+           if (existingVideo.paused) {
+             existingVideo.play();
+           } else {
+             existingVideo.pause();
+           }
+           return;
+         }
+
+         // Otherwise, remove any other playing videos
+         document.querySelectorAll('.img-block').forEach(block => {
+           block.classList.remove('video-played');
+           const vid = block.querySelector('video');
+           if (vid) {
+             vid.pause();
+             vid.remove();
+           }
+         });
+
+         // Then add and play the new video
+         imgBlock.classList.add('video-played');
+         const video = document.createElement('video');
+         video.src = videoUrl;
+         video.controls = true;
+         video.muted = false;
+         video.autoplay = true;
+         video.loop = true;
+         video.playsInline = true;
+
+         imgBlock.appendChild(video);
+       });
+     });
+
+
+
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Testimonial Slider",
+  "settings": [
+
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+    },
+    {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button Text",
+        "default": "EXPLORE OUR SOLUTIONS"
+    },
+    {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review_block",
+      "name": "Review Slide",
+      "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Select Video"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "image_picker",
+          "id": "auth_img",
+          "label": "Auth Image"
+        },
+        {
+          "type": "text",
+          "id": "auth",
+          "label": "Author"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial Slider",
+      "blocks": [
+        {
+          "type": "review_block"
+        },
+        {
+          "type": "review_block"
+        },
+        {
+          "type": "review_block"
+        }
+      ]
+    }
+  ],
+}
+{% endschema %}

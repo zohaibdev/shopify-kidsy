@@ -1,0 +1,84 @@
+<script>
+(function () {
+  var SEL_FORMS = 'form[action="/search"], form.gl-d-searchbox, .fallback-search-form';
+
+  function isBlank(v){ return !v || !v.trim(); }
+
+  function protectForm(form){
+    if (!form || form.__searchGuard) return;
+    var input = form.querySelector('input[name="q"]');
+    if (!input) return;
+
+    // HTML constraints (nice UX, but not relied upon)
+    input.setAttribute('required', 'true');
+    input.setAttribute('pattern', '.*\\S.*');
+    input.setAttribute('title', 'Please enter a search term');
+
+    // Hard block: submit (capture phase) so we beat any theme/Globo handler
+    var blockIfEmpty = function(e){
+      if (isBlank(input.value)) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        input.focus();
+        return false;
+      }
+    };
+    form.addEventListener('submit', blockIfEmpty, true);
+
+    // Block Enter (capture) on the input itself
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' && isBlank(input.value)) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        return false;
+      }
+    }, true);
+
+    // Some scripts call form.submit() directly, which bypasses events.
+    // Patch this form's submit to enforce the empty check.
+    var nativeSubmit = HTMLFormElement.prototype.submit;
+    form.submit = function(){
+      if (isBlank(input.value)) return false;
+      return nativeSubmit.call(this);
+    };
+
+    // Visual state (optional)
+    function toggle(){
+      var ok = !isBlank(input.value);
+      form.classList.toggle('can-submit', ok);
+      var btn = form.querySelector('button[type="submit"],input[type="submit"]');
+      if (btn) btn.disabled = !ok;
+    }
+    input.addEventListener('input', toggle);
+    toggle();
+
+    form.__searchGuard = true;
+  }
+
+  function scan(){
+    document.querySelectorAll(SEL_FORMS).forEach(protectForm);
+  }
+
+  document.addEventListener('DOMContentLoaded', scan);
+  document.addEventListener('shopify:section:load', scan);
+  // Catch overlays injected later (e.g., Globo)
+  new MutationObserver(function(){ scan(); })
+    .observe(document.documentElement, {childList:true, subtree:true});
+
+  // Last-resort global Enter guard (capture) for any search input
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Enter') return;
+    var t = e.target;
+    if (t && t.matches && t.matches('input[type="search"], input[name="q"]')) {
+      if (isBlank(t.value)) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      }
+    }
+  }, true);
+})();
+</script>
+

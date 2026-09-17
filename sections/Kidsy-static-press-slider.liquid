@@ -1,0 +1,375 @@
+{% style %}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } #shopify-section-{{ section.id }} .title-wrapper  { justify-content: {{ section.settings.heading_alignment }}; } #shopify-section-{{ section.id }} .title-wrapper .section-header-content { text-align: {{ section.settings.content_alignment }}; justify-content: {{ section.settings.heading_alignment }}; display: inline-flex; flex-wrap: wrap; } /* Press Carousel Styles */ #shopify-section-{{ section.id }} .press-scroll-wrapper { gap: {{ section.settings.card_gap }}px; } #shopify-section-{{ section.id }} .press-slide { width: calc(({{ settings.page_width | divided_by: 10 }}rem - 10rem - ({{ section.settings.card_gap }}px * ({{ section.settings.desktop_card }} - 1))) / {{ section.settings.desktop_card }}); } @media screen and (max-width: 989px) { #shopify-section-{{ section.id }} .press-slide { width: calc(({{ settings.page_width | divided_by: 10 }}rem - 6rem - ({{ section.settings.card_gap }}px * ({{ section.settings.desktop_card }} - 1))) / {{ section.settings.desktop_card }}); } } @media screen and (max-width: 749px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } #shopify-section-{{ section.id }} .press-scroll-wrapper { gap: {{ section.settings.card_gap_mobile }}px; } #shopify-section-{{ section.id }} .press-slide { width: calc(({{ settings.page_width | divided_by: 10 }}rem - 6rem - ({{ section.settings.card_gap_mobile }}px * ({{ section.settings.mobile_card }} - 1))) / {{ section.settings.mobile_card }}); } }
+{% endstyle %}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="cust-press-wrapper section-{{ section.id }}-padding">
+    {%- unless section.settings.title == blank -%}
+      <div class="title-wrapper page-width {% if section.settings.cta_label != blank %}header-with-CTA{% endif %}">
+        <div class="section-header-content">
+          {% if section.settings.heading_link != blank %}
+            <a href="{{ section.settings.heading_link }}" class="section--title h3" title="{{ section.settings.title | escape }}">
+              {{ section.settings.title | escape }}
+            </a>
+          {% else %}
+            <h3 class="section--title h3">
+              {{ section.settings.title | escape }}
+            </h3>
+          {% endif %}
+          {% if section.settings.subtitle != blank %}
+            <p class="section-description h5">
+              {{ section.settings.subtitle }}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    {%- endunless -%}
+
+    <div class="press-carousel-wrapper page-width">
+      <div class="press-gsap-marquee">
+        <div class="press-scroll-wrapper" id="pressscroll-{{ section.id }}">
+            {% for block in section.blocks %}
+              <div class="press-slide color-{{ section.settings.card_color_scheme }} gradient" {{ block.shopify_attributes }}>
+                <a {% if block.settings.press_URL != blank %}href="{{ block.settings.press_URL }}"{% endif %} class="press-card">
+                  <div class="press-quote-icon">
+                    <svg width="67" height="52" viewBox="0 0 67 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14.4818 25.9133H15.7031C19.0182 25.9133 21.9844 27.1844 24.6016 29.7267C27.2769 32.2111 28.6146 35.3311 28.6146 39.0867C28.6146 42.7844 27.2769 45.8467 24.6016 48.2733C21.9844 50.6422 18.7274 51.8267 14.8307 51.8267C10.5851 51.8267 7.03733 50.1511 4.1875 46.8C1.39583 43.3911 0 38.5667 0 32.3267C0 26.6067 1.22135 21.2622 3.66406 16.2933C6.16493 11.2667 9.18924 7.30889 12.737 4.42C16.3429 1.47333 19.5417 0 22.3333 0C24.1944 0 25.6484 0.548889 26.6953 1.64667C27.7422 2.74444 28.2656 4.16 28.2656 5.89333C28.2656 8.43556 27.1315 10.3133 24.8633 11.5267C21.7808 13.2022 19.3381 15.1667 17.5352 17.42C15.7322 19.6733 14.7144 22.5044 14.4818 25.9133ZM53.0417 25.9133H54.1758C57.4327 25.9133 60.3698 27.1844 62.987 29.7267C65.6623 32.2111 67 35.3311 67 39.0867C67 42.7267 65.6623 45.7889 62.987 48.2733C60.3698 50.7578 57.1128 52 53.2161 52C48.9123 52 45.3646 50.2667 42.5729 46.8C39.7812 43.3333 38.3854 38.5089 38.3854 32.3267C38.3854 27.8778 39.1124 23.6889 40.5664 19.76C42.0204 15.8311 43.8815 12.4222 46.1497 9.53333C48.4761 6.58667 50.9479 4.27556 53.5651 2.6C56.2405 0.866667 58.625 0 60.7188 0C62.638 0 64.092 0.548889 65.0807 1.64667C66.1276 2.68667 66.651 4.10222 66.651 5.89333C66.651 8.49333 65.5169 10.3711 63.2487 11.5267C60.0499 13.3178 57.6363 15.3111 56.0078 17.5067C54.3793 19.6444 53.3906 22.4467 53.0417 25.9133Z" fill="currentcolor"/>
+                    </svg>
+                  </div>
+                  <div class="press__media">
+                    {% render 'custom-image', 
+                      image: block.settings.press_image, 
+                      alt: block.settings.press_image.alt
+                    %}
+                  </div>
+                  <h4 class="h4 press__content">{{ block.settings.press_content | escape }}</h4>
+                </a>
+              </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const pressMarquee = document.getElementById("pressscroll-{{ section.id }}");
+    const pressContainer = document.querySelector('#shopify-section-{{ section.id }} .press-gsap-marquee');
+    if (!pressMarquee || !pressContainer) return;
+    
+    const autoplayEnabled = {{ section.settings.autoplay }};
+    let pressTween, pressDraggable, pressTotalWidth;
+    
+    function initPressCarousel() {
+      // Kill old animation if any
+      if (pressTween) {
+        pressTween.kill();
+        pressTween = null;
+      }
+      
+      // Clean up old Draggable instance
+      if (pressDraggable) {
+        pressDraggable.kill();
+        pressDraggable = null;
+      }
+      
+      // Remove hover event listeners
+      pressContainer.onmouseenter = null;
+      pressContainer.onmouseleave = null;
+      
+      // Reset position and duplicates
+      pressMarquee.style.transform = "translateX(0)";
+      pressMarquee.querySelectorAll(".press-slide.clone").forEach(el => el.remove());
+      
+      const slides = Array.from(pressMarquee.children);
+      if (slides.length === 0) return;
+      
+      pressTotalWidth = pressMarquee.scrollWidth;
+      const containerWidth = pressContainer.offsetWidth;
+      
+      // Clone slides until total width covers container twice (for seamless loop)
+      while (pressTotalWidth < containerWidth * 2) {
+        slides.forEach(slide => {
+          const clone = slide.cloneNode(true);
+          clone.classList.add("clone");
+          pressMarquee.appendChild(clone);
+        });
+        pressTotalWidth = pressMarquee.scrollWidth;
+      }
+      
+      // Create GSAP continuous scroll only if autoplay is enabled
+      if (autoplayEnabled) {
+        pressTween = gsap.to(pressMarquee, {
+          x: `-=${pressTotalWidth / 2}`,
+          duration: {{ section.settings.scroll_speed }},
+          ease: "none",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % (pressTotalWidth / 2))
+          }
+        });
+        
+        // Hover pause/resume
+        pressContainer.onmouseenter = () => pressTween.pause();
+        pressContainer.onmouseleave = () => pressTween.resume();
+      } else {
+        // Enable manual drag/scroll when autoplay is disabled
+        enablePressFreeMode();
+      }
+    }
+    
+    // Manual drag/scroll functionality using GSAP Draggable
+    function enablePressFreeMode() {
+      pressContainer.style.cursor = 'grab';
+      
+      pressDraggable = Draggable.create(pressMarquee, {
+        type: "x",
+        bounds: pressContainer,
+        inertia: true,
+        throwProps: true,
+        dragResistance: 0.3,
+        edgeResistance: 0.65,
+        cursor: "grab",
+        activeCursor: "grabbing"
+      })[0];
+    }
+    
+    // Initialize on load
+    initPressCarousel();
+    
+    // Recalculate on resize
+    window.addEventListener("resize", () => {
+      clearTimeout(window.__pressCarouselResizeTimer);
+      window.__pressCarouselResizeTimer = setTimeout(initPressCarousel, 300);
+    });
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Press Carousel",
+    "class": "press-carousel--section",
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "Color Scheme"
+      },
+      {
+        "type": "color_scheme",
+        "id": "card_color_scheme",
+        "label": "Card Color Scheme"
+      },
+      {
+        "type": "header",
+        "content": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Kidsy In The News"
+      },
+      {
+        "type": "url",
+        "id": "heading_link",
+        "label": "Heading link URL"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "subtitle",
+        "label": "Subtitle"
+      },
+      {
+      "type": "select",
+        "id": "heading_alignment",
+        "label": "Heading Alignment",
+        "options": [
+          {
+            "label": "Left",
+            "value": "flex-start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "flex-end"
+          }
+        ],
+        "default": "flex-start"
+      },
+      {
+      "type": "select",
+        "id": "content_alignment",
+        "label": "Content Alignment",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "header",
+        "content": "Card Settings"
+      },
+      {
+        "type": "range",
+        "id": "desktop_card",
+        "label": "Cards per view (Desktop)",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "mobile_card",
+        "label": "Cards per view (Mobile)",
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "default": 2
+      },
+      {
+        "type": "range",
+        "id": "card_gap",
+        "label": "Gap between cards - Desktop (px)",
+        "min": 0,
+        "max": 60,
+        "step": 4,
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "card_gap_mobile",
+        "label": "Gap between cards - Mobile (px)",
+        "min": 0,
+        "max": 40,
+        "step": 4,
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Scrolling Behavior"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Enable autoplay",
+        "info": "Automatically scroll cards. When disabled, manual drag/scroll is enabled",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "scroll_speed",
+        "label": "Autoplay speed (seconds)",
+        "info": "Higher value = slower scroll",
+        "min": 10,
+        "max": 60,
+        "step": 5,
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Mobile"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Padding Top (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Padding Bottom (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      }
+    ],
+    "blocks": [
+      {
+        "type": "press_card",
+        "name": "Press Card",
+        "settings": [
+          {
+            "type": "url",
+            "id": "press_URL",
+            "label": "Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "press_image",
+            "label": "Image"
+          },
+          {
+            "id": "press_content",
+            "type": "text",
+            "label": "Content",
+            "default": "\"Kidsy supports sustainable parenting amid rising costs.\""
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Press Carousel",
+        "blocks": [
+          {
+            "type": "press_card"
+          },
+          {
+            "type": "press_card"
+          },
+          {
+            "type": "press_card"
+          },
+          {
+            "type": "press_card"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

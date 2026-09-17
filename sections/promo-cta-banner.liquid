@@ -1,0 +1,526 @@
+{% comment %}
+  ============================================================
+  Section: Promo CTA Banner
+  ------------------------------------------------------------
+  Wide orange call-to-action banner matching Figma design:
+    • Full-width orange background with rounded corners
+    • Two decorative cream blobs in opposite corners
+    • Centered content: large headline, body copy, white CTA button
+    • Bottom trust row with 3 items (icon + label, divider dots between)
+
+  All text, button, trust items, blobs, and colors are dynamic.
+  Trust items are managed as section blocks for flexibility.
+  ============================================================
+{% endcomment %}
+ <link rel="preload" href="{{ 'custom.css' | asset_url }}" as="style">
+
+{%- liquid
+  assign s = section.settings
+  assign sec_id = 'kidsy-promo-' | append: section.id
+-%}
+
+<style>
+  #{{ sec_id }} {
+    --bg:        {{ s.color_bg     | default: '#F45901' }};
+    --text:      {{ s.color_text   | default: '#FFFFFF' }};
+    --btn-bg:    {{ s.color_btn_bg | default: '#FFFFFF' }};
+    --btn-text:  {{ s.color_btn_text | default: '#341300' }};
+    --blob:      {{ s.color_blob   | default: '#FFE0B0' }};
+  }
+
+  #{{ sec_id }} {
+    padding: {{ s.padding_outer | default: 30 }}px {{ s.padding_outer | default: 30 }}px;
+    font-family: "Roobert TRIAL", sans-serif;
+    background: {{ s.color_outer_bg | default: '#FFFBF3' }};
+  }
+
+
+  #{{ sec_id }} img { display: block; max-width: 100%; }
+
+  /* ============================================================
+     OUTER CARD — orange background, rounded, with overflow clipped
+     ============================================================ */
+  #{{ sec_id }} .kp__card {
+    position: relative;
+    background: var(--bg);
+    border-radius: 12px;
+    overflow: hidden;
+    isolation: isolate;
+    max-width: 1340px;
+    margin: 0 auto;
+    padding: {{ s.padding_top | default: 80 }}px 50px {{ s.padding_bottom | default: 80 }}px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height:390px;
+  }
+
+  /* ============================================================
+     DECORATIVE BLOBS — bottom-left + top-right corners
+     Figma: left blob at left:-81, bottom:-61 (rotated -4.16deg)
+            right blob at right:-152, top:-109 (rotated -20.34deg)
+     ============================================================ */
+  #{{ sec_id }} .kp__blob {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+  }
+  #{{ sec_id }} .kp__blob--left {
+    left: 0;
+    bottom: 0;
+    {% comment %} width: 293px;
+    height: 263px; {% endcomment %}
+  }
+  #{{ sec_id }} .kp__blob--right {
+    right: 0;
+    top: 0;
+  }
+  #{{ sec_id }} .kp__blob svg { width: 100%; height: 100%; display: block; }
+
+  /* ============================================================
+     CONTENT — centered, max 710px wide
+     ============================================================ */
+  #{{ sec_id }} .kp__content {
+    position: relative;
+    z-index: 2;
+    max-width: 710px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+  }
+
+  #{{ sec_id }} .kp__copy-block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+  }
+
+  #{{ sec_id }} .kp__heading-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #{{ sec_id }} .kp__title {
+    margin: 0;
+    color: var(--text);
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.15;
+    text-transform: capitalize;
+  }
+
+  #{{ sec_id }} .kp__desc {
+    margin: 0;
+    color: var(--text);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* CTA button — white pill */
+  #{{ sec_id }} .kp__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: capitalize;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    font-family: inherit;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  #{{ sec_id }} .kp__btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(0,0,0,.14);
+  }
+
+  /* ============================================================
+     TRUST ROW — icon + label, separated by tiny dots
+     ============================================================ */
+  #{{ sec_id }} .kp__trust {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    color: var(--text);
+  }
+
+  #{{ sec_id }} .kp__trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text);
+    text-transform: capitalize;
+    line-height: 1;
+  }
+  #{{ sec_id }} .kp__trust-item svg,
+  #{{ sec_id }} .kp__trust-item img {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Vertical separator between trust items (Figma: 4px×15px spacers) */
+  #{{ sec_id }} .kp__trust-sep {
+    display: inline-block;
+    width: 1px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 1024px) {
+    #{{ sec_id }} .kp__card { padding: 64px 40px; }
+    #{{ sec_id }} .kp__title { font-size: 36px; }
+    #{{ sec_id }} .kp__desc  { font-size: 20px; }
+  }
+
+  @media (max-width: 768px) {
+    #{{ sec_id }} { padding: 20px; }
+    #{{ sec_id }} .kp__card { padding: 36px 31px;
+        border-radius: 12px; }
+    #{{ sec_id }} .kp__title {font-size: 24px;
+font-style: normal;
+font-weight: 650;
+line-height: normal;
+text-transform: capitalize; }
+    #{{ sec_id }} .kp__desc  {
+    font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: capitalize;
+    }
+     #{{ sec_id }} .kp__heading-group {
+    gap: 8px;
+}
+    #{{ sec_id }} .kp__copy-block { gap: 24px; }
+    {% comment %} #{{ sec_id }} .kp__blob--left  { width: 220px; height: 200px; left: -60px; bottom: -45px; } {% endcomment %}
+    {% comment %} #{{ sec_id }} .kp__blob--right { width: 220px; height: 200px; right: -100px; top: -80px; } {% endcomment %}
+    #{{ sec_id }} .kp__trust { gap: 6px; }
+    #{{ sec_id }} .kp__trust-item { font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: capitalize; }
+  #{{ sec_id }} .kp__trust-sep {
+    display: none;
+}
+  #{{ sec_id }}  .kp__blob--right {
+    width: 58.032px;
+} 
+#{{ sec_id }} .kp__blob--left {
+    left: 0;
+    bottom: 0;
+    width: 100px;
+}
+}
+
+
+</style>
+
+<section
+  id="{{ sec_id }}"
+  class="kidsy-promo"
+  aria-labelledby="{{ sec_id }}-title">
+
+  <div class="kp__card">
+    {%- comment -%} Decorative blobs {%- endcomment -%}
+    {%- if s.show_blobs -%}
+      {%- if s.blob_image != blank -%}
+        <img class="kp__blob kp__blob--left"  src="{{ s.blob_image | image_url: width: 600 }}" alt="" aria-hidden="true" loading="lazy">
+        <img class="kp__blob kp__blob--right" src="{{ s.blob_image | image_url: width: 600 }}" alt="" aria-hidden="true" loading="lazy">
+      {%- else -%}
+        <div class="kp__blob kp__blob--left" aria-hidden="true">
+         <svg xmlns="http://www.w3.org/2000/svg" width="208" height="189" viewBox="0 0 208 189" fill="none">
+<path d="M-73.3451 107.598C-74.2114 184.83 20.0439 222.859 27.1317 225.6C93.3332 251.198 183.449 236.091 202.748 190.415C213.596 164.739 202.776 127.726 184.907 121.654C159.939 113.166 135.711 147.521 116.633 138.813C101.175 131.756 88.1565 121.169 70.4139 76.4064C59.1507 47.9933 54.0712 2.01398 17.9562 0.0747322C-27.1836 -2.34687 -72.7485 54.3999 -73.3451 107.598Z" fill="#FFDFA8"/>
+</svg>
+        </div>
+        <div class="kp__blob kp__blob--right" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="125" height="137" viewBox="0 0 125 137" fill="none">
+<path d="M3.32874 60.2939C21.7131 126.424 111.577 135.542 118.305 136.126C181.147 141.58 254.32 106.372 259.483 62.6095C262.384 38.009 243.984 9.09846 227.228 8.34015C203.816 7.27897 191.645 42.6001 173.205 39.8916C158.265 37.6969 144.531 31.8841 118.304 -1.92628C101.655 -23.3874 85.9348 -61.3723 54.6302 -54.0845C15.5036 -44.9735 -9.33485 14.7421 3.32874 60.2939Z" fill="#FFDFA8"/>
+</svg>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} Centered content {%- endcomment -%}
+    <div class="kp__content">
+
+      <div class="kp__copy-block">
+        <div class="kp__heading-group">
+          {%- if s.title != blank -%}
+            <h2 id="{{ sec_id }}-title" class="kp__title">{{ s.title }}</h2>
+          {%- endif -%}
+          {%- if s.description != blank -%}
+            <p class="kp__desc">{{ s.description }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- if s.cta_label != blank -%}
+          <a href="{{ s.cta_link | default: '#' }}" class="kp__btn">{{ s.cta_label }}</a>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Trust row — managed via blocks {%- endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <ul class="kp__trust" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'trust_item' -%}
+              {%- assign b = block.settings -%}
+              <li class="kp__trust-item" {{ block.shopify_attributes }}>
+                {%- if b.icon_image != blank -%}
+                  <img src="{{ b.icon_image | image_url: width: 40 }}" alt="" width="20" height="20" loading="lazy">
+                {%- else -%}
+                  {%- case b.icon_preset -%}
+
+                    {%- when 'users' -%}
+                      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M2 17c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <circle cx="14" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/>
+                        <path d="M11 17c0-2.2 1.8-4 4-4s3 1.5 3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                      </svg>
+
+                    {%- when 'shield' -%}
+                      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M10 2l7 3v5c0 4.4-3 7.5-7 9-4-1.5-7-4.6-7-9V5l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+
+                    {%- when 'gift' -%}
+                      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="2.5" y="8" width="15" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                        <rect x="1.5" y="5.5" width="17" height="3" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="10" y1="5.5" x2="10" y2="18" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M10 5.5C8.5 3 6 3 6 4.7c0 1.1 1.5 1.3 4 0.8zM10 5.5c1.5-2.5 4-2.5 4-0.8 0 1.1-1.5 1.3-4 0.8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                      </svg>
+
+                    {%- when 'check' -%}
+                      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M6 10.2l2.8 2.8L14 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+
+                    {%- when 'star' -%}
+                      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M10 2l2.5 5.2 5.7.8-4.1 4 1 5.7L10 15l-5.1 2.7 1-5.7-4.1-4 5.7-.8L10 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                      </svg>
+
+                    {%- when 'heart' -%}
+                      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M10 17S2 12 2 7a4 4 0 017-2.6A4 4 0 0118 7c0 5-8 10-8 10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                      </svg>
+
+                  {%- endcase -%}
+                {%- endif -%}
+                <span>{{ b.label }}</span>
+              </li>
+
+              {%- comment -%} Divider between trust items, but not after the last one {%- endcomment -%}
+              {% comment %} {%- unless forloop.last -%}
+                <li class="kp__trust-sep" aria-hidden="true"></li>
+              {%- endunless -%} {% endcomment %}
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo CTA Banner",
+  "tag": "section",
+  "class": "section-kidsy-promo",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading & Copy"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Start Earning on Your Next Order"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Every order is worth more with Kidsy Points. Join free in 30 seconds and earn 100 bonus points the moment you sign up. No credit card. No fees. Just savings."
+    },
+
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button text",
+      "default": "Join Kidsy Points — It's Free"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+
+    {
+      "type": "header",
+      "content": "Background Decoration"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blobs",
+      "label": "Show decorative blobs",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "blob_image",
+      "label": "Custom blob image (optional)",
+      "info": "Defaults to a built-in cream shape"
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_outer",
+      "label": "Section outer padding",
+      "min": 0, "max": 80, "step": 5, "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Card top padding",
+      "min": 30, "max": 160, "step": 5, "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Card bottom padding",
+      "min": 30, "max": 160, "step": 5, "unit": "px",
+      "default": 80
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_outer_bg",
+      "label": "Page background (around card)",
+      "default": "#FFFBF3"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Card background",
+      "default": "#F45901"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_bg",
+      "label": "Button background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_text",
+      "label": "Button text",
+      "default": "#341300"
+    },
+    {
+      "type": "color",
+      "id": "color_blob",
+      "label": "Blob color (built-in)",
+      "default": "#FFE0B0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "100,000+ parents already earning"
+        },
+        {
+          "type": "select",
+          "id": "icon_preset",
+          "label": "Icon preset",
+          "options": [
+            { "value": "users",  "label": "Users (members)" },
+            { "value": "shield", "label": "Shield (free / secure)" },
+            { "value": "gift",   "label": "Gift (signup bonus)" },
+            { "value": "check",  "label": "Check circle" },
+            { "value": "star",   "label": "Star" },
+            { "value": "heart",  "label": "Heart" }
+          ],
+          "default": "users"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Custom icon (optional)",
+          "info": "Overrides the preset above"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo CTA Banner",
+      "blocks": [
+        { "type": "trust_item", "settings": { "label": "100,000+ parents already earning", "icon_preset": "users"  } },
+        { "type": "trust_item", "settings": { "label": "Free forever",                     "icon_preset": "shield" } },
+        { "type": "trust_item", "settings": { "label": "100 pts on signup",                "icon_preset": "gift"   } }
+      ]
+    }
+  ]
+}
+{% endschema %}

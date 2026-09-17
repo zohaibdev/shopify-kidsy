@@ -1,0 +1,382 @@
+{% style %}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } #shopify-section-{{ section.id }} .title-wrapper  { justify-content: {{ section.settings.heading_alignment }}; } #shopify-section-{{ section.id }} .title-wrapper .section-header-content { text-align: {{ section.settings.content_alignment }}; justify-content: {{ section.settings.heading_alignment }}; display: inline-flex; flex-wrap: wrap; } /* Promise Cards Styles */ #shopify-section-{{ section.id }} .promise-scroll-wrapper { gap: {{ section.settings.card_gap }}px; } #shopify-section-{{ section.id }} .promise-slide { width: calc(({{ settings.page_width | divided_by: 10 }}rem - 10rem - ({{ section.settings.card_gap }}px * ({{ section.settings.desktop_card }} - 1))) / {{ section.settings.desktop_card }}); } @media screen and (max-width: 1199px) { #shopify-section-{{ section.id }} .promise-slide { width: calc(({{ settings.page_width | divided_by: 10 }}rem - 10rem - ({{ section.settings.card_gap }}px * ({{ section.settings.desktop_card }} - 1))) / {{ section.settings.desktop_card }}); } } @media screen and (max-width: 989px) { #shopify-section-{{ section.id }} .promise-slide { width: calc(({{ settings.page_width | divided_by: 10 }}rem - 6rem - ({{ section.settings.card_gap }}px * ({{ section.settings.desktop_card }} - 1))) / {{ section.settings.desktop_card }}); } } {% if section.settings.card_content_alignment == 'left' %} .promise-slide, .promise-card { align-items: flex-start; text-align: left; } {% elsif section.settings.card_content_alignment == 'center' %} .promise-slide, .promise-card { align-items: center; text-align: center; } {% elsif section.settings.card_content_alignment == 'right' %} .promise-slide, .promise-card { align-items: flex-end; text-align: right; } {% endif %} @media screen and (max-width: 749px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } #shopify-section-{{ section.id }} .promise-scroll-wrapper { gap: {{ section.settings.card_gap_mobile }}px; } #shopify-section-{{ section.id }} .promise-slide { /* width: calc(({{ settings.page_width | divided_by: 10 }}rem - 6rem - ({{ section.settings.card_gap_mobile }}px * ({{ section.settings.mobile_cards }} - 1))) / {{ section.settings.mobile_cards }}); */ width: calc(({{ settings.page_width | divided_by: 10 }}rem - 6rem - ({{ section.settings.card_gap_mobile }}px * (7 - 1))) / 7); } }
+{% endstyle %}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="cust-promise-wrapper section-{{ section.id }}-padding ">
+    {%- unless section.settings.title == blank -%}
+      <div class="title-wrapper {% if section.settings.cta_label != blank %}header-with-CTA{% endif %} page-width" >
+        <div class="section-header-content">
+          {% if section.settings.heading_link != blank %}
+            <a href="{{ section.settings.heading_link }}" class="section--title h3" title="{{ section.settings.title | escape }}">
+              {{ section.settings.title | escape }}
+            </a>
+          {% else %}
+            <h3 class="section--title h3">
+              {{ section.settings.title | escape }}
+            </h3>
+          {% endif %}
+          {% if section.settings.subtitle != blank %}
+            <p class="section-description h5">
+              {{ section.settings.subtitle }}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    {%- endunless -%}
+
+    <div class="promise-cards-wrapper page-width">
+      <div class="promise-gsap-marquee">
+        <div class="promise-scroll-wrapper" id="promisescroll-{{ section.id }}">
+          {% for block in section.blocks %}
+            <div class="promise-slide color-{{ section.settings.card_color_scheme }} gradient" {{ block.shopify_attributes }}>
+              <div class="promise-card">
+                {% if block.settings.promise_image != blank %}
+                  <div class="promise-card__icon">
+                    {% render 'custom-image', 
+                      image: block.settings.promise_image, 
+                      alt: block.settings.promise_image.alt
+                    %}
+                  </div>
+                {% endif %}
+                {% if block.settings.promise_title != blank %}
+                  <h5 class="promise-card__title h5">{{ block.settings.promise_title | escape }}</h5>
+                {% endif %}
+                {% if block.settings.promise_description != blank %}
+                  <p class="promise-card__description">{{ block.settings.promise_description }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const promiseMarquee = document.getElementById("promisescroll-{{ section.id }}");
+    const promiseContainer = document.querySelector('#shopify-section-{{ section.id }} .promise-gsap-marquee');
+    if (!promiseMarquee || !promiseContainer) return;
+    
+    const autoplayEnabled = {{ section.settings.autoplay | default: true }};
+    let promiseTween, promiseTotalWidth;
+    
+    function initPromiseCarousel() {
+      // Kill old animation if any
+      if (promiseTween) promiseTween.kill();
+      
+      // Reset position and duplicates
+      promiseMarquee.style.transform = "translateX(0)";
+      promiseMarquee.querySelectorAll(".promise-slide.clone").forEach(el => el.remove());
+      
+      const slides = Array.from(promiseMarquee.children);
+      promiseTotalWidth = promiseMarquee.scrollWidth;
+      
+      // Clone slides until total width covers container twice (for seamless loop)
+      while (promiseTotalWidth < promiseContainer.offsetWidth * 2) {
+        slides.forEach(slide => {
+          const clone = slide.cloneNode(true);
+          clone.classList.add("clone");
+          promiseMarquee.appendChild(clone);
+        });
+        promiseTotalWidth = promiseMarquee.scrollWidth;
+      }
+      
+      // Create GSAP continuous scroll only if autoplay is enabled
+      if (autoplayEnabled) {
+        promiseTween = gsap.to(promiseMarquee, {
+          x: `-=${promiseTotalWidth / 2}`,
+          duration: {{ section.settings.scroll_speed }},
+          ease: "none",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % (promiseTotalWidth / 2))
+          }
+        });
+        
+        // Hover pause/resume
+        promiseContainer.onmouseenter = () => promiseTween.pause();
+        promiseContainer.onmouseleave = () => promiseTween.resume();
+      } else {
+        // Enable manual drag/scroll when autoplay is disabled
+        enablePromiseFreeMode();
+      }
+    }
+    
+    // Manual drag/scroll functionality using GSAP Draggable
+    function enablePromiseFreeMode() {
+      promiseContainer.style.cursor = 'grab';
+      
+      Draggable.create(promiseMarquee, {
+        type: "x",
+        bounds: promiseContainer,
+        inertia: true,
+        throwProps: true,
+        dragResistance: 0.3,
+        edgeResistance: 0.65,
+        cursor: "grab",
+        activeCursor: "grabbing"
+      });
+    }
+    
+    // Initialize on load
+    initPromiseCarousel();
+    
+    // Recalculate on resize
+    window.addEventListener("resize", () => {
+      clearTimeout(window.__promiseCarouselResizeTimer);
+      window.__promiseCarouselResizeTimer = setTimeout(initPromiseCarousel, 300);
+    });
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Kidsy Promise",
+    "class": "kidsy-promise--section",
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "Color Scheme"
+      },
+      {
+        "type": "color_scheme",
+        "id": "card_color_scheme",
+        "label": "Card Color Scheme"
+      },
+      {
+        "type": "header",
+        "content": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "The Kidsy Promise"
+      },
+      {
+        "type": "url",
+        "id": "heading_link",
+        "label": "Heading link URL"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "subtitle",
+        "label": "Subtitle"
+      },
+      {
+        "type": "select",
+        "id": "heading_alignment",
+        "label": "Heading Alignment",
+        "options": [
+          {
+            "label": "Left",
+            "value": "flex-start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "flex-end"
+          }
+        ],
+        "default": "flex-start"
+      },
+      {
+        "type": "select",
+        "id": "content_alignment",
+        "label": "Content Alignment",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "header",
+        "content": "Card Settings"
+      },
+      {
+        "type": "range",
+        "id": "desktop_card",
+        "label": "Cards per view (Desktop)",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "card_gap",
+        "label": "Gap between cards - Desktop (px)",
+        "min": 0,
+        "max": 60,
+        "step": 4,
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "card_gap_mobile",
+        "label": "Gap between cards - Mobile (px)",
+        "min": 0,
+        "max": 40,
+        "step": 4,
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "mobile_cards",
+        "label": "Cards per view (Mobile)",
+        "min": 1,
+        "max": 7,
+        "step": 1,
+        "default": 2
+      },
+      {
+        "type": "select",
+        "id": "card_content_alignment",
+        "label": "Card Content Alignment",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "header",
+        "content": "Scrolling Behavior"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Enable autoplay",
+        "info": "Automatically scroll cards. When disabled, manual drag/scroll is enabled",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "scroll_speed",
+        "label": "Autoplay speed (seconds)",
+        "info": "Higher value = slower scroll",
+        "min": 10,
+        "max": 60,
+        "step": 5,
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Mobile"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Padding Top (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Padding Bottom (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      }
+    ],
+    "blocks": [
+      {
+        "type": "promise_card",
+        "name": "Promise Card",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "promise_image",
+            "label": "Icon Image"
+          },
+          {
+            "type": "text",
+            "id": "promise_title",
+            "label": "Title",
+            "default": "CONDITION TRANSPARENCY"
+          },
+          {
+            "type": "textarea",
+            "id": "promise_description",
+            "label": "Description",
+            "default": "Every Item Is Clearly Labeled By Condition, So You Always Know Exactly What You're Getting."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Kidsy Promise",
+        "blocks": [
+          {
+            "type": "promise_card"
+          },
+          {
+            "type": "promise_card"
+          },
+          {
+            "type": "promise_card"
+          },
+          {
+            "type": "promise_card"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

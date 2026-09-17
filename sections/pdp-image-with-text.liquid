@@ -1,0 +1,132 @@
+<style>
+  #shopify-section-{{ section.id }} section.pdp_image_with_text { padding: 37px 0; } #shopify-section-{{ section.id }} .pdp_image_with_text .page-width { max-width: 1400px; padding: 0 10px; margin: 0 auto; } #shopify-section-{{ section.id }} .pdp_image_with_text .heading p { font-size: 48px; margin: 0; line-height:1.05; letter-spacing: 0; color: #000; font-weight: 500; font-family: "Poppins", sans-serif; } #shopify-section-{{ section.id }} .pdp_image_with_text .check_it_wrapper { display: flex; background-color: #F7B801; border-radius: 25px; border: 1px solid #000; } #shopify-section-{{ section.id }} .pdp_image_with_text .producy_image img { width: 100%; height: 100%; display: block; object-fit: cover; } #shopify-section-{{ section.id }} .pdp_image_with_text .check_content { padding-left: 80px; width: 61%; padding-top: 67px; } #shopify-section-{{ section.id }} .pdp_image_with_text .producy_image img { border-top-left-radius: 25px; border-bottom-left-radius: 25px; } #shopify-section-{{ section.id }} .pdp_image_with_text .heading_wrapper { display: flex; align-items: center; gap: 12px; } #shopify-section-{{ section.id }} .pdp_image_with_text .producy_image { width: 63%; } #shopify-section-template--24509323870488__pdp_image_with_text_EJCN3H .pdp_image_with_text .sub_text p { font-size: 20px; margin: 0; line-height: 1.5; letter-spacing: 0; font-weight: 400; padding-top: 38px; width: 90%; color: #000; font-family: "Poppins", sans-serif; } #shopify-section-{{ section.id }} .pdp_image_with_text .text_box { display: flex; align-items: center; gap: 9px; padding-bottom: 18px; } #shopify-section-{{ section.id }} .pdp_image_with_text .text p { font-size: 20px; margin: 0; line-height: 1; letter-spacing: 0; font-weight: 400; color: #000; font-family: "Poppins", sans-serif; } #shopify-section-{{ section.id }} .pdp_image_with_text .check-kit-features { padding: 10px 0 18px; } #shopify-section-{{ section.id }} .pdp_image_with_text a.btn-main { display: flex; justify-content: center; align-items: center; max-width: 523px; border: 1px solid #000; height: 58px; background-color: #fff; color: #000; text-decoration: none; font-size: 20px; line-height: 1; letter-spacing: 0; font-weight: 600; text-transform: uppercase; border-radius: 50px; box-shadow: 4px 6px 0px 0px #000; margin-bottom: 59px; margin-left: -17px; } @media screen and ( min-width:950px ) and ( max-width:1200px ){ #shopify-section-{{ section.id }} .pdp_image_with_text .check_content { padding-left: 30px; width: 61%; padding-top: 45px; } #shopify-section-{{ section.id }} .pdp_image_with_text .heading p { font-size: 42px; margin: 0; line-height: 1.05; letter-spacing: 0; color: #000; font-weight: 500; font-family: "Poppins", sans-serif; } #shopify-section-{{ section.id }} .pdp_image_with_text  a.btn-main { max-width: 463px; margin-left: 0px; margin-bottom: 39px; } } @media screen and ( max-width:766px ) { #shopify-section-{{ section.id }} section.pdp_image_with_text { padding: 0; } #shopify-section-{{ section.id }} .pdp_image_with_text .check_it_wrapper { display: flex; flex-wrap: wrap; padding: 24px 16px 0px 16px; } #shopify-section-{{ section.id }} .pdp_image_with_text .heading_wrapper svg { width: 51px; height: 51px; } #shopify-section-{{ section.id }} .pdp_image_with_text .producy_image { width: 100%; } #shopify-section-{{ section.id }} .pdp_image_with_text .producy_image img { border-top-left-radius: 0; border-bottom-left-radius: 0; } #shopify-section-{{ section.id }} .pdp_image_with_text .check_content { padding-left: unset; background-color: #F7B801; border-top-right-radius: 0; border-bottom-right-radius: 0; width: 100%; padding-top: 30px; } #shopify-section-{{ section.id }} .pdp_image_with_text .producy_image img { border-top-left-radius: 0; border-bottom-left-radius: 0; } #shopify-section-{{ section.id }} .pdp_image_with_text .heading p { font-size: 24px; margin: 0; line-height: 1.25; } #shopify-section-{{ section.id }} .pdp_image_with_text .heading_wrapper { display: flex; align-items: end; gap: 5px; justify-content: space-between; } #shopify-section-{{ section.id }} .pdp_image_with_text .sub_text p { font-size: 16px; padding-top: 12px; width: 100%; } #shopify-section-{{ section.id }} .pdp_image_with_text .check-kit-features { padding: 31px 0 10px; } #shopify-section-{{ section.id }} .pdp_image_with_text .text_box { display: flex; align-items: center; gap: 5px; padding-bottom: 16px; } #shopify-section-{{ section.id }} .pdp_image_with_text .text p { font-size: 16px; letter-spacing: 0; } #shopify-section-{{ section.id }} .pdp_image_with_text a.btn-main { max-width: 316px; font-size: 20px; margin-left: 0; margin-bottom: 37px; margin-inline: auto; } }
+</style>
+
+<section class="pdp_image_with_text"style="background-color:{{ section.settings.bg_color }};color:{{ section.settings.txt_color }}">
+<div class="page-width">
+  <div class="check_it_wrapper">
+        <div class="producy_image">
+     {%- if section.settings.bg_image != blank -%}
+            {%- liquid
+              assign mobileImage = section.settings.bg_image
+              if section.settings.bg_image_mobile != blank
+                assign mobileImage = section.settings.bg_image_mobile
+              endif
+            -%}
+            <picture>
+              <source media="(min-width: 1901px)" srcset="{{ section.settings.bg_image | image_url: width: 2560 }}">
+              <source media="(min-width: 1700px)" srcset="{{ section.settings.bg_image | image_url: width: 2020 }}">
+              <source media="(min-width: 1500px)" srcset="{{ section.settings.bg_image | image_url: width: 1820 }}">
+              <source media="(min-width: 1200px)" srcset="{{ section.settings.bg_image | image_url: width: 1600 }}">
+              <source media="(min-width: 991px)" srcset="{{ section.settings.bg_image | image_url: width: 1350 }}">
+              <source media="(min-width: 768px)" srcset="{{ mobileImage | image_url: width: 1100 }}">
+              <source media="(min-width: 576px)" srcset="{{ mobileImage | image_url: width: 800 }}">
+              <source media="(min-width: 400px)" srcset="{{ mobileImage | image_url: width: 700 }}">
+              <source media="(min-width: 0)" srcset="{{ mobileImage | image_url: width: 600 }}">
+              <img src="{{ section.settings.bg_image | image_url }}"
+                   alt="{{ section.settings.bg_image.alt | default: section.settings.testimonial_heading | escape }}"
+                   width="{{ section.settings.bg_image.width }}"
+                   height="{{ section.settings.bg_image.width | divided_by: section.settings.bg_image.aspect_ratio | round }}"
+                   loading="lazy">
+            </picture>
+          {%- endif -%}
+    </div>
+    <div class="check_content">
+      <div class="heading_wrapper">
+     <div class="heading">{{ section.settings.heading }}</div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="87" height="86" viewBox="0 0 87 86" fill="none">
+<path d="M40.416 3.36914C42.2245 1.94249 44.7755 1.94249 46.584 3.36914C48.347 4.76007 50.707 5.13452 52.8135 4.35645C54.9744 3.55831 57.4005 4.346 58.6797 6.26172C59.9265 8.12929 62.0551 9.21395 64.2988 9.125C66.6007 9.03365 68.6646 10.5336 69.2891 12.751C69.8978 14.9125 71.5875 16.6022 73.749 17.2109C75.9664 17.8354 77.4663 19.8993 77.375 22.2012C77.286 24.4449 78.3707 26.5735 80.2383 27.8203C82.154 29.0995 82.9417 31.5256 82.1436 33.6865C81.3655 35.793 81.7399 38.153 83.1309 39.916C84.5575 41.7245 84.5575 44.2755 83.1309 46.084C81.7399 47.847 81.3655 50.207 82.1436 52.3135C82.9417 54.4744 82.154 56.9005 80.2383 58.1797C78.3707 59.4265 77.286 61.5551 77.375 63.7988C77.4663 66.1007 75.9664 68.1646 73.749 68.7891C71.5875 69.3978 69.8978 71.0875 69.2891 73.249C68.6646 75.4664 66.6007 76.9663 64.2988 76.875C62.0551 76.786 59.9265 77.8707 58.6797 79.7383C57.4005 81.654 54.9744 82.4417 52.8135 81.6436C50.707 80.8655 48.347 81.2399 46.584 82.6309C44.7755 84.0575 42.2245 84.0575 40.416 82.6309C38.653 81.2399 36.293 80.8655 34.1865 81.6436C32.0256 82.4417 29.5995 81.654 28.3203 79.7383C27.0735 77.8707 24.9449 76.786 22.7012 76.875C20.3993 76.9663 18.3354 75.4664 17.7109 73.249C17.1022 71.0875 15.4125 69.3978 13.251 68.7891C11.0336 68.1646 9.53365 66.1007 9.625 63.7988C9.71395 61.5551 8.62929 59.4265 6.76172 58.1797C4.846 56.9005 4.05831 54.4744 4.85645 52.3135C5.63452 50.207 5.26007 47.847 3.86914 46.084C2.44249 44.2755 2.44249 41.7245 3.86914 39.916C5.26007 38.153 5.63452 35.793 4.85645 33.6865C4.05831 31.5256 4.846 29.0995 6.76172 27.8203C8.62929 26.5735 9.71395 24.4449 9.625 22.2012C9.53365 19.8993 11.0336 17.8354 13.251 17.2109C15.4125 16.6022 17.1022 14.9125 17.7109 12.751C18.3354 10.5336 20.3993 9.03365 22.7012 9.125C24.9449 9.21395 27.0735 8.12929 28.3203 6.26172C29.5995 4.346 32.0256 3.55831 34.1865 4.35645C36.293 5.13452 38.653 4.76007 40.416 3.36914Z" fill="white" stroke="black" stroke-width="1.46967"/>
+<path d="M58.938 37.8501L41.1091 55.679C40.6925 56.0953 40.1277 56.3291 39.5387 56.3291C38.9497 56.3291 38.3849 56.0953 37.9683 55.679L28.0235 45.6815C27.6076 45.2649 27.374 44.7003 27.374 44.1117C27.374 43.5231 27.6076 42.9585 28.0235 42.542L30.8006 39.7649C31.217 39.3502 31.7807 39.1175 32.3683 39.1175C32.9559 39.1175 33.5196 39.3502 33.9359 39.7649L39.5942 45.2524L53.0298 31.9821C53.4462 31.567 54.0102 31.334 54.5981 31.334C55.1861 31.334 55.7501 31.567 56.1665 31.9821L58.9366 34.6953C59.145 34.9018 59.3103 35.1474 59.4233 35.4181C59.5362 35.6888 59.5944 35.9791 59.5945 36.2724C59.5946 36.5657 59.5367 36.8561 59.424 37.1269C59.3113 37.3977 59.1462 37.6435 58.938 37.8501Z" fill="black"/>
+</svg>
+      </div>
+  <div class="sub_text">{{section.settings.sub_text}}</div>
+      <div class="check-kit-features">
+        <div class="text_box">
+       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+<path d="M20.9091 7.81263L9.87475 18.847C9.61692 19.1047 9.26732 19.2494 8.9028 19.2494C8.53828 19.2494 8.18868 19.1047 7.93085 18.847L1.776 12.6595C1.5186 12.4017 1.37402 12.0523 1.37402 11.688C1.37402 11.3237 1.5186 10.9743 1.776 10.7165L3.49475 8.9977C3.75245 8.74109 4.10131 8.59701 4.46499 8.59701C4.82866 8.59701 5.17753 8.74109 5.43522 8.9977L8.93718 12.394L17.2525 4.18091C17.5102 3.92403 17.8593 3.77979 18.2232 3.77979C18.587 3.77979 18.9361 3.92403 19.1938 4.18091L20.9083 5.86013C21.0372 5.98789 21.1396 6.13993 21.2094 6.30745C21.2793 6.47498 21.3153 6.65468 21.3154 6.8362C21.3155 7.01771 21.2796 7.19745 21.2099 7.36504C21.1402 7.53262 21.0379 7.68475 20.9091 7.81263Z" fill="black"/>
+</svg>
+          <div class="text">{{ section.settings.text1 }}</div>
+        </div>
+     <div class="text_box">
+       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+<path d="M20.9091 7.81263L9.87475 18.847C9.61692 19.1047 9.26732 19.2494 8.9028 19.2494C8.53828 19.2494 8.18868 19.1047 7.93085 18.847L1.776 12.6595C1.5186 12.4017 1.37402 12.0523 1.37402 11.688C1.37402 11.3237 1.5186 10.9743 1.776 10.7165L3.49475 8.9977C3.75245 8.74109 4.10131 8.59701 4.46499 8.59701C4.82866 8.59701 5.17753 8.74109 5.43522 8.9977L8.93718 12.394L17.2525 4.18091C17.5102 3.92403 17.8593 3.77979 18.2232 3.77979C18.587 3.77979 18.9361 3.92403 19.1938 4.18091L20.9083 5.86013C21.0372 5.98789 21.1396 6.13993 21.2094 6.30745C21.2793 6.47498 21.3153 6.65468 21.3154 6.8362C21.3155 7.01771 21.2796 7.19745 21.2099 7.36504C21.1402 7.53262 21.0379 7.68475 20.9091 7.81263Z" fill="black"/>
+</svg>
+          <div class="text">{{ section.settings.text2 }}</div>
+        </div>
+     <div class="text_box">
+       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+<path d="M20.9091 7.81263L9.87475 18.847C9.61692 19.1047 9.26732 19.2494 8.9028 19.2494C8.53828 19.2494 8.18868 19.1047 7.93085 18.847L1.776 12.6595C1.5186 12.4017 1.37402 12.0523 1.37402 11.688C1.37402 11.3237 1.5186 10.9743 1.776 10.7165L3.49475 8.9977C3.75245 8.74109 4.10131 8.59701 4.46499 8.59701C4.82866 8.59701 5.17753 8.74109 5.43522 8.9977L8.93718 12.394L17.2525 4.18091C17.5102 3.92403 17.8593 3.77979 18.2232 3.77979C18.587 3.77979 18.9361 3.92403 19.1938 4.18091L20.9083 5.86013C21.0372 5.98789 21.1396 6.13993 21.2094 6.30745C21.2793 6.47498 21.3153 6.65468 21.3154 6.8362C21.3155 7.01771 21.2796 7.19745 21.2099 7.36504C21.1402 7.53262 21.0379 7.68475 20.9091 7.81263Z" fill="black"/>
+</svg>
+          <div class="text">{{ section.settings.text3 }}</div>
+        </div>
+      </div>
+         <a class="btn-main  {{ section.settings.btn_style }}" data-add-btn href="{{ section.settings.btn_link }}">
+    {{ section.settings.btn_txt }}
+  </a>
+    </div>
+
+
+        </div>
+
+          
+        </div>
+</section>
+
+{% schema %}
+{
+  "name": "pdp image with text",
+  "settings": [
+       {
+        "type": "color",
+        "id":"bg_color",
+        "label":"Select Background Color",
+      },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Add Image"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Main Heading",
+    },
+    {
+      "type": "richtext",
+      "id": "sub_text",
+      "label": "Add text",
+    },
+       {
+       "type": "richtext",
+       "id": "text1",
+       "label": "Add text"
+     },
+       {
+       "type": "richtext",
+       "id": "text2",
+       "label": "Add text"
+     },
+       {
+       "type": "richtext",
+       "id": "text3",
+       "label": "Add text"
+     },
+        {
+      "type": "text",
+      "id": "btn_txt",
+      "label": "Button Text"
+      },
+      {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+      },   
+  ],
+
+  "presets": [
+    {
+      "name": "pdp image with text"
+    }
+  ]
+}
+{% endschema %}

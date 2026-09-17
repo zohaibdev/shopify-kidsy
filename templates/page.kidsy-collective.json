@@ -1,0 +1,274 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_VaBrqV": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_Y7JhUa": {
+          "type": "heading",
+          "settings": {
+            "heading": "Kidsy Collective",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Y7JhUa"
+      ],
+      "custom_css": [
+        ".h1 {font-weight: bold;}",
+        ".banner__box.content-container.content-container--full-width-mobile.color-background-2 {background-color: transparent;}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/iStock-1292897490.jpg",
+        "image_overlay_opacity": 20,
+        "image_height": "small",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "background-2",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "rich_text_jtKJfK": {
+      "type": "rich-text",
+      "blocks": {
+        "text_9AXVNG": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Kidsy is redefining the recommerce industry by leveraging our proprietary technology to drive the fastest sell-through of products better than anyone else in the industry. We are driven by our mission which is rooted in sustainability.</p><p>Through the <strong>Kidsy Collective</strong>, we are proud to showcase some of the leading brands and retailers we work closely with to give customer-returns and excess products a second life. Every day we save these products from ending up in landfills and put them back in the hands of our consumers nationwide.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_9AXVNG"
+      ],
+      "custom_css": [
+        "p {font-size: 20px;}"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-ec5d81c0-f9b4-4a02-9a99-f58043a39c67",
+        "full_width": true,
+        "padding_top": 80,
+        "padding_bottom": 20
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "image_with_text_DYYUKE": {
+      "type": "image-with-text",
+      "blocks": {
+        "text_RRQbw9": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Together with industry leaders, the <strong>Kidsy Collective</strong> is our promise to be a powerful force for good. </p><p>It’s where smart shopping meets sustainable solutions. </p><p>Where profits meets purpose. </p><p>Where little feet leave a small carbon footprint. </p><p>Where sustainability and savings go hand-in-hand.</p><p>Our expert quality-control process ensures all open-box products are safely recirculated to our customers, meeting industry standards that make us the most trusted recommerce platform in the country.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "text_RRQbw9"
+      ],
+      "custom_css": [
+        "p {font-size: 18px;}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/iStock-1355538147.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-ec5d81c0-f9b4-4a02-9a99-f58043a39c67",
+        "color_scheme": "accent-2",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "image_with_text_PdWRBq": {
+      "type": "image-with-text",
+      "blocks": {
+        "text_FqkCXk": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We are proud of the impact we are making and by 2027, we pledge to save over 2 million baby and kids products from the landfill.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "text_FqkCXk"
+      ],
+      "custom_css": [
+        "p {font-size: 18px;}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/iStock-1199585563.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "center",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-ec5d81c0-f9b4-4a02-9a99-f58043a39c67",
+        "color_scheme": "accent-2",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "multicolumn_rwh6Wp": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_6HQ7xR": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/600d9c39516067000439ac64.png",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": "shopify://collections/graco"
+          }
+        },
+        "column_9qx4bN": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Evenflo.png",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": "shopify://collections/evenflo"
+          }
+        },
+        "column_rCpWK7": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/joovy-logo.jpg",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": "shopify://collections/joovy"
+          }
+        },
+        "column_WkUJgd": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/brand-logo-metaimage.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": "shopify://collections/baby-jogger"
+          }
+        },
+        "column_WRjh8V": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/baby-trend-logo_1024x-1-p49ohnawx0y04m9ozuj130avtyjhzwqxek77ka2eio.png",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": "shopify://collections/babytrend"
+          }
+        },
+        "column_FHkB9M": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/cybex-1_2cf4a422-5216-400e-8c58-07842d39239b.svg",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": "shopify://collections/cyber"
+          }
+        }
+      },
+      "block_order": [
+        "column_6HQ7xR",
+        "column_9qx4bN",
+        "column_rCpWK7",
+        "column_WkUJgd",
+        "column_WRjh8V",
+        "column_FHkB9M"
+      ],
+      "custom_css": [
+        ".multicolumn .title {font-weight: bold; text-align: center; margin: auto;}",
+        ".multicolumn-card.content-container {background: #fff !important; border-radius: 4px;}",
+        ".multicolumn-card-spacing {margin: 0; padding: 12px;}",
+        ".multicolumn-card {height: 114px;}",
+        ".media {position: inherit; padding-bottom: 0;}",
+        ".multicolumn-list__item .media--adapt .multicolumn-card__image {aspect-ratio: 3/2; object-fit: scale-down; width: 100%; padding: 8px;}"
+      ],
+      "settings": {
+        "title": "Explore our partners we work with",
+        "heading_size": "h2",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 4,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "scheme-ec5d81c0-f9b4-4a02-9a99-f58043a39c67",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich_text_k7dMgT": {
+      "type": "rich-text",
+      "blocks": {
+        "text_tnUJzh": {
+          "type": "text",
+          "settings": {
+            "text": "<p><em>For more information on the </em><em><strong>Kidsy Collective</strong></em><em> or if you’d like to join our mission in putting waste to work, reach out to us at </em><a href=\"mailto:partnerships@kidsy.co\"><span style=\"text-decoration:underline\"><em>partnerships@kidsy.co</em></span></a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_tnUJzh"
+      ],
+      "custom_css": [],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-ec5d81c0-f9b4-4a02-9a99-f58043a39c67",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "image_banner_VaBrqV",
+    "rich_text_jtKJfK",
+    "main",
+    "image_with_text_DYYUKE",
+    "image_with_text_PdWRBq",
+    "multicolumn_rwh6Wp",
+    "rich_text_k7dMgT"
+  ]
+}

@@ -1,0 +1,954 @@
+{%- comment -%}
+============================================================
+Section: Reviews & Stats Carousel (Kidsy)
+File:    sections/reviews-stats-carousel.liquid
+
+Pixel-perfect implementation of:
+- Desktop (1440):  node 10083-1356
+- Mobile:          node 10083-2042
+
+A full-width band with:
+• A semi-transparent stats banner (1–N stat blocks)
+• An infinite, draggable review carousel (1–N review blocks)
+• Dot pagination + prev/next arrows
+• Decorative squiggles (white left, orange right)
+
+All copy, colors, sizes and items are merchant-editable via
+section settings + blocks.
+============================================================
+{%- endcomment -%}
+<link rel="preload" href="{{ 'custom.css' | asset_url }}" as="style">
+{%- liquid
+  assign s            = section.settings
+  assign uid          = section.id
+  assign bg_color     = s.bg_color | default: '#ffbc38'
+  assign card_bg      = s.card_bg | default: '#fff4e1'
+  assign accent       = s.accent_color | default: '#f45901'
+  assign text_color   = s.text_color | default: '#341300'
+  assign banner_tint  = s.banner_tint | default: 'rgba(255,255,255,0.46)'
+  assign avatar_bg    = s.avatar_bg | default: '#fddecc'
+  assign border_color = s.border_color | default: 'rgba(52,19,0,0.19)'
+  assign max_width    = s.max_width | default: 1440
+  assign show_banner  = s.show_banner
+
+  assign stat_blocks   = section.blocks | where: 'type', 'stat'
+  assign review_blocks = section.blocks | where: 'type', 'review'
+-%}
+
+<style>
+  #ReviewsCarousel-{{ uid }} {
+    --rc-bg:        {{ bg_color }};
+    --rc-card-bg:   {{ card_bg }};
+    --rc-accent:    {{ accent }};
+    --rc-text:      {{ text_color }};
+    --rc-banner:    {{ banner_tint }};
+    --rc-avatar-bg: {{ avatar_bg }};
+    --rc-border:    {{ border_color }};
+    --rc-max:       {{ max_width }}px;
+
+    background: var(--rc-bg);
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    color: var(--rc-text);
+font-family: "Roobert TRIAL", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Outer container — pixel-perfect to Figma 1440: 50px L/R, 60px T/B */
+  .rc-{{ uid }}__container {
+    width: 100%;
+    margin: 0 auto;
+    padding: {{ s.padding_top | default: 60 }}px 0 {{ s.padding_bottom | default: 60 }}px;
+    position: relative;
+  }
+  {% comment %} .reviews_slider {
+    padding-left: 50px;
+    width: 100%;
+} {% endcomment %}
+
+  .rc-{{ uid }}__inner { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .rc-{{ uid }}__stack { display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%; }
+
+  /* ============= STATS BANNER ============= */
+  .rc-{{ uid }}__banner {
+    position: relative;
+    width: 100%;
+    height: 232px;
+    background: var(--rc-banner);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 12px;
+    overflow: visible;
+  }
+  .rc-{{ uid }}__stat {
+    padding: 20px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 5px;
+    text-transform: capitalize;
+    text-align: center;
+  }
+  .rc-{{ uid }}__stat-num {
+    font-weight: 650;
+    font-size: 56px;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--rc-text);
+  }
+  .rc-{{ uid }}__stat-label {
+    font-weight: 650;
+    font-size: 24px;
+    line-height: normal;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--rc-text);
+  }
+
+  /* Decorative squiggles */
+  .rc-{{ uid }}__squiggle {
+    position: absolute;
+    pointer-events: none;
+  }
+  /* Desktop white squiggle — left of banner */
+  .rc-{{ uid }}__squiggle--left {
+    left: -0;
+    top: 168px;
+    width: auto;
+    height: auto;
+  }
+  /* Desktop orange squiggle — top right of banner */
+  .rc-{{ uid }}__squiggle--right {
+    width: auto;
+    height: auto;
+    right: 0px;
+    top: 70px;
+        z-index: 1;
+  }
+
+  /* ============= SLIDER ============= */
+  .rc-{{ uid }}__viewport {
+    width: 100%;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+  }
+  .rc-{{ uid }}__viewport.is-dragging { cursor: grabbing; }
+
+  .rc-{{ uid }}__track {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    will-change: transform;
+    transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .rc-{{ uid }}__track.no-transition { transition: none !important; }
+  .rc-{{ uid }}__viewport.is-dragging .rc-{{ uid }}__track { transition: none; }
+
+  /* Card — 341×308 desktop */
+  .rc-{{ uid }}__card {
+    background: var(--rc-card-bg);
+    border: 1px solid var(--rc-border);
+    border-radius: 6px;
+    width: 341px;
+    height: 308px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    -webkit-user-drag: none;
+  }
+  .rc-{{ uid }}__card * { -webkit-user-drag: none; }
+
+  .rc-{{ uid }}__card-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: center;
+    width: 297px;
+  }
+
+  /* Stars row */
+  .rc-{{ uid }}__stars {
+    display: flex;
+    align-items: center;
+    height: 18px;
+    width: 100%;
+  }
+  .rc-{{ uid }}__star {
+    width: 20.634px;
+    height: 20.634px;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  /* Text block — 297×140 desktop */
+  .rc-{{ uid }}__text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 297px;
+    height: 140px;
+    text-transform: capitalize;
+    color: var(--rc-text);
+    overflow: hidden;
+  }
+  .rc-{{ uid }}__title {
+    font-size: 16px;
+    font-weight: 650;
+    line-height: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
+  .rc-{{ uid }}__body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  /* Divider */
+  .rc-{{ uid }}__divider {
+    width: 100%;
+    height: 1px;
+    border: none;
+    border-top: 1px solid var(--rc-border);
+    margin: 0;
+  }
+
+  /* Author row */
+  .rc-{{ uid }}__author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+  .rc-{{ uid }}__avatar {
+    width: 50px; height: 50px;
+    background: var(--rc-avatar-bg);
+    border: 1px solid var(--rc-border);
+    border-radius: 100px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .rc-{{ uid }}__avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .rc-{{ uid }}__avatar span {
+    font-weight: 650;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.36px;
+    line-height: normal;
+    color: var(--rc-text);
+  }
+  .rc-{{ uid }}__author-info {
+    display: flex; flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    min-width: 0;
+  }
+  .rc-{{ uid }}__author-name {
+    font-weight: 650;
+    font-size: 16px;
+    text-transform: capitalize;
+    line-height: normal;
+    color: var(--rc-text);
+  }
+  .rc-{{ uid }}__verified {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .rc-{{ uid }}__verified-text {
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--rc-accent);
+    text-transform: capitalize;
+    line-height: normal;
+  }
+  .rc-{{ uid }}__verified-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  /* ============= CONTROLS ============= */
+  .rc-{{ uid }}__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .rc-{{ uid }}__dots {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .rc-{{ uid }}__dot {
+    width: 17.375px;
+    height: 17.375px;
+    border-radius: 50%;
+    background: rgba(254, 254, 254, 0.38);
+    border: 0.869px solid var(--rc-border);
+    flex-shrink: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+  }
+  .rc-{{ uid }}__dot:hover  { transform: scale(1.1); }
+  .rc-{{ uid }}__dot.active { background: var(--rc-accent); border-color: var(--rc-accent); }
+
+  .rc-{{ uid }}__arrows {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .rc-{{ uid }}__arrow {
+    width: 50px; height: 50px;
+    border-radius: 100px;
+    border: 1px solid var(--rc-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    background: #fff;
+    padding: 0;
+  }
+  .rc-{{ uid }}__arrow:hover { transform: scale(1.05); }
+  .rc-{{ uid }}__arrow--next {
+    background: var(--rc-accent);
+    border-color: transparent;
+  }
+
+  /* Mobile-only / desktop-only show flags */
+  .rc-{{ uid }}__mb { display: none; }
+  .rc-{{ uid }}__dt { display: block; }
+
+  /* ============= MOBILE ============= */
+  @media (max-width: 768px) {
+    .rc-{{ uid }}__container {
+      padding: 20px 0;
+    }
+  {% comment %} .rc-{{ uid }}__controls {
+    padding-right: 16px;
+  } {% endcomment %}
+#ReviewsCarousel-{{ uid }} .page-width{
+padding:0 16px;
+}
+{% comment %} .reviews_slider {
+    padding-left: 16px;
+        position: relative;
+} {% endcomment %}
+    .rc-{{ uid }}__inner { gap: 10px; }
+    .rc-{{ uid }}__stack { gap: 20px; }
+
+    /* Banner — vertical stack */
+    .rc-{{ uid }}__banner {
+      height: auto;
+      flex-direction: column;
+      gap: 24px;
+      padding: 24px 12px;
+    }
+    .rc-{{ uid }}__stat {
+      padding: 0;
+      width: 280px;
+      max-width: 100%;
+    }
+    .rc-{{ uid }}__stat-num {
+      font-size: 30px;
+      line-height: 1.1;
+    }
+    .rc-{{ uid }}__stat-label {
+      font-size: 18px;
+      white-space: normal;
+    }
+    {% comment %} .rc-{{ uid }}__track{
+    } {% endcomment %}
+
+    /* Hide desktop squiggles, show mobile ones */
+    .rc-{{ uid }}__dt { display: none; }
+    .rc-{{ uid }}__mb { display: block; }
+
+    .rc-{{ uid }}__squiggle--mb-right {
+      position: absolute;
+      right: 0;
+      top: 13px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .rc-{{ uid }}__squiggle--mb-left {
+      position: absolute;
+      left: 0;
+      top: 163px;
+      pointer-events: none;
+    }
+
+    /* Card — 260 wide, 15 padding */
+    .rc-{{ uid }}__card {
+      width: 260px;
+      height: auto;
+      min-height: 0;
+      padding: 15px;
+    }
+    .rc-{{ uid }}__card-inner {
+      width: 230px;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .rc-{{ uid }}__star {
+      width: 16px;
+      height: 16px;
+    }
+    .rc-{{ uid }}__text {
+      width: 230px;
+      height: auto;
+      gap: 10px;
+      font-size: 14px;
+    }
+    .rc-{{ uid }}__title {
+      font-size: 14px;
+      white-space: normal;
+    }
+    .rc-{{ uid }}__body {
+      font-size: 14px;
+    }
+
+    .rc-{{ uid }}__avatar {
+      width: 40px; height: 40px;
+    }
+    .rc-{{ uid }}__avatar span {
+      font-size: 14px;
+      letter-spacing: 0.28px;
+    }
+    .rc-{{ uid }}__author-name { font-size: 14px; }
+    .rc-{{ uid }}__verified-text { font-size: 14px; }
+    .rc-{{ uid }}__verified-icon { width: 14px; height: 14px; }
+
+    /* Mobile dots & arrows */
+    .rc-{{ uid }}__dots { gap: 5px; }
+    .rc-{{ uid }}__dot {
+      width: 12px;
+      height: 12px;
+    }
+    .rc-{{ uid }}__arrows { gap: 5px; }
+    .rc-{{ uid }}__arrow {
+      width: 30px; height: 30px;
+    }
+    .rc-{{ uid }}__arrow svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
+</style>
+
+<section
+  id="ReviewsCarousel-{{ uid }}"
+  class="reviews-carousel"
+  data-section-id="{{ section.id }}"
+  data-section-type="reviews-stats-carousel">
+
+     {%- if s.show_squiggles -%}
+              {%- comment -%} Desktop white squiggle (left) {%- endcomment -%}
+               <svg  class="rc-{{ uid }}__squiggle rc-{{ uid }}__squiggle--left rc-{{ uid }}__dt" xmlns="http://www.w3.org/2000/svg" width="61" height="274" viewBox="0 0 61 274" fill="none">
+<path d="M-44.9615 273.259C-48.7749 272.575 -51.5469 272.104 -54.3154 271.58C-55.854 271.299 -57.6622 271.154 -57.9953 269.25C-58.3768 267.049 -56.4083 266.395 -54.9644 265.565C-49.4628 262.451 -43.4788 260.596 -37.3354 259.183C-28.1296 257.073 -18.7921 256.041 -9.40393 255.272C-0.312307 254.533 0.756263 252.642 -3.30422 244.419C-6.43842 238.038 -11.1566 232.753 -15.4922 227.202C-19.0022 222.71 -22.8396 218.195 -20.1659 211.965C-17.5549 205.886 -11.7544 204.916 -6.04827 204.3C3.16613 203.295 12.4217 203.913 21.668 203.928C25.1139 203.929 28.5759 203.95 31.9957 203.587C36.3408 203.117 37.3725 201.258 35.7754 197.142C33.7378 191.909 30.099 187.77 25.9759 184.114C20.9411 179.635 15.5842 175.548 10.5126 171.101C2.29221 163.912 3.11004 155.516 12.8417 150.371C19.7493 146.718 27.1157 143.925 34.2083 140.596C36.8948 139.336 39.5257 137.883 41.9816 136.21C48.2584 131.926 49.673 125.625 45.7755 119.017C41.121 111.115 33.6565 106.464 25.6258 102.723C20.6635 100.405 15.4582 98.5886 10.4357 96.388C0.374799 91.9683 -2.78132 84.6716 0.757877 74.2761C3.09728 67.3846 7.17177 61.4265 11.0788 55.3875C13.1982 52.1037 15.4012 48.8603 16.9208 45.2409C18.6062 41.2363 17.7609 38.0019 14.189 35.3688C8.1327 30.8867 1.0649 28.7142 -5.90587 26.3932C-13.6375 23.8116 -21.4784 21.55 -29.2285 18.9843C-33.4254 17.6011 -37.356 15.6328 -40.4093 12.2771C-42.9328 9.51096 -43.7807 6.31099 -42.7311 2.72735C-42.2517 1.08761 -41.0713 0.0666607 -39.3004 0.00188396C-37.3744 -0.0519457 -36.4109 1.01675 -36.3694 2.88304C-36.2878 6.6328 -33.2618 7.43311 -30.6434 8.1183C-24.1311 9.82025 -17.506 11.1505 -10.9459 12.6661C-1.14829 14.9277 8.56342 17.425 17.5674 22.0979C31.3665 29.2487 35.0101 39.9443 27.7209 53.6638C24.1445 60.4162 19.5004 66.5928 15.69 73.2252C10.6955 81.9134 11.0865 82.752 20.3145 86.2157C32.4603 90.7826 43.9894 96.2376 52.64 106.407C65.8958 121.991 63.1319 139.066 45.5996 149.475C39.1106 153.33 32.1998 156.293 25.331 159.396C20.6443 161.516 20.5769 161.735 24.7636 164.981C32.5927 171.089 39.9397 177.647 45.1721 186.194C47.6564 190.252 49.4113 194.585 49.451 199.419C49.5339 208.793 45.3026 214.275 35.9825 216.533C26.7497 218.779 17.244 217.78 7.88758 218.345C5.69585 218.484 3.49653 218.484 1.31719 218.692C0.1666 218.801 -1.53376 218.111 -2.00347 219.614C-2.40453 220.879 -1.06932 221.836 -0.305243 222.787C4.13747 228.294 8.10909 234.096 11.0477 240.549C18.018 255.879 11.521 268.188 -5.18974 270.148C-18.7048 271.73 -32.3551 272.285 -44.975 273.206L-44.9615 273.259Z" fill="white"/>
+</svg>
+              {%- comment -%} Desktop orange squiggle (right) {%- endcomment -%}
+
+              <svg   class="rc-{{ uid }}__squiggle rc-{{ uid }}__squiggle--right rc-{{ uid }}__dt" xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+<path d="M57.7965 3.41956C27.1521 12.5037 -23.206 34.5238 20.5172 49.9311C75.1711 69.1903 233.315 49.0142 151.472 91.4577C69.6283 133.901 48.2438 163.283 123.952 158.778" stroke="#F45901" stroke-width="6.8372" stroke-linecap="round"/>
+</svg>
+            {%- endif -%}
+
+                 {%- if s.show_squiggles -%}
+              {%- comment -%} Mobile orange squiggle (top right) {%- endcomment -%}
+               <svg xmlns="http://www.w3.org/2000/svg" width="91" height="104" viewBox="0 0 91 104" fill="none"  class="rc-{{ uid }}__squiggle rc-{{ uid }}__squiggle--mb-right rc-{{ uid }}__mb">
+<path d="M37.3168 3.41947C18.2139 9.0823 -13.1781 22.8091 14.0778 32.4136C48.1477 44.4193 146.731 31.842 95.7115 58.3003C44.6924 84.7585 31.3619 103.074 78.5566 100.266" stroke="#F45901" stroke-width="6.8372" stroke-linecap="round"/>
+</svg>
+              {%- comment -%} Mobile white squiggle (left side, mid) {%- endcomment -%}
+
+              <svg  class="rc-{{ uid }}__squiggle rc-{{ uid }}__squiggle--mb-left rc-{{ uid }}__mb" xmlns="http://www.w3.org/2000/svg" width="49" height="214" viewBox="0 0 49 214" fill="none">
+  <path d="M-34.5799 213.711C-37.5624 213.177 -39.7303 212.808 -41.8954 212.399C-43.0988 212.179 -44.5129 212.065 -44.7735 210.576C-45.0718 208.855 -43.5323 208.343 -42.403 207.694C-38.1004 205.258 -33.4203 203.808 -28.6157 202.703C-21.416 201.052 -14.1133 200.245 -6.77098 199.644C0.339418 199.066 1.17513 197.587 -2.0005 191.156C-4.45171 186.165 -8.14168 182.032 -11.5325 177.691C-14.2776 174.178 -17.2788 170.646 -15.1878 165.774C-13.1457 161.02 -8.60921 160.261 -4.14657 159.78C3.05985 158.993 10.2984 159.477 17.5298 159.489C20.2248 159.49 22.9324 159.506 25.6069 159.222C29.0051 158.855 29.812 157.4 28.563 154.182C26.9694 150.089 24.1236 146.852 20.8989 143.993C16.9613 140.49 12.7718 137.293 8.80536 133.815C2.37637 128.193 3.01598 121.626 10.627 117.603C16.0293 114.746 21.7904 112.562 27.3374 109.958C29.4385 108.973 31.496 107.836 33.4167 106.528C38.3257 103.177 39.4321 98.2489 36.3839 93.0816C32.7437 86.9009 26.9058 83.2638 20.6251 80.3376C16.7442 78.5254 12.6732 77.1046 8.74526 75.3835C0.876795 71.9269 -1.59155 66.2203 1.17639 58.0902C3.006 52.7005 6.19258 48.0407 9.2482 43.3178C10.9057 40.7495 12.6287 38.2129 13.8172 35.3822C15.1353 32.2503 14.4742 29.7207 11.6806 27.6614C6.94411 24.1561 1.41652 22.457 -4.03521 20.6418C-10.082 18.6227 -16.2142 16.854 -22.2754 14.8474C-25.5578 13.7656 -28.6318 12.2263 -31.0198 9.60185C-32.9934 7.43849 -33.6564 4.93584 -32.8356 2.13314C-32.4607 0.850731 -31.5375 0.0522629 -30.1525 0.00160176C-28.6462 -0.0404975 -27.8926 0.795312 -27.8602 2.25491C-27.7964 5.18753 -25.4298 5.81343 -23.382 6.34931C-18.2888 7.68038 -13.1075 8.72076 -7.97695 9.90604C-0.314383 11.6749 7.28097 13.6279 14.3229 17.2825C25.1149 22.875 27.9644 31.2398 22.2637 41.9696C19.4666 47.2506 15.8346 52.0812 12.8545 57.2683C8.94842 64.0632 9.25427 64.719 16.4713 67.4279C25.9703 70.9996 34.987 75.2659 41.7525 83.2189C52.1196 95.4068 49.958 108.761 36.2463 116.902C31.1714 119.917 25.7666 122.234 20.3946 124.661C16.7292 126.319 16.6765 126.49 19.9509 129.029C26.0738 133.806 31.8198 138.935 35.912 145.619C37.855 148.793 39.2274 152.182 39.2585 155.962C39.3233 163.294 36.014 167.581 28.7249 169.347C21.5042 171.104 14.0699 170.322 6.75241 170.764C5.0383 170.872 3.31825 170.872 1.61382 171.035C0.713966 171.12 -0.615858 170.581 -0.983212 171.756C-1.29687 172.746 -0.252629 173.495 0.344944 174.238C3.81951 178.545 6.92565 183.082 9.22388 188.129C14.6752 200.119 9.59409 209.745 -3.47514 211.278C-14.045 212.516 -24.7207 212.95 -34.5905 213.67L-34.5799 213.711Z" fill="white"/>
+</svg>
+            {%- endif -%}
+
+
+  <div class="page-width">
+    <div class="rc-{{ uid }}__container">
+    <div class="rc-{{ uid }}__inner">
+      <div class="rc-{{ uid }}__stack">
+
+        {%- comment -%} ============= STATS BANNER ============= {%- endcomment -%}
+        {%- if show_banner and stat_blocks.size > 0 -%}
+          <div class="rc-{{ uid }}__banner">
+
+            {%- for block in stat_blocks -%}
+              <div class="rc-{{ uid }}__stat" {{ block.shopify_attributes }}>
+                <div class="rc-{{ uid }}__stat-num">{{ block.settings.number }}</div>
+                <div class="rc-{{ uid }}__stat-label">{{ block.settings.label }}</div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+          {%- comment -%} ============= REVIEW SLIDER ============= {%- endcomment -%}
+
+        {%- if review_blocks.size > 0 -%}
+          <div class="rc-{{ uid }}__viewport" data-rc-viewport tabindex="0" aria-label="Customer reviews carousel">
+            <div class="rc-{{ uid }}__track" data-rc-track></div>
+          </div>
+        {%- endif -%}
+
+              {%- if review_blocks.size > 0 -%}
+        <div class="rc-{{ uid }}__controls">
+          <div class="rc-{{ uid }}__dots" data-rc-dots role="tablist" aria-label="Review pagination"></div>
+          <div class="rc-{{ uid }}__arrows">
+            <button type="button" class="rc-{{ uid }}__arrow rc-{{ uid }}__arrow--prev" data-rc-prev aria-label="Previous reviews">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15.0001 4.5L7.50012 12L15.0001 19.5" stroke="#341300" stroke-width="1.41871" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button type="button" class="rc-{{ uid }}__arrow rc-{{ uid }}__arrow--next" data-rc-next aria-label="Next reviews">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 4.5L16.5 12L9 19.5" stroke="white" stroke-width="1.41871" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      {%- endif -%}
+
+
+      </div>
+
+
+    </div>
+    </div>
+  </div>
+
+
+
+
+  {%- comment -%} ============= JSON DATA FOR SLIDER ============= {%- endcomment -%}
+  <script type="application/json" data-rc-data>
+    {
+      "reviews": [
+        {%- for block in review_blocks -%}
+          {
+            "title":    {{ block.settings.title    | default: ''  | json }},
+            "body":     {{ block.settings.body     | default: ''  | json }},
+            "name":     {{ block.settings.name     | default: ''  | json }},
+            "initials": {{ block.settings.initials | default: ''  | json }},
+            "avatar":   {%- if block.settings.avatar -%}{{ block.settings.avatar | image_url: width: 100 | json }}{%- else -%}null{%- endif -%},
+            "rating":   {{ block.settings.rating   | default: 5   | json }},
+            "verified": {{ block.settings.verified | default: true | json }}
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+  <div class="wave_bottom">
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="91" viewBox="0 0 1440 91" fill="none">
+<path d="M1092.5 65.5287C1256.8 63.8105 1392.1 40.4585 1440 8.95776L1440 91L0 90.9999L2.22676e-06 65.5287C402 -18.4469 420.811 -12.5285 644.857 31.9361C845.065 71.67 1018.65 70.5402 1092.5 65.5287Z" fill="#FFF4E1"/>
+</svg>
+</div>
+</section>
+
+<script>
+(function(){
+  'use strict';
+  const SECTION_ID = {{ section.id | json }};
+  const root = document.getElementById('ReviewsCarousel-' + SECTION_ID);
+  if (!root) return;
+
+  const dataEl = root.querySelector('[data-rc-data]');
+  if (!dataEl) return;
+
+  let DATA;
+  try { DATA = JSON.parse(dataEl.textContent); }
+  catch (e) { console.warn('[reviews-carousel] Bad JSON', e); return; }
+
+  const REVIEWS = DATA.reviews || [];
+  if (!REVIEWS.length) return;
+
+  const viewport = root.querySelector('[data-rc-viewport]');
+  const track    = root.querySelector('[data-rc-track]');
+  const dotsWrap = root.querySelector('[data-rc-dots]');
+  const prevBtn  = root.querySelector('[data-rc-prev]');
+  const nextBtn  = root.querySelector('[data-rc-next]');
+  if (!viewport || !track) return;
+
+  /* ---------- Build a single card ---------- */
+  function buildCard(r) {
+    const card  = document.createElement('article');
+    card.className = 'rc-{{ uid }}__card';
+
+    const inner = document.createElement('div');
+    inner.className = 'rc-{{ uid }}__card-inner';
+
+    // Stars
+    const stars = document.createElement('div');
+    stars.className = 'rc-{{ uid }}__stars';
+    const rating = Math.max(0, Math.min(5, Number(r.rating) || 5));
+    for (let i = 0; i < rating; i++) {
+      stars.insertAdjacentHTML('beforeend',
+        '<svg class="rc-{{ uid }}__star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none" aria-hidden="true">' +
+          '<path d="M7.20978 0.594188C7.46715 -0.197915 8.58777 -0.197915 8.84514 0.594187L10.1508 4.61248C10.2659 4.96672 10.596 5.20656 10.9684 5.20656H15.1935C16.0264 5.20656 16.3727 6.27233 15.6989 6.76187L12.2807 9.24531C11.9794 9.46425 11.8533 9.85231 11.9684 10.2066L13.274 14.2248C13.5314 15.0169 12.6248 15.6756 11.951 15.1861L8.53281 12.7026C8.23148 12.4837 7.82344 12.4837 7.52211 12.7026L4.10394 15.1861C3.43014 15.6756 2.52354 15.017 2.78091 14.2248L4.08654 10.2066C4.20164 9.85231 4.07555 9.46425 3.77421 9.24531L0.356048 6.76187C-0.317755 6.27233 0.0285332 5.20656 0.861399 5.20656H5.08648C5.45895 5.20656 5.78906 4.96672 5.90416 4.61248L7.20978 0.594188Z" fill="#FFBC38"/>' +
+        '</svg>');
+    }
+
+    // Text
+    const text  = document.createElement('div');
+    text.className = 'rc-{{ uid }}__text';
+    const title = document.createElement('p');
+    title.className = 'rc-{{ uid }}__title';
+    title.textContent = r.title || '';
+    const body  = document.createElement('p');
+    body.className = 'rc-{{ uid }}__body';
+    body.textContent = r.body || '';
+    text.append(title, body);
+
+    // Divider
+    const hr = document.createElement('hr');
+    hr.className = 'rc-{{ uid }}__divider';
+
+    // Author
+    const author = document.createElement('div');
+    author.className = 'rc-{{ uid }}__author';
+
+    const avatar = document.createElement('div');
+    avatar.className = 'rc-{{ uid }}__avatar';
+    if (r.avatar) {
+      const img = document.createElement('img');
+      img.src = r.avatar;
+      img.alt = r.name || '';
+      img.loading = 'lazy';
+      avatar.appendChild(img);
+    } else {
+      const initials = document.createElement('span');
+      initials.textContent = r.initials || '';
+      avatar.appendChild(initials);
+    }
+
+    const info = document.createElement('div');
+    info.className = 'rc-{{ uid }}__author-info';
+    const name = document.createElement('div');
+    name.className = 'rc-{{ uid }}__author-name';
+    name.textContent = r.name || '';
+    info.appendChild(name);
+
+    if (r.verified) {
+      const v = document.createElement('div');
+      v.className = 'rc-{{ uid }}__verified';
+      v.innerHTML =
+        '<span class="rc-{{ uid }}__verified-text">Verified Buyer</span>' +
+        '<svg class="rc-{{ uid }}__verified-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
+          '<path d="M8 16C6.89583 16 5.85938 15.7917 4.89062 15.375C3.91146 14.9583 3.0599 14.388 2.33594 13.6641C1.61198 12.9401 1.04167 12.0885 0.625 11.1094C0.208333 10.1406 0 9.10417 0 8C0 6.89583 0.208333 5.85938 0.625 4.89062C1.04167 3.91146 1.61198 3.0599 2.33594 2.33594C3.0599 1.61198 3.91146 1.04167 4.89062 0.625C5.85938 0.208333 6.89583 0 8 0C9.10417 0 10.1406 0.208333 11.1094 0.625C12.0885 1.04167 12.9401 1.61198 13.6641 2.33594C14.388 3.0599 14.9583 3.91146 15.375 4.89062C15.7917 5.85938 16 6.89583 16 8C16 9.10417 15.7917 10.1406 15.375 11.1094C14.9583 12.0885 14.388 12.9401 13.6641 13.6641C12.9401 14.388 12.0885 14.9583 11.1094 15.375C10.1406 15.7917 9.10417 16 8 16ZM11.4531 4.42188L6.71875 9.14062L4.46875 6.90625L3 8.375L6.71875 12.0781L12.9219 5.89062L11.4531 4.42188Z" fill="#F45901"/>' +
+        '</svg>';
+      info.appendChild(v);
+    }
+
+    author.append(avatar, info);
+    inner.append(stars, text, hr, author);
+    card.appendChild(inner);
+    return card;
+  }
+
+  /* ---------- Infinite slider engine ---------- */
+  const CARD_GAP = 20;
+  const N        = REVIEWS.length;
+  const BUFFER   = N;
+
+  let cardWidth = 341;
+  let cardStep  = cardWidth + CARD_GAP;
+
+  let index    = BUFFER;
+  let currentX = 0;
+
+  let isDragging = false, startX = 0, startTransX = 0;
+  let lastX = 0, lastTime = 0, velocity = 0;
+  let pointerId = null, dragMoved = false;
+
+  function renderTrack() {
+    track.innerHTML = '';
+    // Leading clones (last N)
+    for (let i = 0; i < BUFFER; i++) {
+      track.appendChild(buildCard(REVIEWS[(N - BUFFER + i + N) % N]));
+    }
+    // Real cards
+    for (let i = 0; i < N; i++) track.appendChild(buildCard(REVIEWS[i]));
+    // Trailing clones (first N)
+    for (let i = 0; i < BUFFER; i++) {
+      track.appendChild(buildCard(REVIEWS[i % N]));
+    }
+  }
+
+  function recompute() {
+    const firstCard = track.querySelector('.rc-{{ uid }}__card');
+    if (firstCard) {
+      cardWidth = firstCard.getBoundingClientRect().width;
+      cardStep  = cardWidth + CARD_GAP;
+    }
+    buildDots();
+    setIndex(index, false);
+  }
+
+  function buildDots() {
+    if (!dotsWrap) return;
+    dotsWrap.innerHTML = '';
+    for (let i = 0; i < N; i++) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'rc-{{ uid }}__dot';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-label', 'Go to review ' + (i + 1));
+      b.addEventListener('click', () => {
+        const r = realIndex();
+        let delta = i - r;
+        if (delta >  N / 2) delta -= N;
+        if (delta < -N / 2) delta += N;
+        setIndex(index + delta, true);
+      });
+      dotsWrap.appendChild(b);
+    }
+    updateDots();
+  }
+
+  function realIndex() { return ((index - BUFFER) % N + N) % N; }
+
+  function updateDots() {
+    if (!dotsWrap) return;
+    const r = realIndex();
+    [...dotsWrap.children].forEach((d, i) => {
+      d.classList.toggle('active', i === r);
+      d.setAttribute('aria-selected', i === r ? 'true' : 'false');
+    });
+  }
+
+  function xForIndex(i) { return -i * cardStep; }
+
+  function applyTransform(x, animate) {
+    track.classList.toggle('no-transition', !animate);
+    track.style.transform = 'translateX(' + x + 'px)';
+    if (!animate) track.offsetHeight;
+  }
+
+  function setIndex(newIndex, animate) {
+    index    = newIndex;
+    currentX = xForIndex(index);
+    applyTransform(currentX, animate);
+    updateDots();
+
+    const finalize = () => {
+      let normalized = index;
+      while (normalized <  BUFFER)     normalized += N;
+      while (normalized >= BUFFER + N) normalized -= N;
+      if (normalized !== index) {
+        index    = normalized;
+        currentX = xForIndex(index);
+        applyTransform(currentX, false);
+      }
+    };
+
+    if (animate) {
+      track.addEventListener('transitionend', function onEnd(e) {
+        if (e.propertyName !== 'transform') return;
+        track.removeEventListener('transitionend', onEnd);
+        finalize();
+      });
+    } else {
+      finalize();
+    }
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => setIndex(index - 1, true));
+  if (nextBtn) nextBtn.addEventListener('click', () => setIndex(index + 1, true));
+
+  /* Pointer drag */
+  function onPointerDown(e) {
+    if (e.button !== undefined && e.button !== 0) return;
+    isDragging  = true;
+    dragMoved   = false;
+    pointerId   = e.pointerId;
+    startX      = e.clientX;
+    lastX       = e.clientX;
+    lastTime    = performance.now();
+    velocity    = 0;
+    startTransX = currentX;
+    viewport.classList.add('is-dragging');
+    if (viewport.setPointerCapture) viewport.setPointerCapture(pointerId);
+    viewport.addEventListener('pointermove',   onPointerMove);
+    viewport.addEventListener('pointerup',     onPointerUp);
+    viewport.addEventListener('pointercancel', onPointerUp);
+  }
+  function onPointerMove(e) {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) dragMoved = true;
+    currentX = startTransX + dx;
+    applyTransform(currentX, false);
+    const now = performance.now();
+    const dt  = now - lastTime || 1;
+    velocity  = (e.clientX - lastX) / dt;
+    lastX     = e.clientX;
+    lastTime  = now;
+  }
+  function onPointerUp() {
+    if (!isDragging) return;
+    isDragging = false;
+    viewport.classList.remove('is-dragging');
+    if (pointerId !== null && viewport.releasePointerCapture) viewport.releasePointerCapture(pointerId);
+    viewport.removeEventListener('pointermove',   onPointerMove);
+    viewport.removeEventListener('pointerup',     onPointerUp);
+    viewport.removeEventListener('pointercancel', onPointerUp);
+    const movedCards = -currentX / cardStep;
+    const flick      = velocity * 200;
+    const projected  = movedCards - flick / cardStep;
+    setIndex(Math.round(projected), true);
+  }
+  viewport.addEventListener('pointerdown', onPointerDown);
+
+  /* Suppress click after drag */
+  viewport.addEventListener('click', (e) => {
+    if (dragMoved) {
+      e.preventDefault();
+      e.stopPropagation();
+      dragMoved = false;
+    }
+  }, true);
+
+  /* Keyboard */
+  viewport.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); setIndex(index - 1, true); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); setIndex(index + 1, true); }
+  });
+
+  /* Init + responsive */
+  renderTrack();
+  recompute();
+
+  let resizeRaf;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(recompute);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Reviews & Stats Carousel",
+  "tag": "section",
+  "class": "section-reviews-carousel",
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "checkbox", "id": "show_banner", "label": "Show stats banner", "default": true },
+    { "type": "checkbox", "id": "show_squiggles", "label": "Show decorative squiggles", "default": true },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 60 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color",     "label": "Section background", "default": "#ffbc38" },
+    { "type": "color", "id": "card_bg",      "label": "Review card background", "default": "#fff4e1" },
+    { "type": "color", "id": "accent_color", "label": "Accent (stars, active dot, next arrow)", "default": "#f45901" },
+    { "type": "color", "id": "text_color",   "label": "Text color", "default": "#341300" },
+    { "type": "color", "id": "avatar_bg",    "label": "Avatar background", "default": "#fddecc" },
+    { "type": "color", "id": "border_color", "label": "Borders & inactive dot", "default": "#341300", "info": "Used at 19% opacity in the design." },
+    { "type": "text",  "id": "banner_tint",  "label": "Stats banner tint (CSS color)", "default": "rgba(255,255,255,0.46)", "info": "Use rgba() for translucency." },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "text", "id": "font_family", "label": "Font family stack", "default": "'Roobert TRIAL', 'Manrope', system-ui, sans-serif", "info": "Use the font name + fallbacks. Load the actual font in theme.liquid." }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "100K+" },
+        { "type": "text", "id": "label",  "label": "Label",  "default": "Kidsy Points Members" }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Review",
+      "limit": 30,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Headline", "default": "Great experience" },
+        { "type": "textarea", "id": "body", "label": "Review text", "default": "Shipping was fast and the items were of great quality." },
+        { "type": "text", "id": "name", "label": "Reviewer name", "default": "Jane Doe" },
+        { "type": "text", "id": "initials", "label": "Initials (fallback if no avatar)", "default": "JD", "info": "Shown when no avatar image is set." },
+        { "type": "image_picker", "id": "avatar", "label": "Avatar image (optional)" },
+        { "type": "range", "id": "rating", "label": "Star rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "checkbox", "id": "verified", "label": "Show \"Verified Buyer\" badge", "default": true }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews & Stats Carousel",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "100K+", "label": "Kidsy Points Members" } },
+        { "type": "stat", "settings": { "number": "10%",   "label": "Back on Every Order" } },
+        { "type": "stat", "settings": { "number": "$[X]",  "label": "Avg. Member Savings / Year" } },
+        {
+          "type": "review",
+          "settings": {
+            "title": "What a great idea to resell baby items…",
+            "body":  "“What a great idea to resell baby items that are normally so crazy expensive! Plus free shipping over $50 and the merchandise is brand new! OMG you guys are the BEST!!!!”",
+            "name":  "Judy Mcdermott",
+            "initials": "JM",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Love shopping on kidsy",
+            "body":  "The price is what made me buy it from here. I bought a stroller for my grandson and I didn't want to spend a lot of money. Because we just needed when he comes over.",
+            "name":  "Maria Z.",
+            "initials": "MZ",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Perfect condition, and fast delivery.",
+            "body":  "It came out great and the shipping was very fast. And the product was in perfect condition.",
+            "name":  "Erica F.",
+            "initials": "EF",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "brand new!!!",
+            "body":  "Shipping was fast and items were of good Quality",
+            "name":  "Pat A.",
+            "initials": "PA",
+            "rating": 5,
+            "verified": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

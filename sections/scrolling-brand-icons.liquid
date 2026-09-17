@@ -1,0 +1,381 @@
+{% comment %}
+SECTION: Scrolling Brand Icons (scrolling-brand-icons)
+ROLE: Horizontal scrolling carousel displaying brand logo icons. Shows 10 brand icons on screen at once with smooth horizontal scrolling. Each brand icon is clickable and links to a URL. Icons are displayed in rounded rectangular blocks with subtle borders.
+NOTES: Uses CSS scroll-snap for smooth scrolling. Icons are lazy-loaded for performance. Fully editable via theme customizer with blocks for each brand.
+{% endcomment %}
+{%- style -%}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } .section-{{ section.id }}  .brand-icons-scroll { gap: {{ section.settings.icon_gap }}px; } .section-{{ section.id }} .brand-icon-container { background: {{ section.settings.icon_bg_color }}; border: {{ section.settings.icon_border_width }}px solid rgba(var(--color-foreground),0.19); border-radius: {{ section.settings.icon_border_radius }}px; padding: 0.5rem {{ section.settings.icon_padding }}px; height: {{ section.settings.icon_height }}px; transition: transform 0.2s ease, box-shadow 0.2s ease; } .section-{{ section.id }} .brand-icon-container img { width: {{ section.settings.icon_min_width_img }}px; transition: all 0.3s ease-in-out; } .section-{{ section.id }} .brand-icon-block { min-width: {{ section.settings.icon_min_width }}px; width: {{ section.settings.icon_min_width }}px;; } @media screen and (min-width: 750px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } } @media screen and (max-width: 749px) { .section-{{ section.id }} .brand-icon-block { width: calc((100% - ({{ section.settings.icon_gap }}px * 4)) / 5); min-width: {{ section.settings.icon_min_width_mobile }}px; } .section-{{ section.id }} .brand-icon-container { height: {{ section.settings.icon_height_mobile }}px; padding: {{ section.settings.icon_padding_mobile }}px; } }
+{%- endstyle -%}
+  
+<div class="scrolling-brand-icons section-{{ section.id }}  section-{{ section.id }}-padding gradient color-{{ section.settings.section_color_scheme }}" data-section-type="scrolling-brand-icons">
+  {%- comment -%} First child: Section container (edge-to-edge) {%- endcomment -%}
+
+  <div class="brand-icons-wrapper page-width ">
+    {%- if section.blocks.size > 0 -%}
+      <div class="brand-icons-scroll-wrapper" role="region" aria-label="Brand logos carousel">
+        <div class="brand-icons-scroll" id="BrandIconsScroll-{{ section.id }}" tabindex="0" aria-label="Scrollable brand icons">
+          {%- comment -%} First set of brand icons {%- endcomment -%}
+          {%- for block in section.blocks -%}
+            <div class="brand-icon-block" {{ block.shopify_attributes }}>
+              {%- if block.settings.brand_url != blank -%}
+                <a href="{{ block.settings.brand_url }}" class="brand-icon-link" aria-label="{{ block.settings.brand_name | default: 'Brand logo' | escape }}">
+              {%- else -%}
+                <div class="brand-icon-link">
+              {%- endif -%}
+                <div class="brand-icon-container">
+                  {%- if block.settings.brand_logo != blank -%}
+                    {%- assign brand_alt_text = block.settings.brand_name | default: 'Brand logo' | escape -%}
+                    {% render 'custom-image', image: block.settings.brand_logo, alt: brand_alt_text, class: 'brand-icon-image' %}
+                  {%- else -%}
+                    <div class="brand-icon-placeholder" aria-hidden="true">
+                      {% render 'custom-image', image: 'image' | placeholder_svg_tag: 'placeholder-svg' %}
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- if block.settings.brand_url != blank -%}
+                </a>
+              {%- else -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- else -%}
+      <div class="brand-icons-empty">
+        <p>Add brand icons using the section blocks.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+const marquee = document.getElementById("BrandIconsScroll-{{ section.id }}");
+    const container = document.querySelector(".brand-icons-scroll-wrapper");
+    const autoplayEnabled = {{ section.settings.autoplay }};
+    let tween, totalWidth;
+    
+    function initMarquee() {
+      if (tween) tween.kill();
+      marquee.style.transform = "translateX(0)";
+      marquee.querySelectorAll(".brand-icon-block.clone").forEach(el => el.remove());
+      const slides = Array.from(marquee.children);
+      totalWidth = marquee.scrollWidth;
+      while (totalWidth < container.offsetWidth * 2) {
+        slides.forEach(slide => {
+          const clone = slide.cloneNode(true);
+          clone.classList.add("clone");
+          clone.setAttribute("aria-hidden", "true");
+          marquee.appendChild(clone);
+        });
+        totalWidth = marquee.scrollWidth;
+      }
+      if (autoplayEnabled) {
+        tween = gsap.to(marquee, {
+          x: `-=${totalWidth / 2}`,
+          duration: {{ section.settings.scroll_speed }}, // adjust speed (smaller = faster)
+          ease: "none",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % (totalWidth / 2))
+          }
+        });
+        container.onmouseenter = () => tween.pause();
+        container.onmouseleave = () => tween.resume();
+      } else {
+        enableFreeMode();
+      }
+    }
+    
+    function enableFreeMode() {
+      container.style.cursor = 'grab';
+      Draggable.create(marquee, {
+        type: "x",
+        bounds: container,
+        inertia: true,
+        throwProps: true,
+        dragResistance: 0.3,
+        edgeResistance: 0.65,
+        cursor: "grab",
+        activeCursor: "grabbing",
+      });
+    }
+    
+    document.addEventListener("DOMContentLoaded", initMarquee);
+    window.addEventListener("resize", () => {
+      clearTimeout(window.__marqueeResizeTimer);
+      window.__marqueeResizeTimer = setTimeout(initMarquee, 300);
+    });
+  
+</script>  
+
+
+{% schema %}
+{
+  "name": "Scrolling Brand Icons",
+  "class": "scrolling-icons--section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Icon Settings"
+    },
+    {
+      "type": "range",
+      "id": "icon_gap",
+      "label": "Gap between icons (px)",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "icon_height",
+      "label": "Icon container height (px)",
+      "min": 50,
+      "max": 200,
+      "step": 5,
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "icon_padding",
+      "label": "Icon padding (px)",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "icon_min_width",
+      "label": "Minimum icon width (px)",
+      "min": 80,
+      "max": 200,
+      "step": 10,
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "icon_min_width_img",
+      "label": "Minimum icon width img desktop (px)",
+      "min": 80,
+      "max": 200,
+      "step": 10,
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "icon_min_width_img_mob",
+      "label": "Minimum icon width mobile (px)",
+      "min": 80,
+      "max": 200,
+      "step": 10,
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "icon_border_width",
+      "label": "Icon border width (px)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "icon_border_radius",
+      "label": "Icon border radius (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_color",
+      "label": "Icon background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Settings"
+    },
+    {
+      "type": "range",
+      "id": "icon_height_mobile",
+      "label": "Icon container height mobile (px)",
+      "min": 40,
+      "max": 150,
+      "step": 5,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "icon_padding_mobile",
+      "label": "Icon padding mobile (px)",
+      "min": 6,
+      "max": 30,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "icon_min_width_mobile",
+      "label": "Minimum icon width mobile (px)",
+      "min": 60,
+      "max": 150,
+      "step": 10,
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Scrolling Behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "info": "Automatically scroll the brand icons",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed (seconds)",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_color",
+      "label": "Scrollbar color",
+      "default": "#CCCCCC"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+    "type": "header",
+    "content": "Section Padding - Desktop"
+},
+{
+    "type": "range",
+    "id": "padding_top",
+    "label": "Padding Top",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "default": 0
+},
+{
+    "type": "range",
+    "id": "padding_bottom",
+    "label": "Padding bottom",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "default": 0
+},
+{
+    "type": "header",
+    "content": "Section Padding - Mobile"
+},
+{
+    "type": "range",
+    "id": "padding_top_mobile",
+    "label": "Padding Top (px)",
+    "min": 0,
+    "max": 80,
+    "step": 5,
+    "default": 40
+},
+{
+    "type": "range",
+    "id": "padding_bottom_mobile",
+    "label": "Padding Bottom (px)",
+    "min": 0,
+    "max": 80,
+    "step": 5,
+    "default": 40
+}
+  ],
+  "blocks": [
+    {
+      "type": "brand_icon",
+      "name": "Brand Icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "brand_logo",
+          "label": "Brand logo image"
+        },
+        {
+          "type": "text",
+          "id": "brand_name",
+          "label": "Brand name (for alt text)",
+          "info": "Used for accessibility and image alt text"
+        },
+        {
+          "type": "url",
+          "id": "brand_url",
+          "label": "Brand link URL",
+          "info": "Optional: Link to brand page or collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling Brand Icons",
+      "blocks": [
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        },
+        {
+          "type": "brand_icon"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

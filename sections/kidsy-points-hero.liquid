@@ -1,0 +1,674 @@
+{% comment %}
+  ============================================================
+  Section: Kidsy Points Hero
+  ------------------------------------------------------------
+  Two-image hero matching Figma design:
+    • Left side  -> yellow squiggle decoration (Image 1)
+    • Right side -> hero photo with cream blob + orange squiggle baked in (Image 2)
+    • Left content: tag, subhead, title, description, CTAs, trust row
+    • Floating "Every 100 points = $1" pill overlapping the photo
+    • Bottom wave decoration
+
+  All text, buttons, trust items, images, and the points pill are editable
+  via the schema below. Trust items are managed as section blocks so
+  merchants can add/remove/reorder them in the theme editor.
+  ============================================================
+{% endcomment %}
+
+ <link rel="preload" href="{{ 'custom.css' | asset_url }}" as="style">
+
+{%- liquid
+  assign s = section.settings
+  assign sec_id = 'kidsy-hero-' | append: section.id
+-%}
+
+<style>
+.bottom_wave {
+    --poppy:     {{ s.color_accent | default: '#F45901' }};
+    --chocolate: {{ s.color_text   | default: '#341300' }};
+    --gold:      {{ s.color_gold   | default: '#FFBC38' }};
+    --cream:     {{ s.color_bg     | default: '#FFFBF3' }};
+    --soft-gold: {{ s.color_secondary_btn | default: '#FFDFA8' }};
+    --wave:      {{ s.color_wave   | default: '#FFE0B0' }};
+  }
+
+.bottom_wave {
+    position: relative;
+    background: var(--cream);
+    font-family: "Roobert TRIAL", sans-serif;
+    color: var(--chocolate);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #{{ sec_id }} img { display: block; max-width: 100%; }
+
+  #{{ sec_id }} .kh__inner {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+        padding: 47px 0;
+  }
+.kh__visual {
+    width: 100%;
+    max-width:900px;
+}
+.wave_bottom,.wave_bottom svg{
+width:100%;
+display:block;
+height: auto;
+margin-bottom: -10px;
+}
+  .kidsy-hero{
+      display: flex;
+    align-items: center;
+    {% comment %} flex-wrap:wrap; {% endcomment %}
+        {% comment %} gap: 121px; {% endcomment %}
+  }
+  
+  /* ============================================================
+     LEFT DECORATION — yellow squiggle (Image 1)
+     Original Figma: 273×112 rotated 15deg, positioned at left:-112, top:433
+     ============================================================ */
+  #{{ sec_id }} .kh__squiggle {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+   max-width: 200px;
+    height: auto;
+    z-index: 2;
+    pointer-events: none;
+    transform: rotate(0deg);
+  }
+
+  /* ============================================================
+     RIGHT VISUAL — hero photo (Image 2)
+     Image already includes the cream blob, photo, and orange squiggle.
+     Sized to match Figma: 519×449 photo + decorations extending right.
+     ============================================================ */
+  {% comment %} #{{ sec_id }} .kh__visual {
+   max-width: 713px;
+    z-index: 3;
+    pointer-events: none;
+  } {% endcomment %}
+  #{{ sec_id }} .kh__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  /* ============================================================
+     LEFT CONTENT BLOCK
+     Figma: left:103, top:82, width:524
+     ============================================================ */
+  #{{ sec_id }} .kh__content {
+   max-width: 524px;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    z-index: 5;
+  }
+
+  #{{ sec_id }} .kh__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  #{{ sec_id }} .kh__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #{{ sec_id }} .kh__tag-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  #{{ sec_id }} .kh__tag {
+    background: var(--gold);
+    color: var(--chocolate);
+    height: 23px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.24px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+
+  #{{ sec_id }} .kh__subhead {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.36px;
+    text-transform: uppercase;
+    color: var(--chocolate);
+  }
+
+  #{{ sec_id }} .kh__title {
+    margin: 0;
+    color: var(--chocolate);
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1.1;
+    text-transform: capitalize;
+    letter-spacing: -0.4px;
+  }
+
+  #{{ sec_id }} .kh__desc {
+    margin: 0;
+    color: var(--chocolate);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    text-transform: capitalize;
+  }
+
+  #{{ sec_id }} .kh__cta-row {
+    display: flex;
+    gap: 12px;
+    {% comment %} flex-wrap: wrap; {% endcomment %}
+  }
+
+  #{{ sec_id }} .kh__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: capitalize;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    font-family: inherit;
+    transition: transform .15s ease, box-shadow .15s ease;
+    white-space: nowrap;
+  }
+  #{{ sec_id }} .kh__btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(52,19,0,.14);
+  }
+  #{{ sec_id }} .kh__btn--primary   { background: var(--poppy);     color: #fff; }
+  #{{ sec_id }} .kh__btn--secondary { background: var(--soft-gold); color: var(--chocolate); }
+
+  #{{ sec_id }} .kh__trust {
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  #{{ sec_id }} .kh__trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--chocolate);
+    text-transform: capitalize;
+  }
+  #{{ sec_id }} .kh__trust-item svg,
+  #{{ sec_id }} .kh__trust-item img {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  /* ============================================================
+     POINTS PILL — overlays the photo
+     Figma coords: left:1134, top:327
+     ============================================================ */
+  #{{ sec_id }} .kh__pill {
+    position: absolute;
+    left: 1134px;
+    top: 327px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.62);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow:
+      inset 0 7px 6.1px rgba(255,255,255,.25),
+      0 10px 24px -10px rgba(52,19,0,.20);
+    z-index: 6;
+  }
+  #{{ sec_id }} .kh__pill-badge {
+    width: 39px; height: 39px;
+    border-radius: 50%;
+    background: var(--poppy);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+  }
+  #{{ sec_id }} .kh__pill-badge img {
+    width: 20px; height: 20px;
+  }
+  #{{ sec_id }} .kh__pill-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--chocolate);
+    text-transform: capitalize;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  /* ============================================================
+     BOTTOM WAVE
+     Figma: 1440×102 at top:517, rotated 180deg
+     ============================================================ */
+  #{{ sec_id }} .kh__wave {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 102px;
+    pointer-events: none;
+    z-index: 1;
+    transform: rotate(180deg);
+  }
+  #{{ sec_id }} .kh__wave svg { width: 100%; height: 100%; display: block; }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+
+@media (max-width: 768px) {
+.kidsy-hero .page-width{
+padding:0 16px;
+}
+#{{ sec_id }} .kh__inner {
+padding: 20px 0;
+gap: 32px;
+flex-wrap: wrap;
+}
+#{{ sec_id }} .kh__squiggle {
+display:none;
+}
+#{{ sec_id }} .kh__cta-row,.kidsy-hero {
+flex-wrap: wrap;
+}
+#{{ sec_id }} .kh__subhead {
+  font-size: 16px;
+font-style: normal;
+font-weight: 650;
+line-height: normal;
+letter-spacing: 0.32px;
+text-transform: uppercase;
+}
+#{{ sec_id }} .kh__title {
+font-size: 28px;
+font-style: normal;
+font-weight: 650;
+line-height: normal;
+text-transform: capitalize;
+max-width: 280px;
+width: 100%;
+}
+#{{ sec_id }} .kh__desc{
+  font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: capitalize;
+}
+#{{ sec_id }} .kh__btn{
+  width:100%;
+  display: flex;
+height: 46px;
+padding: 12px 20px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+font-size: 16px;
+font-style: normal;
+font-weight: 650;
+line-height: 100%; /* 16px */
+text-transform: capitalize;
+}
+#{{ sec_id }} .kh__trust {
+display: flex;
+justify-content: center;
+align-items: center;
+align-content: center;
+gap: 8px;
+align-self: stretch;
+flex-wrap: wrap;
+}
+.wave_bottom, .wave_bottom svg {
+    height: 26px;
+    {% comment %} margin-bottom: 0; {% endcomment %}
+}
+}
+
+</style>
+<div class="bottom_wave">
+<div
+  id="{{ sec_id }}"
+  class="kidsy-hero"
+  aria-labelledby="{{ sec_id }}-title">
+
+  {%- comment -%} Yellow squiggle — left side decoration (Image 1) {%- endcomment -%}
+  {%- if s.squiggle_image != blank -%}
+    <img
+      class="kh__squiggle"
+      src="{{ s.squiggle_image | image_url: width: 400 }}"
+      alt=""
+      width="200" height="180"
+      loading="lazy"
+      aria-hidden="true">
+  {%- endif -%}
+
+  <div class="page-width">
+  <div class="kh__inner">
+    {%- comment -%} LEFT — copy & CTAs {%- endcomment -%}
+    <div class="kh__content">
+
+      <div class="kh__copy">
+        <div class="kh__heading">
+          {%- if s.tag_label != blank or s.subhead != blank -%}
+            <div class="kh__tag-row">
+              {%- if s.tag_label != blank -%}
+                <span class="kh__tag">{{ s.tag_label }}</span>
+              {%- endif -%}
+              {%- if s.subhead != blank -%}
+                <p class="kh__subhead">{{ s.subhead }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if s.title != blank -%}
+            <h1 id="{{ sec_id }}-title" class="kh__title">{{ s.title }}</h1>
+          {%- endif -%}
+
+          {%- if s.description != blank -%}
+            <p class="kh__desc">{{ s.description }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- if s.primary_btn_label != blank or s.secondary_btn_label != blank -%}
+          <div class="kh__cta-row">
+            {%- if s.primary_btn_label != blank -%}
+              <a href="{{ s.primary_btn_link | default: '#' }}" class="kh__btn kh__btn--primary">
+                {{ s.primary_btn_label }}
+              </a>
+            {%- endif -%}
+            {%- if s.secondary_btn_label != blank -%}
+              <a href="{{ s.secondary_btn_link | default: '#' }}" class="kh__btn kh__btn--secondary">
+                {{ s.secondary_btn_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Trust items — managed via blocks {%- endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <ul class="kh__trust">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'trust_item' -%}
+              <li class="kh__trust-item" {{ block.shopify_attributes }}>
+                {%- if block.settings.icon != blank -%}
+                  <img src="{{ block.settings.icon | image_url: width: 36 }}" alt="" width="18" height="18" loading="lazy">
+                {%- else -%}
+                  {%- case block.settings.icon_preset -%}
+                    {%- when 'check' -%}
+                      <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="9" cy="9" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5.4 9.2 L8 11.6 L12.8 6.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    {%- when 'card' -%}
+                      <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="2" y="4.5" width="14" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="2" y1="8" x2="16" y2="8" stroke="currentColor" stroke-width="1.5"/>
+                      </svg>
+                    {%- when 'star' -%}
+                      <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M9 1.5 L11.2 6.8 L17 7.4 L12.7 11.3 L14 17 L9 14 L4 17 L5.3 11.3 L1 7.4 L6.8 6.8 Z"
+                              fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                      </svg>
+                  {%- endcase -%}
+                {%- endif -%}
+                <span>{{ block.settings.label }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+    </div>
+
+  </div>
+</div>
+   {%- comment -%} RIGHT — hero visual (Image 2) {%- endcomment -%}
+   {%- if s.visual_image != blank -%}
+  <div class="kh__visual">
+    <picture>
+      {%- if s.mb_image != blank -%}
+        <source
+          media="(max-width: 768px)"
+          srcset="
+            {{ s.mb_image | image_url: width: 400 }} 400w,
+            {{ s.mb_image | image_url: width: 600 }} 600w,
+            {{ s.mb_image | image_url: width: 800 }} 800w
+          "
+          sizes="100vw">
+      {%- endif -%}
+      <source
+        media="(min-width: 769px)"
+        srcset="
+          {{ s.visual_image | image_url: width: 900 }} 900w,
+          {{ s.visual_image | image_url: width: 1000 }} 1000w,
+          {{ s.visual_image | image_url: width: 1400 }} 1400w
+        "
+        sizes="(max-width: 1100px) 90vw, 50vw">
+      <img
+        src="{{ s.visual_image | image_url: width: 1400 }}"
+        alt="{{ s.visual_image.alt | default: s.title | escape }}"
+        width="900" height="900"
+        loading="eager"
+        fetchpriority="high">
+    </picture>
+  </div>
+{%- endif -%}
+  </div>
+   <div class="wave_bottom">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="90" viewBox="0 0 1440 90" fill="none">
+<path d="M1089.73 85.607C1254.03 84.1499 1392.1 26.7143 1440 7.62939e-06L1440 102L0 102L1.43311e-06 85.6069C425.114 -5.46436 420.811 14.2023 644.857 51.9106C845.065 85.607 1015.88 89.857 1089.73 85.607Z" fill="#FFF4E1"/>
+</svg>
+  </div>
+</div>
+   
+
+
+{% schema %}
+{
+  "name": "Kidsy Points Hero",
+  "tag": "section",
+  "class": "section-kidsy-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Top Tag & Heading"
+    },
+    {
+      "type": "text",
+      "id": "tag_label",
+      "label": "Tag label",
+      "default": "Kidsy Points"
+    },
+    {
+      "type": "text",
+      "id": "subhead",
+      "label": "Subheading",
+      "default": "Free to Join"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Main title",
+      "default": "Earn 10% Back on Every Order."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Shop smarter. Save more. Kidsy Points rewards every purchase with points you can redeem for real savings on premium baby gear — from Graco, UPPAbaby, Chicco, and hundreds more."
+    },
+
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "primary_btn_label",
+      "label": "Primary button text",
+      "default": "Join Free — Start Earning"
+    },
+    {
+      "type": "url",
+      "id": "primary_btn_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_btn_label",
+      "label": "Secondary button text",
+      "default": "Already a member? Log in →"
+    },
+    {
+      "type": "url",
+      "id": "secondary_btn_link",
+      "label": "Secondary button link"
+    },
+
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "squiggle_image",
+      "label": "Left squiggle decoration",
+      "info": "Yellow squiggle on the left side"
+    },
+    {
+      "type": "image_picker",
+      "id": "visual_image",
+      "label": "Right hero visual",
+      "info": "Composite image: photo + cream blob + orange squiggle"
+    },
+   {
+      "type": "image_picker",
+      "id": "mb_image",
+      "label": "Right hero visual",
+      "info": "Composite image: photo + cream blob + orange squiggle"
+    },
+    {
+      "type": "header",
+      "content": "Floating Points Pill"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Background",
+      "default": "#FFFBF3"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text",
+      "default": "#341300"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent (primary button)",
+      "default": "#F45901"
+    },
+    {
+      "type": "color",
+      "id": "color_secondary_btn",
+      "label": "Secondary button",
+      "default": "#FFDFA8"
+    },
+    {
+      "type": "color",
+      "id": "color_gold",
+      "label": "Tag color",
+      "default": "#FFBC38"
+    },
+    {
+      "type": "color",
+      "id": "color_wave",
+      "label": "Bottom wave",
+      "default": "#FFE0B0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Free to join"
+        },
+        {
+          "type": "select",
+          "id": "icon_preset",
+          "label": "Icon preset",
+          "options": [
+            { "value": "check", "label": "Check circle" },
+            { "value": "card",  "label": "Credit card" },
+            { "value": "star",  "label": "Star" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Custom icon (optional)",
+          "info": "Overrides the preset above"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kidsy Points Hero",
+      "blocks": [
+        { "type": "trust_item", "settings": { "label": "Free to join",              "icon_preset": "check" } },
+        { "type": "trust_item", "settings": { "label": "No credit card",            "icon_preset": "card"  } },
+        { "type": "trust_item", "settings": { "label": "100 bonus points on signup","icon_preset": "star"  } }
+      ]
+    }
+  ]
+}
+{% endschema %}

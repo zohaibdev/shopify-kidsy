@@ -1,0 +1,71 @@
+.block__custom-banner--main .block__custom-banner{opacity:0;visibility:hidden;transition:opacity 0.3s ease-in-out,visibility 0.3s ease-in-out}.block__custom-banner--main .block__custom-banner.swiper-initialized{opacity:1;visibility:visible}.block__custom-banner-image img{width:100%;height:100%;display:block;position:absolute;top:0;left:0;object-fit:cover}.swiper-button-prev::after,.swiper-button-next::after{display:none!important}.block__custom-banner-navigation-prev svg,.block__custom-banner-navigation-next svg{width:24px;height:24px;fill:transparent;}.block__custom-banner-inner{position:relative}.block__custom-banner-navigation-prev{left:-25px!important}.block__custom-banner-navigation-next{right:-25px!important}.block__custom-banner-pagination .swiper-pagination{margin-bottom:30px}.block__custom-banner-star-content{display:flex;align-items:flex-start;max-width:580px!important;width:100%;flex-direction:column}.block__custom-banner-star-rating{display:flex;align-items:center;gap:12px;margin-bottom:5px}.block__custom-banner-star-rating-icons{display:flex;gap:6px}.block__custom-banner-star-rating-icon svg{width:25px;height:25px;display:block}.block__custom-banner-image-content{position:relative}.block__custom-banner-image{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit}.block__custom-banner-content{position:relative;width:100%;display:flex;align-items:center;padding-left:70px;padding-inline:70px;min-height:inherit;z-index:2}.block__custom-banner-navigation-prev,.block__custom-banner-navigation-next{transition:all 0.3s ease-in-out}.block__custom-banner-navigation-prev:hover,.block__custom-banner-navigation-next:hover{background:var(--theme_color-4);transition:all 0.3s ease-in-out}.block__custom-banner-navigation-prev:hover svg path,.block__custom-banner-navigation-next:hover svg path{stroke:var(--theme_color-body)}.block__custom-banner-description-text p{text-transform:capitalize}.block__custom-banner-image-desktop{display:block!important}.block__custom-banner-image-mobile{display:none!important}@media (max-width:749px){.block__custom-banner-content{padding-top:2rem;padding-inline:2.2rem;align-items:flex-start}.block__custom-banner-star-content{max-width:100%}a.button.block__custom-banner-button{display:block}.block__custom-banner-navigation-prev,.block__custom-banner-navigation-next{width:30px;height:30px}.block__custom-banner-navigation-prev svg,.block__custom-banner-navigation-next svg{width:15px;height:15px}.block__custom-banner-navigation-prev{left:-15px!important}.block__custom-banner-navigation-next{right:-15px!important}.block__custom-banner-pagination .swiper-pagination{margin-bottom:10px}.block__custom-banner-description-text p{width:82%}.block__custom-banner-image-desktop{display:none!important}.block__custom-banner-image-mobile{display:block!important}}@media screen and (max-width:992px){.block__custom-banner-star-content{max-width:480px!important}}
+.block__custom-banner-image-desktop.sale-banner-img {
+  display: block !important;  
+  width: 100%;
+  height: 100%;
+}
+.sale_block__custom-banner-button {
+    display: inline-flex;
+    position: absolute;
+    bottom: 14rem;
+    right: 8vw;
+    gap: 2rem;
+}
+@media screen and (max-width: 1500px) {
+  .sale_block__custom-banner-button {
+    right: 10vw;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .sale_block__custom-banner-button {
+    right: 8vw;
+  }
+}
+@media screen and (max-width: 1300px) {
+  .sale_block__custom-banner-button {
+    right: 7vw;
+  }
+}
+@media screen and (max-width: 1199px) {
+  .sale_block__custom-banner-button {
+    right: 3vw;
+    bottom: 18rem;
+  }
+}
+@media screen and (max-width: 991px) {
+  .sale_block__custom-banner-button {
+    bottom: 18rem;
+  }
+}
+@media screen and (max-width: 899px) {
+  .sale_block__custom-banner-button {
+    bottom: 19rem;
+    right: 1rem;
+  }
+  .sale_block__custom-banner-button .button {
+    padding: 1.2rem 0.8rem;
+  }
+}
+@media screen and (max-width: 749px) {
+  .sale_block__custom-banner-button {
+    bottom: 9.5rem;
+    right: 4rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+@media screen and (max-width: 573px) {
+  .sale_block__custom-banner-button {
+    bottom: 9rem;
+    right: 1rem;
+  }
+}
+@media screen and (max-width: 400px) {
+  .sale_block__custom-banner-button {
+    right: 1rem;
+  }
+  .sale_block__custom-banner-button .button {
+    padding: 0.8rem 0.6rem !important;
+    font-size: 1.4rem;
+  }
+}

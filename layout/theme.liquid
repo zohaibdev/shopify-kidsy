@@ -1,0 +1,247 @@
+<!doctype html>
+<html class="js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
+    <link rel="preload" href="https://cdn.shopify.com/s/files/1/0805/9325/6728/files/RoobertTRIAL-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://cdn.shopify.com/s/files/1/0805/9325/6728/files/RoobertTRIAL-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+    
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    {%- comment -%} Resource hints for third-party domains {%- endcomment -%}
+     
+    <link rel="dns-prefetch" href="https://www.clarity.ms">
+    <link rel="dns-prefetch" href="https://d34r8q7sht0t9k.cloudfront.net">
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>    
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'meta-tags' %}
+
+    <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'swiper-bundle.min.js' | asset_url}}" defer="defer"></script>
+    <script src="{{ 'gsap-min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'gsap-draggable.js' | asset_url }}" defer="defer"></script> 
+    {%- if settings.animations_reveal_on_scroll -%}
+      <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- if tinyscript -%}{{ content_for_header }}{%- else -%}{% render 'tiny-script-control' %}{%- endif -%}
+
+    {% render 'css-variables' %}
+
+    {% comment %}{{ 'base.css' | asset_url | stylesheet_tag: preload: true }}{% endcomment %}
+    <link rel="preload" href="{{ 'base.css' | asset_url }}" as="style">
+    <link rel="stylesheet" href="{{ 'base.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ 'base.css' | asset_url }}"></noscript>
+    <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
+
+    {% comment %}{{ 'component-rating.css' | asset_url | stylesheet_tag }}{% endcomment %}
+    <link rel="preload" href="{{ 'component-rating.css' | asset_url }}" as="style">
+    <link rel="stylesheet" href="{{ 'component-rating.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ 'component-rating.css' | asset_url }}"></noscript>
+    {% comment %}{{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}{% endcomment %}
+    <link rel="preload" href="{{ 'component-volume-pricing.css' | asset_url }}" as="style">
+    <link rel="stylesheet" href="{{ 'component-volume-pricing.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ 'component-volume-pricing.css' | asset_url }}"></noscript>
+    {% comment %}{{ 'component-price.css' | asset_url | stylesheet_tag }}{% endcomment %}
+    <link rel="preload" href="{{ 'component-price.css' | asset_url }}" as="style">
+    <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}"></noscript>
+    {% comment %}{{ 'quick-order-list.css' | asset_url | stylesheet_tag }}{% endcomment %}
+    <link rel="preload" href="{{ 'quick-order-list.css' | asset_url }}" as="style">
+    <link rel="stylesheet" href="{{ 'quick-order-list.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ 'quick-order-list.css' | asset_url }}"></noscript>
+    {% comment %}{{ 'quantity-popover.css' | asset_url | stylesheet_tag }}{% endcomment %}
+    <link rel="preload" href="{{ 'quantity-popover.css' | asset_url }}" as="style">
+    <link rel="stylesheet" href="{{ 'quantity-popover.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ 'quantity-popover.css' | asset_url }}"></noscript>
+
+    {%- if settings.cart_type == 'drawer' -%}
+      {% comment %}{{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}{% endcomment %}
+      <link rel="preload" href="{{ 'component-cart-drawer.css' | asset_url }}" as="style">
+      <link rel="stylesheet" href="{{ 'component-cart-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+      <noscript><link rel="stylesheet" href="{{ 'component-cart-drawer.css' | asset_url }}"></noscript>
+      {% comment %}{{ 'component-cart.css' | asset_url | stylesheet_tag }}{% endcomment %}
+      <link rel="preload" href="{{ 'component-cart.css' | asset_url }}" as="style">
+      <link rel="stylesheet" href="{{ 'component-cart.css' | asset_url }}" media="print" onload="this.media='all'">
+      <noscript><link rel="stylesheet" href="{{ 'component-cart.css' | asset_url }}"></noscript>
+      {% comment %}{{ 'component-totals.css' | asset_url | stylesheet_tag }}{% endcomment %}
+      <link rel="preload" href="{{ 'component-totals.css' | asset_url }}" as="style">
+      <link rel="stylesheet" href="{{ 'component-totals.css' | asset_url }}" media="print" onload="this.media='all'">
+      <noscript><link rel="stylesheet" href="{{ 'component-totals.css' | asset_url }}"></noscript>
+      {% comment %}{{ 'component-discounts.css' | asset_url | stylesheet_tag }}{% endcomment %}
+      <link rel="preload" href="{{ 'component-discounts.css' | asset_url }}" as="style">
+      <link rel="stylesheet" href="{{ 'component-discounts.css' | asset_url }}" media="print" onload="this.media='all'">
+      <noscript><link rel="stylesheet" href="{{ 'component-discounts.css' | asset_url }}"></noscript>
+     
+    {%- endif -%}
+
+    {%- unless settings.type_body_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
+      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
+    {%- endunless -%}
+    {%- unless settings.type_header_font.system? -%}
+      {% comment %}theme-check-disable AssetPreload{% endcomment %}
+      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+      {% comment %}theme-check-enable AssetPreload{% endcomment %}
+    {%- endunless -%}
+
+    {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+      {% comment %}{{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}{% endcomment %}
+      <link rel="preload" href="{{ 'component-localization-form.css' | asset_url }}" as="style">
+      <link rel="stylesheet" href="{{ 'component-localization-form.css' | asset_url }}" media="print" onload="this.media='all'">
+      <noscript><link rel="stylesheet" href="{{ 'component-localization-form.css' | asset_url }}"></noscript>
+      <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- if settings.predictive_search_enabled -%}
+      <link
+        rel="stylesheet"
+        href="{{ 'component-predictive-search.css' | asset_url }}"
+        media="print"
+        onload="this.media='all'"
+      >
+    {%- endif -%}
+    <script>
+      if (Shopify.designMode) {
+        document.documentElement.classList.add('shopify-design-mode');
+      }
+    </script>
+    {% render 'search-guard-script' %}
+    {% comment %}{{ 'theme-styling.css' | asset_url | stylesheet_tag }}{% endcomment %}
+    <link rel="preload" href="{{ 'theme-styling.css' | asset_url }}" as="style">
+    <link rel="stylesheet" href="{{ 'theme-styling.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ 'theme-styling.css' | asset_url }}"></noscript>
+  </head>
+
+  <body class="{% if settings.animations_hover_elements != 'none' %} template-{{ template.name }} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+
+    <a class="skip-to-content-link button visually-hidden" href="#MainContent">
+      {{ 'accessibility.skip_to_text' | t }}
+    </a>
+
+    {%- if settings.cart_type == 'drawer' -%}
+      {%- render 'cart-drawer' -%}
+    {%- endif -%}
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
+      <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
+    </ul>
+
+    <script>
+      window.shopUrl = '{{ request.origin }}';
+      window.routes = {
+        cart_add_url: '{{ routes.cart_add_url }}',
+        cart_change_url: '{{ routes.cart_change_url }}',
+        cart_update_url: '{{ routes.cart_update_url }}',
+        cart_url: '{{ routes.cart_url }}',
+        predictive_search_url: '{{ routes.predictive_search_url }}',
+      };
+
+      window.cartStrings = {
+        error: `{{ 'sections.cart.cart_error' | t }}`,
+        quantityError: `{{ 'sections.cart.cart_quantity_error_html' | t: quantity: '[quantity]' }}`,
+      };
+
+      window.variantStrings = {
+        addToCart: `{{ 'products.product.add_to_cart' | t }}`,
+        soldOut: `{{ 'products.product.sold_out' | t }}`,
+        unavailable: `{{ 'products.product.unavailable' | t }}`,
+        unavailable_with_option: `{{ 'products.product.value_unavailable' | t: option_value: '[value]' }}`,
+      };
+
+      window.quickOrderListStrings = {
+        itemsAdded: `{{ 'sections.quick_order_list.items_added.other' | t: quantity: '[quantity]' }}`,
+        itemAdded: `{{ 'sections.quick_order_list.items_added.one' | t: quantity: '[quantity]' }}`,
+        itemsRemoved: `{{ 'sections.quick_order_list.items_removed.other' | t: quantity: '[quantity]' }}`,
+        itemRemoved: `{{ 'sections.quick_order_list.items_removed.one' | t: quantity: '[quantity]' }}`,
+        viewCart: `{{- 'sections.quick_order_list.view_cart' | t -}}`,
+        each: `{{- 'sections.quick_order_list.each' | t: money: '[money]' }}`,
+        min_error: `{{- 'sections.quick_order_list.min_error' | t: min: '[min]' }}`,
+        max_error: `{{- 'sections.quick_order_list.max_error' | t: max: '[max]' }}`,
+        step_error: `{{- 'sections.quick_order_list.step_error' | t: step: '[step]' }}`,
+      };
+
+      window.accessibilityStrings = {
+        imageAvailable: `{{ 'products.product.media.image_available' | t: index: '[index]' }}`,
+        shareSuccess: `{{ 'general.share.success_message' | t }}`,
+        pauseSlideshow: `{{ 'sections.slideshow.pause_slideshow' | t }}`,
+        playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
+        recipientFormExpanded: `{{ 'recipient.form.expanded' | t }}`,
+        recipientFormCollapsed: `{{ 'recipient.form.collapsed' | t }}`,
+        countrySelectorSearchCount: `{{ 'localization.country_results_count' | t: count: '[count]' }}`,
+      };
+    </script>
+
+    {%- if settings.predictive_search_enabled -%}
+      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- if settings.cart_type == 'drawer' -%}
+      <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {% if settings.enable_cart_upsell %}
+      <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'cart-drawer-recommendations.js' | asset_url }}" defer="defer"></script>
+    {% endif %}
+
+    {%- comment -%} Third-party tracking scripts - loaded at end of body for better performance {%- endcomment -%}
+    {% render 'clarity-script' %}
+    {% render 'podscribe-pixel' %}
+
+  {% render 'product-condition-modal' %}
+<script>
+(function () {
+  if (!new URLSearchParams(location.search).has('rewards')) return;
+  var kicked = false;
+  var tries = 0;
+  var t = setInterval(function () {
+    if (window.SmileUI && SmileUI.openPanel) {
+      SmileUI.openPanel();
+      clearInterval(t);
+      return;
+    }
+    if (!kicked && typeof window.loadSmileSdk === 'function') {
+      try { loadSmileSdk(); kicked = true; } catch (e) {}
+    }
+    if (++tries > 100) clearInterval(t);
+  }, 300);
+})();
+</script>
+  </body>
+</html>

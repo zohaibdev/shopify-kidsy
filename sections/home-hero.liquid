@@ -1,0 +1,778 @@
+{% comment %}
+SECTION: Home Hero (home-hero)
+ROLE: Full-width hero banner with carousel/slider functionality. Each slide displays an image background with overlaid content including eyebrow text (social proof) in H1, main headline, paragraph text, and a call-to-action button. Includes navigation arrows and dot indicators.
+NOTES: Uses theme's slider-component and slideshow styles. Images are editable per slide. Content is positioned on the left side of each slide for optimal readability.
+{% endcomment %}
+
+{% comment %}{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}{% endcomment %}
+<link rel="preload" href="{{ 'section-image-banner.css' | asset_url }}" as="style">
+<link rel="stylesheet" href="{{ 'section-image-banner.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'section-image-banner.css' | asset_url }}"></noscript>
+{% comment %}{{ 'component-slider.css' | asset_url | stylesheet_tag }}{% endcomment %}
+<link rel="preload" href="{{ 'component-slider.css' | asset_url }}" as="style">
+<link rel="stylesheet" href="{{ 'component-slider.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'component-slider.css' | asset_url }}"></noscript>
+{% comment %}{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}{% endcomment %}
+<link rel="preload" href="{{ 'component-slideshow.css' | asset_url }}" as="style">
+<link rel="stylesheet" href="{{ 'component-slideshow.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'component-slideshow.css' | asset_url }}"></noscript>
+
+{%- if section.settings.slide_height == 'adapt_image' and section.blocks.first.settings.image != blank -%}
+  {%- style -%}
+    @media screen and (max-width: 749px) { #HomeHero-{{ section.id }}::before, #HomeHero-{{ section.id }} .hero-slide__media::before, #HomeHero-{{ section.id }} .hero-slide__content::before { padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%; content: ''; display: block; } } @media screen and (min-width: 750px) { #HomeHero-{{ section.id }}::before, #HomeHero-{{ section.id }} .hero-slide__media::before { padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%; content: ''; display: block; } }
+  {%- endstyle -%}
+{%- endif -%}
+
+<div class="home-hero section-{{ section.id }} {{ section.settings.bg_variant }}" data-section-type="home-hero">
+  {%- comment -%} First child: Section container {%- endcomment -%}
+
+  <slideshow-component
+    class="home-hero__slider"
+    role="region"
+    aria-roledescription="{{ 'sections.slideshow.carousel' | t }}"
+    aria-label="{{ section.settings.accessibility_info | escape }}"
+  >
+    {%- if section.blocks.size > 1 -%}
+      <button
+        type="button"
+        class="slider-button slider-button--prev home-hero__arrow home-hero__arrow--left"
+        name="previous"
+        aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+        aria-controls="HomeHero-{{ section.id }}"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+      <button
+        type="button"
+        class="slider-button slider-button--next home-hero__arrow home-hero__arrow--right"
+        name="next"
+        aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+        aria-controls="HomeHero-{{ section.id }}"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+    {%- endif -%}
+    <div class="home-hero__card-wrapper">
+      {%- if section.blocks.size > 1 -%}
+        <div class="home-hero__dots">
+          <div class="slideshow__control-wrapper">
+            {%- for block in section.blocks -%}
+              <button
+                class="slider-counter__link slider-counter__link--dots link"
+                aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                aria-controls="HomeHero-{{ section.id }}"
+              >
+                <span class="dot"></span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+      <div
+        class="home-hero__slides slider slider--everywhere{% if section.blocks.first.settings.image == blank %} home-hero--placeholder{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+        id="HomeHero-{{ section.id }}"
+        aria-live="polite"
+        aria-atomic="true"
+        data-autoplay="{{ section.settings.auto_rotate }}"
+        data-speed="{{ section.settings.change_slides_speed }}"
+      >
+      {%- for block in section.blocks -%}
+        <div
+          class="home-hero__slide slider__slide"
+          id="HomeHeroSlide-{{ section.id }}-{{ forloop.index }}"
+          {{ block.shopify_attributes }}
+          role="group"
+          aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
+          aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+          tabindex="-1"
+        >
+          <div class="hero-slide__media media{% if block.settings.image == blank %} placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}">
+            {%- if block.settings.image -%}
+              {%- liquid
+                assign height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
+                if section.settings.image_behavior == 'ambient'
+                  assign sizes = '120vw'
+                  assign widths = '450, 660, 900, 1320, 1800, 2136, 2400, 3600, 7680'
+                else
+                  assign sizes = '100vw'
+                  assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+                endif
+                assign fetch_priority = 'auto'
+                if section.index == 1 and forloop.first
+                  assign fetch_priority = 'high'
+                endif
+              -%}
+              {%- if forloop.first %}
+                {{
+                  block.settings.image
+                  | image_url: width: 3840
+                  | image_tag: height: height, sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                }}
+              {%- else -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 3840
+                  | image_tag: loading: 'lazy', height: height, sizes: sizes, widths: widths
+                }}
+              {%- endif -%}
+            {%- else -%}
+              {%- assign placeholder_slide = forloop.index | modulo: 2 -%}
+              {%- if placeholder_slide == 1 -%}
+                {{ 'hero-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- else -%}
+                {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+          <div class="hero-slide__content">
+            {%- assign use_theme_container = section.settings.use_theme_container -%}
+            {%- if use_theme_container -%}
+              <div class="{{ section.settings.theme_container_class }}">
+                <div class="hero-slide__text-wrapper">
+                  <div class="hero-slide__text color-{{ block.settings.color_scheme }} gradient">
+                    {%- if block.settings.eyebrow_text != blank -%}
+                      {%- assign eyebrow_tag = block.settings.eyebrow_heading_tag | default: 'h1' -%}
+                      <{{ eyebrow_tag }} class="hero-slide__eyebrow eyebrow">
+                        {{ block.settings.eyebrow_text | escape }}
+                      </{{ eyebrow_tag }}>
+                    {%- endif -%}
+
+                    {%- if block.settings.heading != blank -%}
+                      {%- assign heading_tag = block.settings.heading_tag | default: 'h1' -%}
+                      <{{ heading_tag }} class="hero-slide__heading {{ block.settings.heading_size }}">
+                        {{ block.settings.heading }}
+                      </{{ heading_tag }}>
+                    {%- endif -%}
+
+                    {%- if block.settings.paragraph_text != blank -%}
+                      <div class="hero-slide__paragraph rte">
+                        {{ block.settings.paragraph_text }}
+                      </div>
+                    {%- endif -%}
+
+                    {%- if block.settings.button_label != blank and block.settings.button_url != blank -%}
+                      <div class="hero-slide__actions">
+                        <a class="button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}" href="{{ block.settings.button_url }}">
+                          {{ block.settings.button_label | escape }}
+                        </a>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- else -%}
+              <div class="global-container">
+                <div class="hero-slide__text-wrapper">
+                  <div class="hero-slide__text color-{{ block.settings.color_scheme }} gradient">
+                    {%- if block.settings.eyebrow_text != blank -%}
+                      {%- assign eyebrow_tag = block.settings.eyebrow_heading_tag | default: 'h1' -%}
+                      <{{ eyebrow_tag }} class="hero-slide__eyebrow eyebrow">
+                        {{ block.settings.eyebrow_text | escape }}
+                      </{{ eyebrow_tag }}>
+                    {%- endif -%}
+
+                    {%- if block.settings.heading != blank -%}
+                      {%- assign heading_tag = block.settings.heading_tag | default: 'h1' -%}
+                      <{{ heading_tag }} class="hero-slide__heading {{ block.settings.heading_size }}">
+                        {{ block.settings.heading }}
+                      </{{ heading_tag }}>
+                    {%- endif -%}
+
+                    {%- if block.settings.paragraph_text != blank -%}
+                      <div class="hero-slide__paragraph rte">
+                        {{ block.settings.paragraph_text }}
+                      </div>
+                    {%- endif -%}
+
+                    {%- if block.settings.button_label != blank and block.settings.button_url != blank -%}
+                      <div class="hero-slide__actions">
+                        <a class="button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}" href="{{ block.settings.button_url }}">
+                          {{ block.settings.button_label | escape }}
+                        </a>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+      </div>
+    </div>
+  </slideshow-component>
+</div>
+
+{%- comment -%}
+=== CSS (scoped) ===
+{%- endcomment -%}
+{% style %}
+.section-{{ section.id }} { background: #FFFBF3; position: relative; padding: {{ section.settings.card_padding }}px; } .section-{{ section.id }} .home-hero__slider { position: relative; max-width: {{ section.settings.max_width }}px; margin: 0 auto; } .section-{{ section.id }} .home-hero__card-wrapper { position: relative; background: #FFFBF3; border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }}; border-radius: {{ section.settings.card_border_radius }}px; overflow: hidden; } .section-{{ section.id }} .home-hero__slides { position: relative; overflow: hidden; height: {{ section.settings.slide_min_height }}px; } .section-{{ section.id }} .home-hero__slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out; visibility: hidden; } .section-{{ section.id }} .home-hero__slide.is-active { opacity: 1; visibility: visible; position: relative; } .section-{{ section.id }} .hero-slide__media { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; } .section-{{ section.id }} .hero-slide__media img { width: 100%; height: 100%; object-fit: cover; } .section-{{ section.id }} .hero-slide__media::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, {{ section.settings.image_overlay_opacity | divided_by: 100.0 }}); z-index: 1; } .section-{{ section.id }} .hero-slide__content { position: relative; z-index: 2; height: 100%; display: flex; align-items: center; } .section-{{ section.id }} .hero-slide__text-wrapper { width: 100%; max-width: {{ section.settings.content_max_width }}px; padding: {{ section.settings.content_padding_top }}px {{ section.settings.content_padding_sides }}px {{ section.settings.content_padding_bottom }}px; } .section-{{ section.id }} .hero-slide__text { padding: 2rem; border-radius: {{ section.settings.text_border_radius }}px; text-align: left; display: flex; flex-direction: column; align-items: flex-start; background: transparent; } .section-{{ section.id }} .hero-slide__eyebrow { font-size: {{ section.settings.eyebrow_font_size }}px; margin-bottom: 1rem; opacity: 0.9; letter-spacing: 0.02em; font-weight: 600; text-align: left; color: #ffffff; } .section-{{ section.id }} .hero-slide__heading { margin-bottom: 1.5rem; line-height: 1.2; text-align: left; color: #ffffff; } .section-{{ section.id }} .hero-slide__paragraph { margin-bottom: 2rem; max-width: {{ section.settings.paragraph_max_width }}px; font-size: {{ section.settings.paragraph_font_size }}px; line-height: 1.6; text-align: left; color: #ffffff; } .section-{{ section.id }} .hero-slide__actions { margin-top: 1.5rem; } .section-{{ section.id }} .hero-slide__actions .button--primary { background-color: #F45901; border-color: #F45901; color: #ffffff; } .section-{{ section.id }} .hero-slide__actions .button--primary:hover { background-color: #d14a01; border-color: #d14a01; color: #ffffff; } .section-{{ section.id }} .home-hero__arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: {{ section.settings.button_color }}; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease; } .section-{{ section.id }} .home-hero__arrow:hover { opacity: 0.8; } .section-{{ section.id }} .home-hero__arrow--left { left: -22px; } .section-{{ section.id }} .home-hero__arrow--right { right: -22px; } .section-{{ section.id }} .home-hero__arrow .svg-wrapper { width: 20px; height: 20px; color: #ffffff; } .section-{{ section.id }} .home-hero__arrow--left .svg-wrapper { transform: rotate(0deg); } .section-{{ section.id }} .home-hero__arrow--right .svg-wrapper { transform: scaleX(-1); } .section-{{ section.id }} .home-hero__dots { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; align-items: center; gap: 1rem; } .section-{{ section.id }} .home-hero__dots .slideshow__control-wrapper { display: flex; align-items: center; gap: 1rem; } .section-{{ section.id }} .slider-counter__link--dots { width: 12px; height: 12px; border-radius: 50%; background: #ffffff; border: none; cursor: pointer; padding: 0; transition: background 0.3s ease; margin: 0; } .section-{{ section.id }} .slider-counter__link--dots.is-active { background: {{ section.settings.button_color }}; } .section-{{ section.id }} .slider-counter__link--dots:hover:not(.is-active) { background: rgba(255, 255, 255, 0.7); } .section-{{ section.id }} .slider-counter__link--dots .dot { display: none; } .section-{{ section.id }} .global-container { width: 100%; max-width: 100%; margin: 0; padding-left: var(--gutter, 16px); padding-right: var(--gutter, 16px); } @media (max-width: 749px) { .section-{{ section.id }} .hero-slide__text-wrapper { padding: {{ section.settings.content_padding_top_mobile }}px {{ section.settings.content_padding_sides_mobile }}px {{ section.settings.content_padding_bottom_mobile }}px; } .section-{{ section.id }} .hero-slide__text { padding: 1.5rem; } .section-{{ section.id }} .hero-slide__eyebrow { font-size: {{ section.settings.eyebrow_font_size_mobile }}px; } .section-{{ section.id }} .hero-slide__paragraph { font-size: {{ section.settings.paragraph_font_size_mobile }}px; } .section-{{ section.id }} .home-hero__arrow { width: 36px; height: 36px; } .section-{{ section.id }} .home-hero__arrow--left { left: -18px; } .section-{{ section.id }} .home-hero__arrow--right { right: -18px; } .section-{{ section.id }} .home-hero__dots { bottom: 1rem; } }
+{% endstyle %}
+
+{%- comment -%}
+=== JavaScript (scoped) ===
+{%- endcomment -%}
+<script>
+(function() {
+  const root = document.querySelector('.section-{{ section.id }}');
+  if(!root) return;
+
+  const slider = root.querySelector('#HomeHero-{{ section.id }}');
+  const slides = root.querySelectorAll('.home-hero__slide');
+  const prevButton = root.querySelector('.slider-button--prev');
+  const nextButton = root.querySelector('.slider-button--next');
+  const dots = root.querySelectorAll('.slider-counter__link--dots');
+  let currentSlide = 0;
+  let autoplayInterval = null;
+
+  if (!slider || slides.length === 0) return;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      if (i === index) {
+        slide.classList.add('is-active');
+        slide.setAttribute('tabindex', '0');
+      } else {
+        slide.classList.remove('is-active');
+        slide.setAttribute('tabindex', '-1');
+      }
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === index);
+    });
+
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    const next = (currentSlide + 1) % slides.length;
+    showSlide(next);
+  }
+
+  function prevSlide() {
+    const prev = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(prev);
+  }
+
+  if (prevButton) {
+    prevButton.addEventListener('click', prevSlide);
+  }
+
+  if (nextButton) {
+    nextButton.addEventListener('click', nextSlide);
+  }
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => showSlide(index));
+  });
+
+  // Autoplay
+  const autoplayEnabled = slider.dataset.autoplay === 'true';
+  const autoplaySpeed = parseInt(slider.dataset.speed) * 1000 || 5000;
+
+  if (autoplayEnabled && slides.length > 1) {
+    function startAutoplay() {
+      autoplayInterval = setInterval(nextSlide, autoplaySpeed);
+    }
+
+    function stopAutoplay() {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+      }
+    }
+
+    const autoplayButton = root.querySelector('.slideshow__autoplay');
+    if (autoplayButton) {
+      let isPaused = false;
+      autoplayButton.addEventListener('click', () => {
+        isPaused = !isPaused;
+        autoplayButton.classList.toggle('slideshow__autoplay--paused', isPaused);
+        if (isPaused) {
+          stopAutoplay();
+        } else {
+          startAutoplay();
+        }
+      });
+    }
+
+    // Pause on hover
+    slider.addEventListener('mouseenter', stopAutoplay);
+    slider.addEventListener('mouseleave', () => {
+      if (!root.querySelector('.slideshow__autoplay--paused')) {
+        startAutoplay();
+      }
+    });
+
+    startAutoplay();
+  }
+
+  // Initialize first slide
+  showSlide(0);
+
+  // Keyboard navigation
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      prevSlide();
+    } else if (e.key === 'ArrowRight') {
+      nextSlide();
+    }
+  });
+})();
+</script>
+
+{%- comment -%}
+=== Schema (all settings editable in Customizer) ===
+{%- endcomment -%}
+{% schema %}
+{
+  "name": "Home Hero",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Carousel Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Auto-rotate slides",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 9,
+      "step": 2,
+      "unit": "s",
+      "label": "Change slides every",
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "slide_height",
+      "options": [
+        {
+          "value": "adapt_image",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium",
+      "label": "Slide height"
+    },
+    {
+      "type": "range",
+      "id": "slide_min_height",
+      "min": 400,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "label": "Minimum slide height",
+      "default": 600
+    },
+    {
+      "type": "select",
+      "id": "image_behavior",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "ambient",
+          "label": "Ambient"
+        }
+      ],
+      "default": "none",
+      "label": "Image animation"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Image overlay opacity (transparent black)",
+      "default": 30,
+      "info": "Controls the darkness of the overlay on the hero image"
+    },
+    {
+      "type": "header",
+      "content": "Content Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_theme_container",
+      "label": "Use theme container class",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "theme_container_class",
+      "label": "Theme container class",
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Container max width (px)",
+      "min": 960,
+      "max": 1920,
+      "step": 20,
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width (px)",
+      "min": 400,
+      "max": 1200,
+      "step": 20,
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "paragraph_max_width",
+      "label": "Paragraph max width (px)",
+      "min": 300,
+      "max": 800,
+      "step": 20,
+      "default": 500
+    },
+    {
+      "type": "header",
+      "content": "Content Spacing"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_top",
+      "label": "Content padding top (px)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "content_padding_bottom",
+      "label": "Content padding bottom (px)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "content_padding_sides",
+      "label": "Content padding sides (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "content_padding_top_mobile",
+      "label": "Content padding top mobile (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "content_padding_bottom_mobile",
+      "label": "Content padding bottom mobile (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "content_padding_sides_mobile",
+      "label": "Content padding sides mobile (px)",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size",
+      "label": "Eyebrow font size (px)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size_mobile",
+      "label": "Eyebrow font size mobile (px)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "paragraph_font_size",
+      "label": "Paragraph font size (px)",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "paragraph_font_size_mobile",
+      "label": "Paragraph font size mobile (px)",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_border_radius",
+      "label": "Text box border radius (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Card Style"
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card padding (white space around card)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Card border width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#E5E5E5"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card shadow (CSS box-shadow value)",
+      "default": "0 4px 6px rgba(0, 0, 0, 0.1)",
+      "info": "Leave empty for no shadow. Example: 0 4px 6px rgba(0, 0, 0, 0.1)"
+    },
+    {
+      "type": "header",
+      "content": "Colors & Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Navigation button color",
+      "default": "#F45901"
+    },
+    {
+      "type": "text",
+      "id": "bg_variant",
+      "label": "Background modifier class (theme)"
+    },
+    {
+      "type": "header",
+      "content": "Accessibility"
+    },
+    {
+      "type": "text",
+      "id": "accessibility_info",
+      "label": "Accessibility label",
+      "default": "Hero carousel",
+      "info": "Describe the carousel for screen readers"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide image"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow_text",
+          "label": "Eyebrow text (Social proof)",
+          "default": "★★★★★ EXCELLENT 4.6 | 100,000+ CUSTOMERS"
+        },
+        {
+          "type": "select",
+          "id": "eyebrow_heading_tag",
+          "label": "Eyebrow heading tag",
+          "default": "h1",
+          "options": [
+            {"value": "h1", "label": "H1"},
+            {"value": "h2", "label": "H2"},
+            {"value": "h3", "label": "H3"},
+            {"value": "h4", "label": "H4"},
+            {"value": "h5", "label": "H5"},
+            {"value": "h6", "label": "H6"},
+            {"value": "p", "label": "Paragraph"}
+          ]
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Main heading",
+          "default": "Premium Baby Brands Discounted Prices"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Heading tag",
+          "default": "h1",
+          "options": [
+            {"value": "h1", "label": "H1"},
+            {"value": "h2", "label": "H2"},
+            {"value": "h3", "label": "H3"},
+            {"value": "h4", "label": "H4"},
+            {"value": "h5", "label": "H5"},
+            {"value": "h6", "label": "H6"}
+          ]
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading size",
+          "default": "h1",
+          "options": [
+            {"value": "h2", "label": "Small"},
+            {"value": "h1", "label": "Medium"},
+            {"value": "h0", "label": "Large"},
+            {"value": "hxl", "label": "Extra Large"},
+            {"value": "hxxl", "label": "Extra Extra Large"}
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "paragraph_text",
+          "label": "Paragraph text",
+          "default": "<p>Discover Trusted Brands Like Doona, Graco, And UPPAbaby. Expertly Inspected, Sustainably Sourced, And Up To 70% Off Retail.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary",
+          "label": "Use secondary button style",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Color Scheme"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "Color scheme",
+          "default": "scheme-1"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Hero",
+      "blocks": [
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

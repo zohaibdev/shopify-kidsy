@@ -1,0 +1,279 @@
+<style>
+  #shopify-section-{{ section.id }} .kidsy_banner_section .page-width { max-width: 1400px; padding: 0 10px; margin: 0 auto; position: relative; } #shopify-section-{{ section.id }} .kidsy_banner_section .banner-content { border: 1px solid #000; border-radius: 25px; display: flex; justify-content: space-between; position: relative; } #shopify-section-{{ section.id }} section.kidsy_banner_section { padding: 29px 0 26px; background:#fffbf7; } #shopify-section-{{ section.id }} .kidsy_banner_section .rating { display: flex; align-items: center; gap: 8px; padding-bottom: 10px; } #shopify-section-{{ section.id }} .kidsy_banner_section .svg_text { font-size: 14px; letter-spacing: 0; line-height: 1.07; color: #000; font-weight: 400; font-family: "Poppins", sans-serif; } #shopify-section-{{ section.id }} .kidsy_banner_section .heading p { font-size: 64px; margin: 0; line-height:0.93; letter-spacing: 0; color: #000; font-weight: 500; padding-bottom: 25px; font-family: "Poppins", sans-serif; } #shopify-section-{{ section.id }} .kidsy_banner_section .rating-svg img { display: block; } #shopify-section-{{ section.id }} .kidsy_banner_section .text-block { padding-left: 55px; padding-top: 38px; width: 53%; } #shopify-section-{{ section.id }} .kidsy_banner_section .product_img { width: 35%; } #shopify-section-{{ section.id }} .kidsy_banner_section .speciality-box { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; } #shopify-section-{{ section.id }} .kidsy_banner_section .toy_img img { width: 100%; height: 100%; object-fit: cover; display: block; } #shopify-section-{{ section.id }} .kidsy_banner_section .product_img { position: absolute; right: 0; width: 32.2%; top: 0px; right: 45px; } #shopify-section-{{ section.id }} .kidsy_banner_section span.icon img { display: block; } #shopify-section-{{ section.id }} .kidsy_banner_section .banner-logos { position: absolute; bottom: -5%; left: 49%; transform: translate(-50%, -50%); } #shopify-section-{{ section.id }} .kidsy_banner_section .text p { font-size: 20px; margin: 0; line-height: 1; letter-spacing: 0; color: #000; font-weight: 500; padding-bottom: 8px; border-bottom: 1px solid #000; font-family: "Poppins", sans-serif; } #shopify-section-{{ section.id }} .kidsy_banner_section a.btn-main { display: flex; justify-content: center; align-items: center; max-width: 260px; border: 1px solid #000; height: 53px; background-color: #fff; color: #000; text-decoration: none; font-size: 20px; line-height: 1; letter-spacing: 0; font-weight: 600; text-transform: uppercase; border-radius: 50px; box-shadow: 4px 6px 0px 0px #000; margin-bottom: 59px; } #shopify-section-{{ section.id }} .kidsy_banner_section .speciality-wrap { padding-bottom: 8px; } @media screen and ( min-width:992px ) and ( max-width:1200px ){ #shopify-section-{{ section.id }} .kidsy_banner_section .text-block { padding-left: 30px; padding-top: 38px; width: 56%; } #shopify-section-{{ section.id }} .kidsy_banner_section .heading p { font-size: 45px; padding-bottom: 15px; } #shopify-section-{{ section.id }} .kidsy_banner_section .banner-logos { position: absolute; bottom: 5%; left: 52.6%; transform: translate(-50%, -50%); } #shopify-section-{{ section.id }} .kidsy_banner_section .banner-logos img { width: 90px; height: 90px; } #shopify-section-{{ section.id }} .kidsy_banner_section .text p { font-size: 17px; } } @media screen and ( min-width:767px ) and ( max-width:991px ){ #shopify-section-{{ section.id }} .kidsy_banner_section .heading p { font-size: 35px; padding-bottom: 15px; } #shopify-section-{{ section.id }} .kidsy_banner_section .banner-logos { bottom: 0%; left: 58%; } #shopify-section-{{ section.id }} .kidsy_banner_section .text-block { padding-left: 30px; padding-top: 28px; width: 56%; } #shopify-section-{{ section.id }} .kidsy_banner_section .banner-logos img { width: 70px; height: 70px; } #shopify-section-{{ section.id }} .kidsy_banner_section .text p { font-size: 16px; } } @media screen and ( max-width:766px ) { #shopify-section-{{ section.id }} section.kidsy_banner_section { padding: 0 0 12px; } #shopify-section-{{ section.id }} .kidsy_banner_section .banner-content { position: unset; flex-wrap: wrap; } #shopify-section-{{ section.id }} .kidsy_banner_section .text-block { padding-left: unset; padding-top: 29px; width: 100%; } #shopify-section-{{ section.id }} .kidsy_banner_section .banner-logos { position: unset; bottom: -6%; left: 49%; transform: unset; } #shopify-section-{{ section.id }} .kidsy_banner_section .product_img { position: unset; right: 0; width: 100%; top: 0px; } #shopify-section-{{ section.id }} .kidsy_banner_section .rating { padding-bottom: 20px; justify-content: center; gap: 4px; } #shopify-section-{{ section.id }} .kidsy_banner_section .svg_text { font-size: 12px; line-height: 0.99; } #shopify-section-{{ section.id }} .kidsy_banner_section .heading p { font-size: 32px; line-height: 1.12; padding-bottom: 21px; text-align: center; } #shopify-section-{{ section.id }} .kidsy_banner_section .text p { font-size: 16px; padding-bottom: 14px; } #shopify-section-{{ section.id }} .kidsy_banner_section .speciality-box { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; } #shopify-section-{{ section.id }} .kidsy_banner_section .rating-svg img { display: block; width: 101px; height: 19px; } #shopify-section-{{ section.id }} .kidsy_banner_section .speciality-wrap { padding-bottom: 0px; max-width: 324px; margin: 0 auto; } #shopify-section-{{ section.id }} .kidsy_banner_section .banner-logos img { height: 107px; width: 107px; } #shopify-section-{{ section.id }} .kidsy_banner_section a.btn-main { max-width: 256px; margin-bottom: 21px; margin-inline: auto; } #shopify-section-{{ section.id }} .kidsy_banner_section .banner-logos { display: flex; gap: 4.92px; justify-content: center; } }
+</style>
+
+<section class="kidsy_banner_section" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="kidsy_banner_wrapper">
+      {% for block in section.blocks %}
+        <div
+          class="banner-content"
+          style="background-color:{{ section.settings.bg_color }};color:{{ section.settings.txt_color }}"
+        >
+          <div class="text-block">
+            <div class="rating">
+              <div class="rating-svg">
+               
+                {% assign rating = block.settings.star_rating %}
+
+                <div class="star-rating">
+                  {% for i in (1..5) %}
+                    {% if i <= rating %}
+                      <!-- Filled star -->
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24.8696 0H0V24.8696H24.8696V0Z" fill="#00B67A"/>
+                        <path d="M12.1749 16.5797L16.0608 15.5435L17.6151 20.4656L12.1749 16.5797ZM20.9829 10.3623H14.2473L12.1749 4.14493L10.1024 10.3623H3.62598L9.06619 14.2482L6.99373 20.4656L12.4339 16.5797L15.8017 14.2482L20.9829 10.3623Z" fill="white"/>
+                      </svg>
+
+                    {% else %}
+                      <!-- Unfilled star -->
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24.8696 0H0V24.8696H24.8696V0Z" fill="#E0E0E0"/>
+                        <path d="M12.1749 16.5797L16.0608 15.5435L17.6151 20.4656L12.1749 16.5797ZM20.9829 10.3623H14.2473L12.1749 4.14493L10.1024 10.3623H3.62598L9.06619 14.2482L6.99373 20.4656L12.4339 16.5797L15.8017 14.2482L20.9829 10.3623Z" fill="white"/>
+                      </svg>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="svg_text">
+                {{ block.settings.ratign_text }}
+              </div>
+            </div>
+            {% if block.settings.heading != blank %}
+              <div class="heading">{{ block.settings.heading }}</div>
+            {% endif %}
+            {% if block.settings.enable_speciality %}
+              <div class="speciality-wrap">
+                {% for index in (1..3) %}
+                  {% liquid
+                    assign icon = 'icon_' | append: index
+                    assign text = 'text_' | append: index
+                  %}
+                  {% if block.settings[icon] != blank and block.settings[text] != blank %}
+                    <div class="speciality-box">
+                      <span class="icon"
+                        ><img
+                          src="{{  block.settings[icon] | image_url : width: 80 }}"
+                          alt="block.settings[text]"
+                          loading="lazy"
+                          width="{{ block.settings[icon].width }}"
+                          height="{{ block.settings[icon].height }}"
+                        >
+                      </span>
+                      <div class="text">
+                        {{ block.settings.txt_color }}
+                        {{ block.settings[text] }}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+            <a class="btn-main {{ block.settings.btn_style }}" href="{{ block.settings.btn_link }}">
+              {{ block.settings.btn_txt }}
+            </a>
+            <div class="banner-logos">
+              {% if block.settings.logo_1 %}
+              <img
+                src="{{ block.settings.logo_1 | image_url: width: 150  }}"
+                alt="{{ shop.name }}"
+                loading="lazy"
+                width="{{ block.settings.logo_1.width }}"
+                height="{{ block.settings.logo_1.height }}"
+              >
+              {% endif %}
+              {% if block.settings.logo_2 %}
+              <img
+                src="{{ block.settings.logo_2 | image_url: width: 150  }}"
+                alt="{{ shop.name }}"
+                loading="lazy"
+                width="{{ block.settings.logo_2.width }}"
+                height="{{ block.settings.logo_2.height }}"
+              >
+              {% endif %}
+             {% if block.settings.logo_3 %}
+              <img
+                src="{{ block.settings.logo_3 | image_url: width: 150  }}"
+                alt="{{ shop.name }}"
+                loading="lazy"
+                width="{{ block.settings.logo_3.width }}"
+                height="{{ block.settings.logo_3.height }}"
+              >
+             {% endif %}
+            </div>
+          </div>
+          <div class="product_img">
+            {% for block in section.blocks %}
+              {% if block.settings.image_link != blank %}
+              <a
+                  href="{{ block.settings.image_link }}" 
+                  title="{{ block.settings.image_alt | escape }}" 
+                  aria-label="{{ block.settings.image_alt | escape }}"
+                >
+              {% endif %}
+                <div class="toy_img">
+                  {%- if block.settings.image != blank -%}
+                    {%- liquid
+                      assign mobileImage = block.settings.image
+                      if block.settings.image_mobile != blank
+                        assign mobileImage = block.settings.image_mobile
+                      endif
+                    -%}
+                    <picture>
+                      <source media="(min-width: 1901px)" srcset="{{ block.settings.image | image_url: width: 2560 }}">
+                      <source media="(min-width: 1700px)" srcset="{{ block.settings.image | image_url: width: 2020 }}">
+                      <source media="(min-width: 1500px)" srcset="{{ block.settings.image | image_url: width: 1820 }}">
+                      <source media="(min-width: 1200px)" srcset="{{ block.settings.image | image_url: width: 1600 }}">
+                      <source media="(min-width: 991px)" srcset="{{ block.settings.image | image_url: width: 1350 }}">
+                      <source media="(min-width: 768px)" srcset="{{ mobileImage | image_url: width: 1100 }}">
+                      <source media="(min-width: 576px)" srcset="{{ mobileImage | image_url: width: 800 }}">
+                      <source media="(min-width: 400px)" srcset="{{ mobileImage | image_url: width: 700 }}">
+                      <source media="(min-width: 0)" srcset="{{ mobileImage | image_url: width: 600 }}">
+                      <source media="(min-width: 0)" srcset="{{ mobileImage | image_url: width: 400 }}">
+                      <img
+                        src="{{ block.settings.image | image_url }}"
+                        alt="{{ block.settings.image.alt | default: block.settings.heading | escape }}"
+                        width="{{ block.settings.image.width }}"
+                        loading="lazy"
+                        fetchpriority="high"
+                        height="{{ block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round }}"
+                      >
+                    </picture>
+                  {%- endif -%}
+                </div>
+              {% if block.settings.image_link != blank %}
+              </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+    "name": "kidsy Banner",
+    "settings": [
+                    {
+                    "type": "color",
+                    "id":"bg_color",
+                    "label":"Select Background Color",
+                    "default":"#fff"
+                  },
+    ],
+    "blocks": [
+       {
+          "type": "slide",
+          "name": "slide",
+          "settings": [
+
+             {
+                "type": "range",
+                "id": "star_rating",
+                "label": "Star Rating",
+                "min": 0,
+                "max": 5,
+                "step": 1,
+                "default": 5
+              },
+              {
+                  "type": "inline_richtext",
+                  "id": "ratign_text",
+                  "label": "Rating Text",
+              },
+              {
+                  "type": "richtext",
+                  "id": "heading",
+                  "label": "Heading"
+              },
+               {
+                "type": "checkbox",
+                "id": "enable_speciality",
+                "label": "Enable Speciality",
+                "default": true
+              },
+              {
+                "type": "image_picker",
+                "id": "icon_1",
+                "label": "Icon 1"
+              },
+              {
+                  "type": "richtext",
+                  "id": "text_1",
+                  "label": "Text 1"
+              },
+              {
+                "type": "image_picker",
+                "id": "icon_2",
+                "label": "Icon 2"
+              },
+              {
+                  "type": "richtext",
+                  "id": "text_2",
+                  "label": "Text 2"
+              },
+              {
+                "type": "image_picker",
+                "id": "icon_3",
+                "label": "Icon 3"
+              },
+              {
+                  "type": "richtext",
+                  "id": "text_3",
+                  "label": "Text 3"
+              },
+                                  {
+                  "type": "text",
+                  "id": "btn_txt",
+                  "label": "Button Text"
+                  },
+                  {
+                  "type": "url",
+                  "id": "btn_link",
+                  "label": "Button Link"
+                  },
+                                     {
+                "type": "image_picker",
+                "id": "logo_1",
+                "label": "Logo 1"
+              },
+             {
+                "type": "image_picker",
+                "id": "logo_2",
+                "label": "Logo 2"
+              },
+             {
+                "type": "image_picker",
+                "id": "logo_3",
+                "label": "Logo 3"
+              },
+
+               {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Dekstop Image"
+              },
+              {
+                "type": "image_picker",
+                "id": "image_mobile",
+                "label": "Mobile Image"
+              },
+              {
+               "type": "url",
+               "id":"image_link",
+               "label":"Add Image Link"
+              }
+
+            ]
+        }
+    ],
+
+    "presets": [
+        {
+            "name": "kidsy Banner"
+        },
+    ],
+}
+{% endschema %}

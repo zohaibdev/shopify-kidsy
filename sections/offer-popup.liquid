@@ -1,0 +1,186 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .offer-popup { display: none; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1050; overflow: hidden; background-color: rgb(0 0 0 / 50%); opacity: 0; visibility: hidden; transition: opacity ease-in-out 0.25s; } .offer-popup.open { display: block; opacity: 1; visibility: visible; } .offer-popup .offer-popup-box { border: 1px solid #000; border-radius: 24px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 560px; width: 90%; padding: 38px 15px 50px; background: #fff; } .offer-popup-box .popup-close-btn { position: absolute; top: -30px; right: 15px; z-index: 3; } .offer-popup-wrapper { width: 100%; max-width: 458px; margin-inline: auto; } /* ✅ Force Poppins font inside popup */ .offer-popup-wrapper, .offer-popup-wrapper .heading, .offer-popup-wrapper .rating, .offer-popup-wrapper .popup-btn-wrapper .btn, .offer-popup-wrapper span { font-family: 'Poppins', sans-serif !important; } .offer-popup-wrapper .rating { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #000; font-weight: 400; justify-content: center; margin-bottom: 20px; } .offer-popup-wrapper .heading { font-size: 40px; color: #000; text-align: center; font-weight: 700; line-height: 1.275; } .popup-icon-list { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; } .popup-icon-list .popup-icon-item { display: flex; align-items: center; gap: 8px; } .popup-icon-list .popup-icon-item span { border-bottom: 1px solid; color: #000; font-weight: 500; font-size: 16px; line-height: 1.1; padding-bottom: 5px; } .popup-btn-wrapper { text-align: center; margin-top: 20px; } .popup-btn-wrapper .btn { display: inline-flex; justify-content: center; align-items: center; max-width: 256px; border: 1px solid #000; height: 53px; background-color: #fff; color: #000; text-decoration: none; font-size: 20px; font-weight: 600; text-transform: uppercase; border-radius: 50px; box-shadow: 4px 6px 0px 0px #000; margin-bottom: 6px; width: 100%; } @media (max-width:700px) { .offer-popup .offer-popup-box { padding: 30px 15px; } .offer-popup-wrapper .rating { font-size: 12px; margin-bottom: 8px; flex-wrap: wrap; } .offer-popup-wrapper .heading { font-size: 32px; } }
+</style>
+
+<div class="offer-popup">
+  <div class="offer-popup-box" style="background: {{ section.settings.bg_color }};">
+      <a href="#" class="popup-close-btn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="black"/>
+          </svg>
+      </a>
+      <div class="offer-popup-wrapper">
+          <div class="rating">
+              <div class="rating-svg">
+                  {% assign rating = section.settings.star_rating %}
+                  <div class="star-rating">
+                      {% for i in (1..5) %}
+                          {% if i <= rating %}
+                              <svg width="25" height="25" fill="#00B67A"><rect width="25" height="25"/><path d="M12.2 16.6L16.1 15.5L17.6 20.5L12.2 16.6ZM21 10.4H14.2L12.2 4.1L10.1 10.4H3.6L9.1 14.2L7 20.5L12.4 16.6L15.8 14.2L21 10.4Z" fill="white"/></svg>
+                          {% else %}
+                              <svg width="25" height="25" fill="#E0E0E0"><rect width="25" height="25"/><path d="M12.2 16.6L16.1 15.5L17.6 20.5L12.2 16.6ZM21 10.4H14.2L12.2 4.1L10.1 10.4H3.6L9.1 14.2L7 20.5L12.4 16.6L15.8 14.2L21 10.4Z" fill="white"/></svg>
+                          {% endif %}
+                      {% endfor %}
+                  </div>
+              </div>
+              <div class="svg_text">{{ section.settings.ratign_text }}</div>
+          </div>
+
+          {% if section.settings.heading != blank %}
+              <div class="heading">{{ section.settings.heading }}</div>
+          {% endif %}
+
+          <div class="popup-icon-list">
+              {% if section.settings.logo_1 != blank or section.settings.logo_txt_1 != blank %}
+              <div class="popup-icon-item">
+                  {% if section.settings.logo_1 != blank %}
+                      <img src="{{ section.settings.logo_1 | image_url }}" alt="{{ section.settings.logo_txt_1 | escape }}" loading="lazy"/>
+                  {% endif %}
+                  <span>{{ section.settings.logo_txt_1 }}</span>
+              </div>
+              {% endif %}
+
+              {% if section.settings.logo_2 != blank or section.settings.logo_txt_2 != blank %}
+              <div class="popup-icon-item">
+                  {% if section.settings.logo_2 != blank %}
+                      <img src="{{ section.settings.logo_2 | image_url }}" alt="{{ section.settings.logo_txt_2 | escape }}" loading="lazy"/>
+                  {% endif %}
+                  <span>{{ section.settings.logo_txt_2 }}</span>
+              </div>
+              {% endif %}
+
+              {% if section.settings.logo_3 != blank or section.settings.logo_txt_3 != blank %}
+              <div class="popup-icon-item">
+                  {% if section.settings.logo_3 != blank %}
+                      <img src="{{ section.settings.logo_3 | image_url }}" alt="{{ section.settings.logo_txt_3 | escape }}" loading="lazy"/>
+                  {% endif %}
+                  <span>{{ section.settings.logo_txt_3 }}</span>
+              </div>
+              {% endif %}
+          </div>
+
+          {% if section.settings.btn_txt != blank %}
+              <div class="popup-btn-wrapper">
+                  <a href="{{ section.settings.btn_url }}" class="btn">{{ section.settings.btn_txt }}</a>
+              </div>
+          {% endif %}
+      </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // ✅ Show instantly in Theme Editor
+    if (Shopify && Shopify.designMode) {
+      const popup = document.querySelector(".offer-popup");
+      if (popup) popup.classList.add("open");
+      return;
+    }
+
+    // ✅ Normal live site behavior
+    if (!sessionStorage.getItem("offerPopupShown")) {
+      setTimeout(function () {
+        const popup = document.querySelector(".offer-popup");
+        if (popup) {
+          popup.classList.add("open");
+          sessionStorage.setItem("offerPopupShown", "true");
+        }
+      }, {{ section.settings.delay_time | times: 1000 }}); // delay in ms
+    }
+
+    // Close button handler
+    document.querySelectorAll(".popup-close-btn").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        const popup = document.querySelector(".offer-popup");
+        if (popup) popup.classList.remove("open");
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Offer Popup",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Select Background Color",
+      "default": "#F7B801"
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "inline_richtext",
+      "id": "ratign_text",
+      "label": "Rating Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "number",
+      "id": "delay_time",
+      "label": "Popup Delay (seconds)",
+      "default": 3
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_1",
+      "label": "Logo 1"
+    },
+    {
+      "type": "text",
+      "id": "logo_txt_1",
+      "label": "Info Text 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_2",
+      "label": "Logo 2"
+    },
+    {
+      "type": "text",
+      "id": "logo_txt_2",
+      "label": "Info Text 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_3",
+      "label": "Logo 3"
+    },
+    {
+      "type": "text",
+      "id": "logo_txt_3",
+      "label": "Info Text 3"
+    },
+    {
+      "type": "text",
+      "id": "btn_txt",
+      "label": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button Url"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Offer Popup",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

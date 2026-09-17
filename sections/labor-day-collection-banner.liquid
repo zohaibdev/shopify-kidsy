@@ -1,0 +1,803 @@
+{% comment %}
+  ============================================================
+  Section: Labor Day Collection Banner
+  ------------------------------------------------------------
+  Figma: 02. Kidsy | Internal  →  Collection Page (12197:27245)
+    • Desktop node 12168:27031 — 1440 x 323 full-bleed band
+    • Mobile  node 12197:27246 —  375 x 521 frame, 335 x 511 card
+
+  This is the Collection Page banner and shares nothing with the
+  Home Page hero (sections/labor-day-hero.liquid): different
+  height, a flat #FFE9BD full-bleed band instead of a rounded
+  gradient card, left-aligned copy, poppy eyebrow over a
+  chocolate headline, and a different product line-up.
+
+  Desktop (>= 750px)
+    Flat cream band, 1440 x 323. Copy column (818 wide) on the
+    left, product trio (stroller / car seat / high chair) on the
+    right, gold squiggle bleeding off the left edge, white
+    squiggle at the top right.
+    NOTE: Figma's desktop node shows only the car seat; the other
+    two were added at the client's request — see the comment on
+    the product cut-outs for how their geometry was derived.
+
+  Mobile (<= 749px)
+    Rounded 335 x 511 card on #FFFBF3. Centred copy stack, then
+    three product cut-outs (stroller / car seat / high chair)
+    bottom-flush across the card.
+
+  Geometry is expressed as a ratio of the design frame so the
+  banner scales proportionally. Every `cqw` value is preceded by
+  the literal Figma px value, which older browsers fall back to.
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign s = section.settings
+  assign sec_id = 'kidsy-ld-collection-' | append: section.id
+
+  assign img_carseat = 'labor-day-collection-carseat.webp' | asset_url
+  if s.image_carseat != blank
+    assign img_carseat = s.image_carseat | image_url: width: 514
+  endif
+
+  assign img_stroller = 'labor-day-collection-stroller.webp' | asset_url
+  if s.image_stroller != blank
+    assign img_stroller = s.image_stroller | image_url: width: 448
+  endif
+
+  assign img_highchair = 'labor-day-collection-highchair.webp' | asset_url
+  if s.image_highchair != blank
+    assign img_highchair = s.image_highchair | image_url: width: 272
+  endif
+
+  # Promo-code line: [code] is swapped for the highlighted code.
+  assign code_html = ''
+  if s.code_text != blank
+    if s.promo_code != blank
+      assign code_value = s.promo_code | escape
+      assign code_span = '<button type="button" class="kldc__code-value" data-promo-code="' | append: code_value
+      assign code_span = code_span | append: '" data-copied-label="Copied!" data-select-label="Copied!" aria-label="Copy promo code ' | append: code_value
+      assign code_span = code_span | append: '">' | append: code_value | append: '</button>'
+      assign code_html = s.code_text | escape | replace: '[code]', code_span
+    else
+      assign code_html = s.code_text | escape
+    endif
+  endif
+-%}
+
+<style>
+  /* ============================================================
+     TOKENS
+     ============================================================ */
+  #{{ sec_id }} {
+    --kldc-band:      {{ s.color_band | default: '#FFE9BD' }};
+    --kldc-accent:    {{ s.color_accent | default: '#F45901' }};
+    --kldc-heading:   {{ s.color_heading | default: '#341300' }};
+    --kldc-note:      {{ s.color_note | default: '#563A2A' }};
+    --kldc-btn-text:  {{ s.color_btn_text | default: '#FFFFFF' }};
+    --kldc-squiggle:  {{ s.color_squiggle | default: '#FFBC38' }};
+
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: var(--kldc-band);
+    font-family: 'Roobert TRIAL', var(--font-body-family), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    z-index: -1;
+  }
+
+  /* The query container must be the PARENT of anything using cqw —
+     an element cannot resolve container units against itself. */
+  #{{ sec_id }} .kldc__frame {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    aspect-ratio: 1440 / 340;
+    container-type: inline-size;
+  }
+
+  #{{ sec_id }} img { display: block; max-width: 100%; }
+  #{{ sec_id }} svg { display: block; width: 100%; height: 100%; }
+
+  /* ============================================================
+     DECORATIVE ACCENTS
+     Positioned on the Figma bounding-box centre, then rotated —
+     matching the transform Figma applies to each vector.
+     ============================================================ */
+  #{{ sec_id }} .kldc__deco {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Vector 14 — gold squiggle bleeding off the left edge (rotate 58.7deg) */
+  #{{ sec_id }} .kldc__deco--gold {
+    left: -0.0340%;
+    top: 41.7471%;
+    width: 14.8517%;
+    height: 48.1021%;
+    transform: translate(-50%, -50%) rotate(58.7deg);
+  }
+
+  /* arrow-23 — white squiggle, top right (rotate -60deg) */
+  #{{ sec_id }} .kldc__deco--white {
+    left: 97.3889%;
+    top: 12.0588%;
+    width: 2.6501%;
+    height: 44.1453%;
+    transform: translate(-50%, -50%) rotate(-60deg);
+  }
+
+  /* ============================================================
+     PRODUCT CUT-OUTS
+     Each is an overflow-clipped frame with the artwork offset
+     inside it, reproducing Figma's image crop exactly.
+     ============================================================ */
+  #{{ sec_id }} .kldc__img {
+    position: absolute;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 2;
+  }
+  #{{ sec_id }} .kldc__img img {
+    position: absolute;
+    max-width: none;
+  }
+
+  /* Figma's desktop node 12168:27031 carries ONLY the car seat. The stroller
+     and high chair were added here at the client's request, reusing the Figma
+     MOBILE arrangement (12197:27246) scaled by 1.39703 so the car seat keeps
+     its exact Figma desktop size (172.2135 x 211.6541) and vertical position
+     (top 55.6745px); the trio is right-aligned to the 1340 content edge.
+     Values marked (derived) are therefore NOT measured from Figma. The image
+     crops below ARE Figma values and are shared with the mobile layout. */
+  #{{ sec_id }} .kldc__img--stroller {
+    left: 70.3655%;   /* derived */
+    top: 8.7083%;     /* derived */
+    width: 10.6080%;  /* derived */
+    height: 67.6895%; /* derived */
+    transform: scaleX(-1);
+  }
+  #{{ sec_id }} .kldc__img--stroller img {
+    left: -52.41%;
+    top: -15.38%;
+    width: 198.63%;
+    height: 131.84%;
+  }
+
+  #{{ sec_id }} .kldc__img--carseat {
+    left: 79.7748%;   /* derived */
+    top: 13.1423%;    /* derived */
+    width: 11.6171%;  /* derived */
+    height: 60.4699%; /* derived */
+  }
+  #{{ sec_id }} .kldc__img--carseat img {
+    left: -24.24%;
+    top: -11.46%;
+    width: 149.01%;
+    height: 121.24%;
+  }
+
+  #{{ sec_id }} .kldc__img--highchair {
+    left: 87.1827%;   /* derived */
+    top: 9.3389%;     /* derived */
+    width: 12.7902%;  /* derived */
+    height: 71.1759%; /* derived */
+  }
+  #{{ sec_id }} .kldc__img--highchair img {
+    left: 0;
+    top: -21.32%;
+    width: 100%;
+    height: 138.82%;
+  }
+
+  /* ============================================================
+     COPY — Figma column 818 wide, left aligned, vertically centred
+     ============================================================ */
+  #{{ sec_id }} .kldc__content {
+    position: absolute;
+    left: 3.4722%;
+    top: 6.0294%;
+    z-index: 3;
+    width: 56.8056%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 12px;
+    gap: 0.8333cqw;
+  }
+
+  #{{ sec_id }} .kldc__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 12px;
+    gap: 0.8333cqw;
+  }
+
+  #{{ sec_id }} .kldc__headings {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 8px;
+    gap: 0.5556cqw;
+  }
+
+  #{{ sec_id }} .kldc__eyebrow {
+    margin: 0;
+    width: 100%;
+    color: var(--kldc-accent);
+    font-weight: 650;
+    line-height: 1.25;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-size: 1.2500cqw;
+    letter-spacing: 0.36px;
+    letter-spacing: 0.0250cqw;
+  }
+
+  #{{ sec_id }} .kldc__title {
+    margin: 0;
+    width: 100%;
+    color: var(--kldc-heading);
+    /* Roobert TRIAL ships only Regular 400 / Medium 500 / SemiBold 600 in this
+       theme; Figma's render measures to the SemiBold face (advance width 445.01
+       at 48px), so 600 is the real weight — not a synthesised 800. */
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: capitalize;
+    overflow-wrap: break-word;
+    /* Figma uses a DROP SHADOW here, not the Home Page outline: measured in
+       Figma's render the inter-letter gaps fall back to the background (no
+       dilation) and the white only feathers ~3px down/right of each glyph. */
+    text-shadow: 1px 1px 2.9px #FFFFFF;
+    font-size: 48px;
+    font-size: 3.3333cqw;
+  }
+
+  /* V6 renders the sub-heading in sentence case, so no capitalize here. */
+  #{{ sec_id }} .kldc__sub,
+  #{{ sec_id }} .kldc__code {
+    margin: 0;
+    width: 100%;
+    color: var(--kldc-heading);
+    font-weight: 650;
+    line-height: 1.25;
+    font-size: 20px;
+    font-size: 1.3889cqw;
+  }
+  #{{ sec_id }} .kldc__code-value { color: var(--kldc-accent); }
+
+  /* The promo code is a one-click control: clicking (or Enter/Space, since it
+     is a real button) copies it and shows a short confirmation. user-select:
+     all means a single click also selects the whole code, so it can always be
+     copied by hand if the clipboard is unavailable. Reset to be visually
+     identical to the surrounding copy. */
+  #{{ sec_id }} [data-promo-code] {
+    appearance: none;
+    -webkit-appearance: none;
+    display: inline;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    text-align: inherit;
+    cursor: pointer;
+    -webkit-user-select: all;
+    user-select: all;
+  }
+  #{{ sec_id }} [data-promo-code]:hover,
+  #{{ sec_id }} [data-promo-code]:focus-visible {
+    text-decoration: underline;
+  }
+  #{{ sec_id }} [data-promo-code]::after {
+    content: attr(data-copied-label);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 6px);
+    transform: translateX(-50%);
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--kldc-heading);
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s ease;
+  }
+  #{{ sec_id }} [data-promo-code].is-copied::after { opacity: 1; }
+
+
+  /* sub-heading + promo-code line share their own gap */
+  #{{ sec_id }} .kldc__subgroup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 12px;
+    gap: 0.8333cqw;
+  }
+
+  #{{ sec_id }} .kldc__cta {
+    display: flex;
+    flex-direction: column;
+    /* Figma 12230:24394 is items-start: the fine print hangs off the button's
+       left edge, it is not centred under it. Mobile re-centres it below. */
+    align-items: flex-start;
+    width: 427px;
+    width: 29.6528cqw;
+    gap: 8px;
+    gap: 0.5556cqw;
+  }
+
+  #{{ sec_id }} .kldc__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    background: var(--kldc-accent);
+    color: var(--kldc-btn-text);
+    text-decoration: none;
+    font-weight: 650;
+    line-height: 1.25;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease;
+    padding: 17px 20px;
+    padding: 1.1806cqw 1.3889cqw;
+    border-radius: 6px;
+    border-radius: 0.4167cqw;
+    font-size: 24px;
+    font-size: 1.6667cqw;
+  }
+  #{{ sec_id }} .kldc__btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(52, 19, 0, .18);
+  }
+
+  #{{ sec_id }} .kldc__note {
+    margin: 0;
+    width: auto;
+    color: var(--kldc-note);
+    font-weight: 650;
+    line-height: 1.25;
+    text-transform: uppercase;
+    text-align: left;
+    white-space: pre;
+    font-size: 12px;
+    font-size: 0.8333cqw;
+    letter-spacing: 0.24px;
+    letter-spacing: 0.0167cqw;
+  }
+
+  /* ============================================================
+     MOBILE — dedicated layout from Figma node 12197:27246
+     375 x 521 frame with a rounded 335 x 511 card on #FFFBF3.
+     ============================================================ */
+  @media screen and (max-width: 749px) {
+    #{{ sec_id }} {
+      background: {{ s.color_section_bg | default: '#FFFBF3' }};
+      padding: {{ s.padding_top_mobile | default: 5 }}px 20px {{ s.padding_bottom_mobile | default: 5 }}px;
+    }
+
+    /* Figma mobile is 375 wide (335 card). Below that everything scales
+       down proportionally; above it the card stops growing so the banner
+       never balloons on large phones / small tablets. */
+    #{{ sec_id }} .kldc__frame {
+      max-width: 420px;
+      aspect-ratio: auto;
+      container-type: normal;
+    }
+
+    #{{ sec_id }} .kldc__card {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 335 / 511;
+      background: var(--kldc-band);
+      border-radius: 10px;
+      overflow: hidden;
+      container-type: inline-size;
+    }
+
+    /* --- decorations --- */
+    #{{ sec_id }} .kldc__deco--gold {
+      left: 59.47px;
+      left: 17.7529%;
+      top: 146.74px;
+      top: 28.7171%;
+      width: 92.48px;
+      width: 27.6060cqw;
+      height: 70.75px;
+      height: 21.1194cqw;
+      transform: translate(-50%, -50%) rotate(63.65deg);
+    }
+    /* Figma thickens the gold stroke on mobile (6 in a 94.12 viewBox) */
+    #{{ sec_id }} .kldc__deco--gold path { stroke-width: 13.633; }
+
+    #{{ sec_id }} .kldc__deco--white {
+      left: 320.9px;
+      left: 95.7910%;
+      top: 58.50px;
+      top: 11.4477%;
+      width: 38.16px;
+      width: 11.3913cqw;
+      height: 150.09px;
+      height: 44.8042cqw;
+    }
+
+    /* --- products: bottom-flush across the card (all Figma-measured) --- */
+    #{{ sec_id }} .kldc__img--stroller {
+      left: 6.2179%;
+      top: 64.7926%;
+      width: 33.6012%;
+      height: 33.1881%;
+    }
+    #{{ sec_id }} .kldc__img--carseat {
+      left: 36.0221%;
+      top: 66.9666%;
+      width: 36.7973%;
+      height: 29.6483%;
+    }
+    #{{ sec_id }} .kldc__img--highchair {
+      left: 59.4866%;
+      top: 65.1017%;
+      width: 40.5134%;
+      height: 34.8975%;
+    }
+
+    /* --- copy stack: centred, upper half of the card --- */
+    #{{ sec_id }} .kldc__content {
+      left: 50%;
+      top: 34.0%;
+      transform: translate(-50%, -50%);
+      width: 90.4478%;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+      gap: 7.1642cqw;
+    }
+    #{{ sec_id }} .kldc__copy {
+      align-items: center;
+      gap: 12px;
+      gap: 3.5821cqw;
+    }
+    #{{ sec_id }} .kldc__subgroup {
+      align-items: center;
+      gap: 12px;
+      gap: 3.5821cqw;
+    }
+    #{{ sec_id }} .kldc__headings {
+      align-items: center;
+      width: 319px;
+      width: 95.2239cqw;
+      gap: 8px;
+      gap: 2.3881cqw;
+    }
+    #{{ sec_id }} .kldc__eyebrow {
+      font-size: 12px;
+      font-size: 3.5821cqw;
+      letter-spacing: 0.24px;
+      letter-spacing: 0.0716cqw;
+    }
+    #{{ sec_id }} .kldc__title {
+      font-size: 32px;
+      font-size: 9.5522cqw;
+      line-height: 42px;
+      line-height: 12.5373cqw;
+    }
+    #{{ sec_id }} .kldc__sub,
+    #{{ sec_id }} .kldc__code {
+      font-size: 16px;
+      font-size: 4.7761cqw;
+    }
+    #{{ sec_id }} .kldc__code {
+      width: 306px;
+      width: 91.3433cqw;
+    }
+    #{{ sec_id }} .kldc__cta {
+      align-items: center;
+      width: 282px;
+      width: 84.1791cqw;
+      gap: 4px;
+      gap: 1.1940cqw;
+    }
+    #{{ sec_id }} .kldc__btn {
+      padding: 11px 20px;
+      padding: 3.2836cqw 5.9701cqw;
+      border-radius: 6px;
+      border-radius: 1.7910cqw;
+      font-size: 18px;
+      font-size: 5.3731cqw;
+      letter-spacing: 0.36px;
+      letter-spacing: 0.1075cqw;
+    }
+    #{{ sec_id }} .kldc__note {
+      width: 100%;
+      text-align: center;
+      white-space: pre-wrap;
+      font-size: 10px;
+      font-size: 2.9851cqw;
+      letter-spacing: 0.2px;
+      letter-spacing: 0.0597cqw;
+    }
+  }
+
+  /* Desktop keeps the band edge-to-edge with no outer padding */
+  @media screen and (min-width: 750px) {
+    #{{ sec_id }} {
+      padding: {{ s.padding_top | default: 0 }}px 0 {{ s.padding_bottom | default: 0 }}px;
+    }
+    #{{ sec_id }} .kldc__card { display: contents; }
+  }
+</style>
+
+<section
+  id="{{ sec_id }}"
+  class="kidsy-ld-collection-banner"
+  {% if s.title != blank %}aria-labelledby="{{ sec_id }}-title"{% endif %}>
+
+  <div class="kldc__frame">
+    <div class="kldc__card">
+
+      {%- comment -%} Decorative accents (Figma: Vector 14 / arrow-23) {%- endcomment -%}
+      {%- if s.show_decorations -%}
+        <span class="kldc__deco kldc__deco--gold" aria-hidden="true">
+          <svg viewBox="0 0 213.865 163.547" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M201.813 82.9047C210.776 119.368 218.313 183.494 176.757 148.294C124.812 104.294 51.4789 -68.0401 56.9789 40.1268C62.4789 148.294 45.3668 187.405 5.03335 107.96" stroke="var(--kldc-squiggle)" stroke-width="10.0645" stroke-linecap="round"/>
+          </svg>
+        </span>
+
+        <span class="kldc__deco kldc__deco--white" aria-hidden="true">
+          <svg viewBox="0 0 38.1611 150.094" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M23.5001 141.125C26.7265 134.223 29.9262 127.507 34.1392 121.351C34.9658 120.152 35.5525 117.7 37.339 118.5C38.9922 119.246 37.6856 121.378 37.419 122.844C35.8991 130.865 32.806 138.327 29.4729 145.709C27.1265 150.853 23.5535 151.466 19.4205 147.575C13.741 142.245 8.11474 136.888 1.79527 132.304C0.568709 131.398 -0.684463 130.306 0.435442 128.6C1.39536 127.134 2.83522 127.561 4.16844 128.147C6.80822 129.32 9.07467 131.105 11.4745 132.704C12.3277 133.264 12.9677 134.276 14.4343 134.117C12.8611 123.537 18.2472 115.062 22.8068 106.321C24.1934 103.682 25.5799 101.044 26.7265 98.2992C28.1131 94.968 27.3932 93.4489 23.8735 92.7827C19.7138 91.9565 15.4742 91.5301 11.2612 90.8906C10.3279 90.7573 9.36797 90.5441 8.46138 90.251C2.6752 88.4654 0.622051 84.8677 2.14192 79.0047C3.10184 75.2471 4.9417 71.8359 7.15484 68.7179C10.9679 63.3346 14.9409 58.058 18.8606 52.7547C20.5671 50.4361 22.1669 48.0643 23.3402 45.426C24.7 42.3613 23.9001 39.9894 21.1537 38.3105C18.8872 36.9247 16.4874 35.7787 14.1143 34.5795C11.8212 33.4069 9.58129 32.2343 7.63478 30.5021C4.19508 27.4107 2.9952 23.6264 4.4884 19.2559C6.80821 12.4868 11.0745 6.89035 15.5008 1.42714C16.1141 0.654294 17.234 -0.49165 18.1673 0.227895C19.3405 1.13399 17.9539 2.14668 17.4207 2.89288C14.3009 7.47664 11.1545 12.0338 9.048 17.2038C6.38155 23.733 7.74145 27.011 14.1409 30.0224C17.234 31.4615 20.4338 32.6874 23.3669 34.393C28.6997 37.4843 30.0063 41.775 27.5798 47.4514C25.3933 52.5948 21.7936 56.8588 18.3805 61.2293C15.3675 65.0935 12.3011 68.9311 9.76799 73.1418C8.62142 75.0606 7.52819 77.0327 6.78159 79.1113C5.28838 83.2687 6.19492 84.8677 10.5679 85.5073C14.9942 86.1469 19.4738 86.3334 23.9001 86.8664C32.5394 87.9058 35.7124 93.1291 32.726 101.257C32.406 102.163 32.0328 103.043 31.6061 103.896C29.8996 107.333 28.1664 110.745 26.4599 114.182C25.7399 115.622 25.0733 117.061 24.3267 118.473C20.5671 125.722 19.2872 133.104 23.4202 141.152L23.5001 141.125Z" fill="#FFFFFF"/>
+          </svg>
+        </span>
+      {%- endif -%}
+
+      {%- comment -%} Product cut-outs {%- endcomment -%}
+      <span class="kldc__img kldc__img--stroller" aria-hidden="true">
+        <img src="{{ img_stroller }}" alt="" width="448" height="448" loading="eager" fetchpriority="high" decoding="async">
+      </span>
+      <span class="kldc__img kldc__img--carseat" aria-hidden="true">
+        <img src="{{ img_carseat }}" alt="" width="514" height="514" loading="eager" fetchpriority="high" decoding="async">
+      </span>
+      <span class="kldc__img kldc__img--highchair" aria-hidden="true">
+        <img src="{{ img_highchair }}" alt="" width="272" height="496" loading="eager" fetchpriority="high" decoding="async">
+      </span>
+
+      {%- comment -%} Copy stack {%- endcomment -%}
+      <div class="kldc__content">
+        <div class="kldc__copy">
+          <div class="kldc__headings">
+            {%- if s.eyebrow != blank -%}
+              <p class="kldc__eyebrow">{{ s.eyebrow }}</p>
+            {%- endif -%}
+            {%- if s.title != blank -%}
+              <h2 class="kldc__title" id="{{ sec_id }}-title">{{ s.title }}</h2>
+            {%- endif -%}
+          </div>
+          <div class="kldc__subgroup">
+            {%- if s.subheading != blank -%}
+              <p class="kldc__sub">{{ s.subheading }}</p>
+            {%- endif -%}
+            {%- if code_html != blank -%}
+              <p class="kldc__code">{{ code_html }}</p>
+            {%- endif -%}
+            <script src="{{ 'promo-code.js' | asset_url }}" defer="defer"></script>
+          </div>
+        </div>
+
+        {%- if s.button_label != blank or s.note != blank -%}
+          <div class="kldc__cta">
+            {%- if s.button_label != blank -%}
+              <a class="kldc__btn" href="{{ s.button_link | default: '#' }}">{{ s.button_label }}</a>
+            {%- endif -%}
+            {%- if s.note != blank -%}
+              <p class="kldc__note">{{ s.note | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Labor Day Collection",
+  "tag": "section",
+  "class": "section-kidsy-ld-collection-banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Long Weekend Starts Now"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Headline",
+      "default": "$15 OFF + FREE SHIPPING ON ORDERS OVER $100"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Sub-heading",
+      "default": "Big savings on premium baby & kids gear"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "code_text",
+      "label": "Promo code line",
+      "default": "Use code [code] at checkout",
+      "info": "Use [code] where the code should appear. Leave blank to hide the line."
+    },
+    {
+      "type": "text",
+      "id": "promo_code",
+      "label": "Promo code",
+      "default": "KIDSYLABORDAY15"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button text",
+      "default": "Shop labor day sale"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Fine print",
+      "default": "Ends Monday At 11:59 PM CST"
+    },
+    {
+      "type": "header",
+      "content": "Product artwork"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_carseat",
+      "label": "Car seat (desktop + mobile)",
+      "info": "Transparent PNG/WebP. Defaults to the bundled artwork."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_stroller",
+      "label": "Stroller (mobile only)",
+      "info": "Transparent PNG/WebP. Defaults to the bundled artwork."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_highchair",
+      "label": "High chair (mobile only)",
+      "info": "Transparent PNG/WebP. Defaults to the bundled artwork."
+    },
+    {
+      "type": "header",
+      "content": "Decoration"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_decorations",
+      "label": "Show decorative accents",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_band",
+      "label": "Banner background",
+      "default": "#FFE9BD"
+    },
+    {
+      "type": "color",
+      "id": "color_section_bg",
+      "label": "Page background (mobile, around card)",
+      "default": "#FFFBF3"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Eyebrow & button background",
+      "default": "#F45901"
+    },
+    {
+      "type": "color",
+      "id": "color_heading",
+      "label": "Headline & sub-heading",
+      "default": "#341300"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_text",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_note",
+      "label": "Fine print",
+      "default": "#563A2A"
+    },
+    {
+      "type": "color",
+      "id": "color_squiggle",
+      "label": "Gold squiggle",
+      "default": "#FFBC38"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0, "max": 60, "step": 1, "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0, "max": 60, "step": 1, "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding (mobile)",
+      "min": 0, "max": 60, "step": 1, "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding (mobile)",
+      "min": 0, "max": 60, "step": 1, "unit": "px",
+      "default": 5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Labor Day Collection"
+    }
+  ]
+}
+{% endschema %}

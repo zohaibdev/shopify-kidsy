@@ -1,0 +1,580 @@
+{% comment %}
+============================================================
+Section: Refer & Earn Hero
+------------------------------------------------------------
+Two-column hero matching Figma design:
+• Left column (646px): gold tag, large title, description,
+two CTA buttons with arrow icons, single trust line
+• Right column (540px × 450px): rounded photo with overlay tint
+• Yellow squiggle decoration at bottom-left
+
+All text, buttons, image, tag, trust line, and squiggle are
+editable via the schema.
+============================================================
+{% endcomment %}
+<link rel="preload" href="{{ 'custom.css' | asset_url }}" as="style">
+
+{%- liquid
+assign s = section.settings
+assign sec_id = 'kidsy-refer-' | append: section.id
+-%}
+
+<style>
+#{{ sec_id }} {
+--bg:        {{ s.color_bg        | default: '#FFFBF3' }};
+--text:      {{ s.color_text      | default: '#341300' }};
+--gold:      {{ s.color_tag       | default: '#FFBC38' }};
+--accent:    {{ s.color_accent    | default: '#F45901' }};
+--soft-gold: {{ s.color_secondary | default: '#FFDFA8' }};
+}
+
+.bottom_waves,.bottom_waves svg{
+    width:100%;
+    height:auto;
+    display:block;
+        margin-bottom: -4px;
+}
+
+#{{ sec_id }} {
+position: relative;
+background: var(--bg);
+overflow: hidden;
+isolation: isolate;
+font-family: "Roobert TRIAL", sans-serif;
+color: var(--text);
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+
+#{{ sec_id }} img { display: block; max-width: 100%; }
+
+#{{ sec_id }} .kr__inner {
+padding: {{ s.padding_top | default: 40 }}px 0px {{ s.padding_bottom | default: 32 }}px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 40px;
+position: relative;
+z-index: 2;
+}
+
+/* ============================================================
+LEFT — content (646px)
+============================================================ */
+#{{ sec_id }} .kr__content {
+max-width: 646px;
+flex-shrink: 0;
+display: flex;
+flex-direction: column;
+gap: 32px;
+align-items: flex-start;
+    width: 100%;
+justify-content: center;
+}
+
+#{{ sec_id }} .kr__head {
+display: flex;
+flex-direction: column;
+gap: 32px;
+width: 100%;
+}
+
+#{{ sec_id }} .kr__heading-group {
+display: flex;
+flex-direction: column;
+gap: 12px;
+width: 100%;
+}
+
+/* Gold tag */
+#{{ sec_id }} .kr__tag {
+background: var(--gold);
+color: var(--text);
+height: 23px;
+padding: 2px 8px;
+border-radius: 6px;
+font-size: 12px;
+font-weight: 600;
+letter-spacing: 0.24px;
+text-transform: uppercase;
+display: inline-flex;
+align-items: center;
+line-height: 1;
+max-width: max-content;
+}
+
+#{{ sec_id }} .kr__title-block {
+display: flex;
+flex-direction: column;
+gap: 20px;
+width: 100%;
+}
+
+#{{ sec_id }} .kr__title {
+margin: 0;
+color: var(--text);
+font-size: 56px;
+font-weight: 700;
+line-height: 1.1;
+text-transform: capitalize;
+letter-spacing: -0.4px;
+}
+
+#{{ sec_id }} .kr__desc {
+margin: 0;
+color: var(--text);
+font-size: 16px;
+font-weight: 400;
+line-height: 1.5;
+text-transform: capitalize;
+}
+
+/* CTA row — two buttons with arrow icons */
+#{{ sec_id }} .kr__cta-row {
+display: flex;
+gap: 16px;
+flex-wrap: wrap;
+}
+
+#{{ sec_id }} .kr__btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+padding: 15px 20px;
+border-radius: 6px;
+font-size: 18px;
+font-weight: 600;
+text-decoration: none;
+text-transform: capitalize;
+border: none;
+cursor: pointer;
+line-height: 1;
+font-family: inherit;
+white-space: nowrap;
+transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+#{{ sec_id }} .kr__btn:hover {
+transform: translateY(-1px);
+box-shadow: 0 8px 20px rgba(52,19,0,.16);
+}
+#{{ sec_id }} .kr__btn--primary   { background: var(--accent);    color: #fff; }
+#{{ sec_id }} .kr__btn--secondary { background: var(--soft-gold); color: var(--text); }
+
+#{{ sec_id }} .kr__btn-icon {
+width: 24px;
+height: 24px;
+flex-shrink: 0;
+}
+
+/* Trust row — single line with icon */
+#{{ sec_id }} .kr__trust {
+display: flex;
+gap: 10px;
+align-items: center;
+color: var(--text);
+}
+#{{ sec_id }} .kr__trust-icon {
+width: 24px;
+height: 24px;
+flex-shrink: 0;
+color: var(--accent);
+}
+#{{ sec_id }} .kr__trust-text {
+margin: 0;
+font-size: 12px;
+font-weight: 600;
+text-transform: capitalize;
+line-height: 1.2;
+color: var(--text);
+}
+
+/* ============================================================
+RIGHT — photo (540px × 450px, rounded 24px)
+============================================================ */
+#{{ sec_id }} .kr__visual {
+max-width: 540px;
+flex-shrink: 0;
+border-radius: 24px;
+overflow: hidden;
+position: relative;
+background: #727272;
+    width: 100%;
+}
+#{{ sec_id }} .kr__visual img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+}
+
+/* ============================================================
+YELLOW SQUIGGLE — bottom-left decoration
+Figma: 232×142 at left:-109, top:448, rotated 15deg
+============================================================ */
+#{{ sec_id }} .kr__squiggle {
+position: absolute;
+left: 0;
+bottom: 0;
+{% comment %} width: 200px; {% endcomment %}
+{% comment %} height: auto; {% endcomment %}
+z-index: 1;
+pointer-events: none;
+transform-origin: center;
+}
+
+/* ============================================================
+RESPONSIVE
+============================================================ */
+@media (max-width: 1280px) {
+#{{ sec_id }} .kr__inner { padding: 40px 0 32px; }
+#{{ sec_id }} .kr__title { font-size: 48px; }
+{% comment %} #{{ sec_id }} .kr__visual { width: 460px; height: 400px; } {% endcomment %}
+#{{ sec_id }} .kr__content { width: auto; flex: 1 1 0; }
+}
+
+@media (max-width: 1024px) {
+#{{ sec_id }} .kr__title { font-size: 42px; }
+{% comment %} #{{ sec_id }} .kr__visual { width: 400px; height: 360px; } {% endcomment %}
+#{{ sec_id }} .kr__inner { gap: 32px; }
+}
+
+@media (max-width: 900px) {
+#{{ sec_id }} .kr__inner { padding: 48px 0 80px; }
+#{{ sec_id }} .kr__inner {
+flex-direction: column;
+align-items: stretch;
+gap: 48px;
+}
+#{{ sec_id }} .kr__content {
+width: 100%;
+max-width: 600px;
+margin: 0 auto;
+}
+#{{ sec_id }} .kr__visual {
+width: 100%;
+max-width: 600px;
+height: auto;
+aspect-ratio: 540 / 450;
+margin: 0 auto;
+}
+}
+
+@media (max-width: 768px) {
+#{{ sec_id }} .kr__inner { padding: 20px 0;gap:32px; }
+#{{ sec_id }} .page-width{
+padding: 0 16px;
+}
+#{{ sec_id }} .kr__head { gap: 12px; }
+#{{ sec_id }} .kr__heading-group { gap: 12px; }
+#{{ sec_id }} .kr__title-block { gap: 14px; }
+#{{ sec_id }} .kr__title { font-size: 28px;
+font-style: normal;
+font-weight: 650;
+line-height: normal;
+text-transform: capitalize; }
+#{{ sec_id }} .kr__desc  { 
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: capitalize;
+}
+#{{ sec_id }} .kr__content {
+gap:16px;
+}
+#{{ sec_id }} .kr__trust {
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+#{{ sec_id }} .kr__cta-row {
+flex-direction: column;
+align-items: stretch;
+gap: 12px;
+width: 100%;
+}
+#{{ sec_id }} .kr__btn {
+height: 46px;
+padding: 12px 20px;
+font-size: 16px;
+font-style: normal;
+font-weight: 650;
+line-height: 100%; /* 16px */
+text-transform: capitalize;
+}
+#{{ sec_id }} .kr__visual { border-radius: 18px; }
+ #{{ sec_id }} .kr__squiggle {
+    left: 0;
+    bottom: 221px;
+    z-index: 9;
+    pointer-events: none;
+    transform-origin: center;
+    width: 54px;
+}
+{% comment %} #{{ sec_id }} .kr__squiggle { width: 130px; left: -30px; bottom: -20px; } {% endcomment %}
+}
+</style>
+
+<div
+id="{{ sec_id }}"
+class="kidsy-refer"
+aria-labelledby="{{ sec_id }}-title">
+<div class="page-width">
+
+<div class="kr__inner">
+
+{%- comment -%} LEFT — content {%- endcomment -%}
+<div class="kr__content">
+
+<div class="kr__head">
+<div class="kr__heading-group">
+{%- if s.tag_label != blank -%}
+<span class="kr__tag">{{ s.tag_label }}</span>
+{%- endif -%}
+
+<div class="kr__title-block">
+{%- if s.title != blank -%}
+<h1 id="{{ sec_id }}-title" class="kr__title">{{ s.title }}</h1>
+{%- endif -%}
+{%- if s.description != blank -%}
+<p class="kr__desc">{{ s.description }}</p>
+{%- endif -%}
+</div>
+</div>
+
+{%- if s.primary_btn_label != blank or s.secondary_btn_label != blank -%}
+<div class="kr__cta-row">
+{%- if s.primary_btn_label != blank -%}
+<a href="{{ s.primary_btn_link | default: '#' }}" class="kr__btn kr__btn--primary">
+<span>{{ s.primary_btn_label }}</span>
+{% comment %} <svg   class="kr__btn-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+<path d="M19.0002 11.9998L4.00024 11.9998" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15 6.99988L19.2929 11.2928C19.6262 11.6261 19.7929 11.7928 19.7929 11.9999C19.7929 12.207 19.6262 12.3737 19.2929 12.707L15 16.9999" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> {% endcomment %}
+</a>
+{%- endif -%}
+
+{%- if s.secondary_btn_label != blank -%}
+<a href="{{ s.secondary_btn_link | default: '#' }}" class="kr__btn kr__btn--secondary">
+<span>{{ s.secondary_btn_label }}</span>
+{% comment %} <svg  class="kr__btn-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+<path d="M19.0002 11.9998L4.00024 11.9998" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15 6.99988L19.2929 11.2928C19.6262 11.6261 19.7929 11.7928 19.7929 11.9999C19.7929 12.207 19.6262 12.3737 19.2929 12.707L15 16.9999" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> {% endcomment %}
+
+</a>
+{%- endif -%}
+</div>
+{%- endif -%}
+</div>
+
+{%- if s.trust_text != blank -%}
+<div class="kr__trust">
+{%- if s.trust_icon != blank -%}
+<img class="kr__trust-icon" src="{{ s.trust_icon | image_url: width: 48 }}" alt="" width="24" height="24" loading="lazy">
+{%- else -%}
+<svg class="kr__trust-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="1.6"/>
+<path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="17" cy="9" r="2.8" stroke="currentColor" stroke-width="1.5"/>
+<path d="M14 20c0-2.5 2-4.5 4.5-4.5s2.5 1.5 2.5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+{%- endif -%}
+<p class="kr__trust-text">{{ s.trust_text }}</p>
+</div>
+{%- endif -%}
+
+</div>
+
+{%- comment -%} RIGHT — photo {%- endcomment -%}
+{%- if s.photo != blank -%}
+<div class="kr__visual">
+<img
+src="{{ s.photo | image_url: width: 1080 }}"
+srcset="
+{{ s.photo | image_url: width: 540 }} 540w,
+{{ s.photo | image_url: width: 800 }} 800w,
+{{ s.photo | image_url: width: 1080 }} 1080w
+"
+sizes="(max-width: 900px) 90vw, 540px"
+alt="{{ s.photo.alt | default: s.title | escape }}"
+width="540" height="450"
+loading="eager"
+fetchpriority="high">
+</div>
+{%- endif -%}
+
+</div>
+</div>
+<div class="bottom_waves">
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="102" viewBox="0 0 1440 102" fill="none">
+  <path d="M1089.73 85.607C1254.03 84.1499 1392.1 26.7143 1440 7.62939e-06L1440 102L0 102L1.43311e-06 85.6069C425.114 -5.46436 420.811 14.2023 644.857 51.9106C845.065 85.607 1015.88 89.857 1089.73 85.607Z" fill="#FFDFA8"/>
+</svg>
+</div>
+{%- comment -%} Yellow squiggle decoration {%- endcomment -%}
+{%- if s.squiggle_image != blank -%}
+<img
+class="kr__squiggle"
+src="{{ s.squiggle_image | image_url }}"
+alt="img"
+loading="lazy"
+aria-hidden="true">
+{%- endif -%}
+
+</div>
+
+{% schema %}
+{
+"name": "Refer & Earn Hero",
+"tag": "section",
+"class": "section-kidsy-refer",
+"settings": [
+{
+"type": "header",
+"content": "Tag & Heading"
+},
+{
+"type": "text",
+"id": "tag_label",
+"label": "Tag label",
+"default": "Refer & Earn"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "Give $20, Get $20 (Minimum $100 Spend)"
+},
+{
+"type": "textarea",
+"id": "description",
+"label": "Description",
+"default": "Share Kidsy with a parent friend and you both save on strollers, car seats, and baby gear from premium brands — up to 60% off retail."
+},
+
+{
+"type": "header",
+"content": "Buttons"
+},
+{
+"type": "text",
+"id": "primary_btn_label",
+"label": "Primary button text",
+"default": "Get My Referral Link"
+},
+{
+"type": "url",
+"id": "primary_btn_link",
+"label": "Primary button link"
+},
+{
+"type": "text",
+"id": "secondary_btn_label",
+"label": "Secondary button text",
+"default": "Already have a link? Log in"
+},
+{
+"type": "url",
+"id": "secondary_btn_link",
+"label": "Secondary button link"
+},
+
+{
+"type": "header",
+"content": "Trust Line"
+},
+{
+"type": "text",
+"id": "trust_text",
+"label": "Trust text",
+"default": "100,000+ parents already shopping smarter"
+},
+{
+"type": "image_picker",
+"id": "trust_icon",
+"label": "Trust icon (optional)",
+"info": "Defaults to a built-in users icon"
+},
+
+{
+"type": "header",
+"content": "Images"
+},
+{
+"type": "image_picker",
+"id": "photo",
+"label": "Hero photo",
+"info": "Right-side photo, ideally 1080×900 or 540×450 ratio"
+},
+{
+"type": "image_picker",
+"id": "squiggle_image",
+"label": "Yellow squiggle decoration",
+"info": "Bottom-left decorative shape"
+},
+
+{
+"type": "header",
+"content": "Spacing"
+},
+{
+"type": "range",
+"id": "padding_top",
+"label": "Top padding",
+"min": 0, "max": 120, "step": 4, "unit": "px",
+"default": 40
+},
+{
+"type": "range",
+"id": "padding_bottom",
+"label": "Bottom padding",
+"min": 0, "max": 120, "step": 4, "unit": "px",
+"default": 32
+},
+
+{
+"type": "header",
+"content": "Colors"
+},
+{
+"type": "color",
+"id": "color_bg",
+"label": "Section background",
+"default": "#FFFBF3"
+},
+{
+"type": "color",
+"id": "color_text",
+"label": "Text",
+"default": "#341300"
+},
+{
+"type": "color",
+"id": "color_tag",
+"label": "Tag color",
+"default": "#FFBC38"
+},
+{
+"type": "color",
+"id": "color_accent",
+"label": "Primary button & icon",
+"default": "#F45901"
+},
+{
+"type": "color",
+"id": "color_secondary",
+"label": "Secondary button",
+"default": "#FFDFA8"
+}
+],
+"presets": [
+{
+"name": "Refer & Earn Hero"
+}
+]
+}
+{% endschema %}

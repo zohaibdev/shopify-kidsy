@@ -1,0 +1,318 @@
+
+{% comment %}{{ 'component-slider.css' | asset_url | stylesheet_tag }}{% endcomment %}
+<link rel="preload" href="{{ 'component-slider.css' | asset_url }}" as="style">
+<link rel="stylesheet" href="{{ 'component-slider.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'component-slider.css' | asset_url }}"></noscript>
+
+{%- style -%}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } @media screen and (min-width: 750px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } }
+{%- endstyle -%}
+  
+
+<div class="color-{{ section.settings.section_color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="block__collections-slider-inner">
+      <div class="block_collections-slider-top">
+        <div class="block__collection-slider-title-button">
+          {% if section.settings.title != blank %}
+            {% if section.settings.heading_link != blank %}
+              <a href="{{ section.settings.heading_link }}" class="section--title h3" title="{{ section.settings.title | escape }}">
+                {{ section.settings.title | escape }}
+              </a>
+            {% else %}
+              <h3 class="section--title h3">
+                {{ section.settings.title | escape }}
+              </h3>
+            {% endif %}
+          {% endif %}
+          <div class="block__collection-slider-button">
+            <div class="block__collection-slider-navigation-prev swiper-button-prev">{{ 'left-arrow.svg' |
+              inline_asset_content }}</div>
+            <div class="block__collection-slider-navigation-next swiper-button-next">{{ 'right-arrow.svg' |
+                inline_asset_content }}</div>
+          </div>
+          
+        </div>
+        <div class="block__collections-slider-slides swiper-class swiper">
+          <div class="block__collections-slider-slides-wrapper swiper-wrapper">
+            {% for block in section.blocks %}
+              {%- case block.type -%}
+              {%- when 'slider_item' -%}
+              <div class="block__collections-slider-slide swiper-slide">
+                <a href="{{ block.settings.button_link }}" class="block__collections-slider-slide-link">
+                  <div class="block__collections-slider-slide-image">
+                    {% if block.settings.image != blank %}
+                      {% render 'custom-image', image: block.settings.image, alt: block.settings.image.alt, class: 'block__collections-slider-slide-image-img' %}
+                    {% endif %}
+                    <div class="block__collection-slider-title-button-image">
+                      {% if block.settings.title != blank %}
+                        <h4 class="h4">{{ block.settings.title }}</h4>
+                      {% endif %}
+                      {% if block.settings.button_label != blank %}
+                        <a href="{{ block.settings.button_link }}" class="block__collections-slider-slide-button button">{{ block.settings.button_label }}</a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </a>
+              </div>
+              {%- endcase -%}
+            {% endfor %}
+            </div>
+        </div>
+        <div class="swiper-navigation">
+          <div class="collection-slider-pagination-{{ section.id }} swiper-pagination"></div>
+        </div>
+      </div>
+      <div class="block__collections-card-bottom">
+        <div class="block__collections-card-slides">
+          {% for block in section.blocks %}
+            {%- case block.type -%}
+              {%- when 'card_item' -%}
+              <div class="block__collections-card-slide">
+                <div class="block__collections-card-slide-content">
+                  <div class="block__collections-card-slide-content-image">
+                    {% if block.settings.image_icon != blank %}
+                      {% render 'custom-image', image: block.settings.image_icon, alt: block.settings.image_icon.alt, class: 'block__collections-card-slide-image-icon' %}
+                    {% endif %}
+                  </div>
+                  <div class="block__collections-card-slide-content-text">
+                    {% if block.settings.title != blank %}
+                      <h3 class="h3">{{ block.settings.title }}</h3>
+                    {% endif %}
+                    {% if block.settings.text != blank %}
+                      {{ block.settings.text }}
+                    {% endif %}
+                  </div>
+                </div>
+                {% if block.settings.text != blank %}
+                  <div class="block__collections-card-slide-content-info-mobile">
+                    {{ block.settings.text }}
+                  </div>
+                {% endif %}
+              </div>
+            {%- endcase -%}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+ document.addEventListener('DOMContentLoaded', function () {
+  let slider = new Swiper(".section-{{ section.id }}-padding .block__collections-slider-slides", {
+    loop: true,
+    freemode: true,
+    slidesPerView: {{ section.settings.card_slides_per_view_mobile }},
+    slidesPerGroup: 2,
+    spaceBetween: {{ section.settings.card_space_between_mobile }},
+    pagination: {
+      el: ".collection-slider-pagination-{{ section.id }}",
+      clickable: true
+    },
+    navigation: {
+      nextEl: ".block__collection-slider-navigation-next",
+      prevEl: ".block__collection-slider-navigation-prev"
+    },
+    breakpoints: {
+      750: {
+        slidesPerView: {{ section.settings.slider_slides_per_view | minus: 2 }},
+        spaceBetween: {{ section.settings.slider_space_between }},
+        pagination: false
+      },
+      1200: {
+        slidesPerView: {{ section.settings.slider_slides_per_view }}
+      }
+    }
+  });
+
+  const slides = document.querySelectorAll(".section-{{ section.id }}-padding .block__collections-card-slide");
+  const intervalTime = 5000;
+  let index = 0;
+  function showSlides() {
+    slides.forEach(s => s.classList.remove("active"));
+
+    const nextSlides = [
+      slides[index % slides.length],
+      slides[(index + 1) % slides.length]
+    ];
+
+    nextSlides.forEach(slide => slide.classList.add("active"));
+    index = (index + 2) % slides.length;
+  }
+
+  function isMobile() {
+    return window.innerWidth <= 991;
+  }
+
+  if (isMobile()) {
+    showSlides();
+    setInterval(showSlides, intervalTime);
+  }
+
+});
+</script>
+
+{% schema %}
+{
+  "name": "Collections Slider",
+  "tag": "section",
+  "class": "block__collections-slider--main",
+  "settings": [
+    {
+    "type": "color_scheme",
+    "id": "section_color_scheme",
+    "label": "t:sections.all.colors.label",
+    "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "url",
+      "id": "heading_link",
+      "label": "Heading link URL"
+    },
+    {
+      "type": "number",
+      "id": "slider_slides_per_view",
+      "label": "Slider Slides Per View",
+      "default": 4
+    },
+    {
+      "type": "number",
+      "id": "slider_space_between",
+      "label": "Slider Space Between",
+      "default": 10
+    },
+    {
+      "type": "number",
+      "id": "card_slides_per_view",
+      "label": "Card Slides Per View",
+      "default": 4
+    },
+    {
+      "type": "number",
+      "id": "card_space_between",
+      "label": "Card Space Between",
+      "default": 10
+    },
+     {
+      "type": "header",
+      "content": "Mobile Slides Per View"
+    },
+    {
+      "type": "number",
+      "id": "card_slides_per_view_mobile",
+      "label": "Card Slides Per View On Mobile",
+      "default": 4
+    },
+    {
+      "type": "number",
+      "id": "card_space_between_mobile",
+      "label": "Card Space Between Mobile",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Section Padding - Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Padding - Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 40
+    }
+  ],
+  "blocks": [
+      {
+        "type": "slider_item",
+        "name": "Slider Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button Label"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+          }
+        ]
+      },
+      {
+        "type": "card_item",
+        "name": "Card Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image_icon",
+            "label": "Image Icon"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collections Slider"
+      }
+    ]
+}
+{% endschema %}

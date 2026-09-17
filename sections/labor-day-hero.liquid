@@ -1,0 +1,823 @@
+{% comment %}
+  ============================================================
+  Section: Labor Day Hero Banner
+  ------------------------------------------------------------
+  Figma: 02. Kidsy | Internal  →  Hero Banner (V3)
+    • Desktop node 12145:9698  — 1440 x 505 frame, 1340 x 500 card
+    • Mobile  reference        —  375 x 528 frame,  335 x 518 card
+
+  Desktop (>= 750px)
+    Rounded card (12px) with a #FFDFA8 → transparent vertical
+    gradient over white. Centred copy stack (eyebrow / headline /
+    sub-heading / CTA / fine print) with a product collage bleeding
+    in from both sides and four decorative accents.
+
+  Mobile (<= 749px)
+    Dedicated layout from the mobile Figma frame: flat #FFE9BD card,
+    copy stack at the top, the two product collages sitting side by
+    side, bottom-flush against the card.
+
+  All geometry is expressed as a ratio of the card so the banner
+  scales proportionally between breakpoints. Every `cqw` value is
+  preceded by the literal Figma px value, which older browsers use
+  as the fallback.
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign s = section.settings
+  assign sec_id = 'kidsy-labor-day-' | append: section.id
+
+  assign collage_left = 'labor-day-hero-collage-left.webp' | asset_url
+  if s.collage_left_image != blank
+    assign collage_left = s.collage_left_image | image_url: width: 712
+  endif
+
+  assign collage_right = 'labor-day-hero-collage-right.webp' | asset_url
+  if s.collage_right_image != blank
+    assign collage_right = s.collage_right_image | image_url: width: 665
+  endif
+
+  # Promo-code line: [code] in the copy is swapped for the highlighted code.
+  assign code_html = ''
+  if s.code_text != blank
+    if s.promo_code != blank
+      assign code_value = s.promo_code | escape
+      assign code_span = '<button type="button" class="kld__code-value" data-promo-code="' | append: code_value
+      assign code_span = code_span | append: '" data-copied-label="Copied!" data-select-label="Copied!" aria-label="Copy promo code ' | append: code_value
+      assign code_span = code_span | append: '">' | append: code_value | append: '</button>'
+      assign code_html = s.code_text | escape | replace: '[code]', code_span
+    else
+      assign code_html = s.code_text | escape
+    endif
+  endif
+-%}
+
+<style>
+  /* ============================================================
+     TOKENS — reuse the theme palette, add the three Figma shades
+     that the theme does not define (Gold 30% / Gold 10% / Chocolate 50%)
+     ============================================================ */
+  #{{ sec_id }} {
+    --kld-poppy:        {{ s.color_accent | default: '#F45901' }};
+    --kld-chocolate:    {{ s.color_text | default: '#341300' }};
+    --kld-chocolate-50: {{ s.color_note | default: '#563A2A' }};
+    --kld-gradient-top: {{ s.color_card_gradient | default: '#FFDFA8' }};
+    --kld-gold-30:      {{ s.color_card_mobile | default: '#FFE9BD' }};
+    --kld-gold-10:      #FFF2D7;
+    --kld-btn-text:     {{ s.color_btn_text | default: '#FFFFFF' }};
+
+    display: block;
+    background: {{ s.color_section_bg | default: '#FFFBF3' }};
+    font-family: 'Roobert TRIAL', var(--font-body-family), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ============================================================
+     CARD
+     Desktop : 1340 x 500, radius 12, gradient over white
+     ============================================================ */
+  /* The query container has to be the card's PARENT: an element cannot
+     resolve container units against itself. .kld__frame is the same width
+     as the card, so every cqw below is a ratio of the card. */
+  #{{ sec_id }} .kld__frame {
+    max-width: 1340px;
+    margin: 0 auto;
+    container-type: inline-size;
+  }
+
+  #{{ sec_id }} .kld__card {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+      linear-gradient(180deg, var(--kld-gradient-top) 0%, rgba(255, 223, 168, 0) 100%),
+      #FFFFFF;
+  }
+
+  #{{ sec_id }} img,
+  #{{ sec_id }} svg { display: block; max-width: 100%; }
+
+  /* ============================================================
+     DECORATIVE ACCENTS
+     Each wrapper is centred on the Figma bounding-box centre and
+     carries the artwork at its intrinsic size, then rotates —
+     exactly how the shapes are transformed in Figma.
+     ============================================================ */
+  #{{ sec_id }} .kld__deco {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    z-index: 1;
+  }
+  #{{ sec_id }} .kld__deco svg { width: 100%; height: 100%; }
+
+  /* Vector 14 — gold squiggle, top left (rotated 75deg) */
+  #{{ sec_id }} .kld__deco--squiggle-gold {
+    left: 17.1640%;
+    top: 14.6165%;
+    width: 15.9601%;
+    height: 32.7094%;
+    transform: translate(-50%, -50%) rotate(75deg);
+  }
+
+  /* arrow-23 — white squiggle, top right (rotated -60deg) */
+  #{{ sec_id }} .kld__deco--squiggle-white {
+    left: 78.0091%;
+    top: 28.1200%;
+    width: 5.8180%;
+    height: 61.3268%;
+    transform: translate(-50%, -50%) rotate(-60deg);
+  }
+
+  /* Ellipse 810 — Gold 10% pool under the right-hand collage */
+  #{{ sec_id }} .kld__deco--pool {
+    left: 72.0191%;
+    top: 75.6%;
+    width: 26.5616%;
+    height: 19.5009%;
+    border-radius: 50%;
+    background: var(--kld-gold-10);
+  }
+
+  /* Vector 148 — soft blurred shadow bleeding off the right edge */
+  #{{ sec_id }} .kld__deco--shadow {
+    left: 110.4087%;
+    top: 83.0198%;
+    width: 25.6745%;
+    height: 15.3669%;
+    transform: translate(-50%, -50%) scaleX(-1);
+  }
+
+  /* Vector — small white sparkle, bottom left */
+  #{{ sec_id }} .kld__deco--sparkle {
+    left: 1.5672%;
+    top: 92.4%;
+    width: 1.0499%;
+    height: 2.6099%;
+  }
+
+  /* ============================================================
+     PRODUCT COLLAGE
+     Desktop: the wrapper spans the card so each collage can be
+     placed with the Figma ratios.
+     ============================================================ */
+  #{{ sec_id }} .kld__collage {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+  #{{ sec_id }} .kld__collage-item {
+    position: absolute;
+    display: block;
+  }
+  #{{ sec_id }} .kld__collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  #{{ sec_id }} .kld__collage-item--left {
+    left: 1.2429%;
+    top: 14.6371%;
+    width: 26.5616%;
+    height: 84.6729%;
+  }
+  #{{ sec_id }} .kld__collage-item--right {
+    left: 73.9481%;
+    top: 8.6217%;
+    width: 24.8077%;
+    height: 89.6594%;
+  }
+
+  /* ============================================================
+     COPY — Figma frame 725.3115 wide, optically centred in the card
+     ============================================================ */
+  #{{ sec_id }} .kld__content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 725px;
+    width: 54.1277cqw;
+    gap: 32px;
+    gap: 2.3881cqw;
+  }
+
+  #{{ sec_id }} .kld__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+    gap: 1.1940cqw;
+  }
+
+  #{{ sec_id }} .kld__headings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+    gap: 0.5970cqw;
+  }
+
+  #{{ sec_id }} .kld__eyebrow {
+    margin: 0;
+    width: 100%;
+    color: var(--kld-chocolate);
+    font-weight: 650;
+    line-height: 1.25;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-size: 1.3433cqw;
+    letter-spacing: 0.36px;
+    letter-spacing: 0.0269cqw;
+  }
+
+  #{{ sec_id }} .kld__title {
+    margin: 0;
+    width: 100%;
+    color: var(--kld-poppy);
+    /* Roobert TRIAL ships only Regular 400 / Medium 500 / SemiBold 600 in this
+       theme; Figma's render measures to the SemiBold face (advance width 648.55
+       at 62px), so 600 is the real weight — not a synthesised 700. */
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: capitalize;
+    overflow-wrap: break-word;
+    /* Figma applies a white OUTLINE (a drop shadow whose *spread* dilates the
+       glyphs — the generated code dropped the spread and kept only the blur).
+       Measured in Figma's own render: 17px inter-letter gaps are uniformly
+       white, with ~6px of solid white outside the glyph at 62px and ~3-4px at
+       32px (~0.10em). paint-order draws the stroke behind the fill so the
+       letterforms keep their full weight; the shadow adds the soft edge. */
+    paint-order: stroke fill;
+    -webkit-text-stroke: 0.23em #FFFFFF;
+    text-shadow: 0.631px 0.631px 1.83px #FFFFFF;
+    font-size: 62px;
+    font-size: 4.6269cqw;
+  }
+
+  /* V5 renders the sub-heading in sentence case, so no capitalize here. */
+  #{{ sec_id }} .kld__sub {
+    margin: 0;
+    width: 100%;
+    color: var(--kld-chocolate);
+    font-weight: 650;
+    line-height: 1.25;
+    font-size: 24px;
+    font-size: 1.7910cqw;
+  }
+
+  /* Promo-code line — same size and rhythm as the sub-heading, code in poppy */
+  #{{ sec_id }} .kld__code {
+    margin: 0;
+    width: 100%;
+    color: var(--kld-chocolate);
+    font-weight: 650;
+    line-height: 1.25;
+    font-size: 24px;
+    font-size: 1.7910cqw;
+  }
+  #{{ sec_id }} .kld__code-value { color: var(--kld-poppy); }
+
+  /* The promo code is a one-click control: clicking (or Enter/Space, since it
+     is a real button) copies it and shows a short confirmation. user-select:
+     all means a single click also selects the whole code, so it can always be
+     copied by hand if the clipboard is unavailable. Reset to be visually
+     identical to the surrounding copy. */
+  #{{ sec_id }} [data-promo-code] {
+    appearance: none;
+    -webkit-appearance: none;
+    display: inline;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    text-align: inherit;
+    cursor: pointer;
+    -webkit-user-select: all;
+    user-select: all;
+  }
+  #{{ sec_id }} [data-promo-code]:hover,
+  #{{ sec_id }} [data-promo-code]:focus-visible {
+    text-decoration: underline;
+  }
+  #{{ sec_id }} [data-promo-code]::after {
+    content: attr(data-copied-label);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 6px);
+    transform: translateX(-50%);
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--kld-chocolate);
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s ease;
+  }
+  #{{ sec_id }} [data-promo-code].is-copied::after { opacity: 1; }
+
+
+  #{{ sec_id }} .kld__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    gap: 0.8955cqw;
+  }
+
+  #{{ sec_id }} .kld__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background: var(--kld-poppy);
+    color: var(--kld-btn-text);
+    text-decoration: none;
+    font-weight: 650;
+    line-height: 1.25;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease;
+    width: 342px;
+    width: 25.5224cqw;
+    padding: 17px 20px;
+    padding: 1.2687cqw 1.4925cqw;
+    border-radius: 6px;
+    border-radius: 0.4478cqw;
+    font-size: 24px;
+    font-size: 1.7910cqw;
+  }
+  #{{ sec_id }} .kld__btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(52, 19, 0, .18);
+  }
+
+  #{{ sec_id }} .kld__note {
+    margin: 0;
+    color: var(--kld-chocolate-50);
+    font-weight: 650;
+    line-height: 1.25;
+    text-transform: uppercase;
+    width: 342px;
+    width: 25.5224cqw;
+    font-size: 12px;
+    font-size: 0.8955cqw;
+    letter-spacing: 0.24px;
+    letter-spacing: 0.0179cqw;
+  }
+
+  /* ============================================================
+     DESKTOP FRAME PADDING — Figma 1440 x 505 around a 1340 card
+     ============================================================ */
+  @media screen and (min-width: 750px) {
+    #{{ sec_id }} {
+      padding: {{ s.padding_top | default: 0 }}px 50px {{ s.padding_bottom | default: 5 }}px;
+    }
+    #{{ sec_id }} .kld__card { aspect-ratio: 1340 / 500; }
+  }
+
+  /* ============================================================
+     MOBILE — dedicated layout from the mobile Figma frame
+     Card 335 x 518 inside a 375 x 528 frame (20px gutters, 5px top/bottom).
+     Copy stacks at the top, collages sit bottom-flush side by side.
+     ============================================================ */
+  @media screen and (max-width: 749px) {
+    #{{ sec_id }} {
+      padding: {{ s.padding_top_mobile | default: 5 }}px 20px {{ s.padding_bottom_mobile | default: 5 }}px;
+    }
+
+    /* Figma mobile is 375 wide (335 card). Below that everything scales
+       down proportionally; above it the card stops growing so the banner
+       never balloons on large phones / small tablets. */
+    #{{ sec_id }} .kld__frame { max-width: 420px; }
+
+    #{{ sec_id }} .kld__card {
+      background: var(--kld-gold-30);
+      padding-top: 24px;
+      padding-top: 7.1642cqw;
+    }
+
+    /* --- decorations: repositioned for the mobile frame --- */
+    #{{ sec_id }} .kld__deco--squiggle-gold {
+      left: -12.53px;
+      left: -3.7403cqw;
+      top: 154px;
+      top: 45.9701cqw;
+      width: 77.72px;
+      width: 23.2000cqw;
+      height: 59.44px;
+      height: 17.7433cqw;
+    }
+    #{{ sec_id }} .kld__deco--squiggle-white {
+      left: 335.5px;
+      left: 100.1493cqw;
+      top: 2.5px;
+      top: 0.7463cqw;
+      width: 35.08px;
+      width: 10.4716cqw;
+      height: 138px;
+      height: 41.1940cqw;
+    }
+    #{{ sec_id }} .kld__deco--pool {
+      left: 171px;
+      left: 51.0448cqw;
+      top: auto;
+      bottom: 3px;
+      bottom: 0.8955cqw;
+      width: 164.2px;
+      width: 49.0149cqw;
+      height: 45px;
+      height: 13.4328cqw;
+      z-index: -1;
+    }
+    #{{ sec_id }} .kld__deco--shadow,
+    #{{ sec_id }} .kld__deco--sparkle { display: none; }
+
+    /* --- copy stack: in flow, at the top of the card --- */
+    #{{ sec_id }} .kld__content {
+      position: static;
+      transform: none;
+      width: 100%;
+      /* 14px gutters -> a 307px column. Figma's widest mobile line is the
+         promo-code line, which needs 305.27px, so a narrower column wraps it;
+         the headline still breaks into 3 lines because "SHIPPING ON ORDERS"
+         needs 334.73px and "ORDERS OVER $100" only 296.67px. */
+      padding: 0 14px;
+      padding: 0 4.1791cqw;
+      box-sizing: border-box;
+      gap: 24px;
+      gap: 7.1642cqw;
+    }
+    #{{ sec_id }} .kld__copy {
+      gap: 12px;
+      gap: 3.5821cqw;
+    }
+    #{{ sec_id }} .kld__headings {
+      gap: 8px;
+      gap: 2.3881cqw;
+    }
+    #{{ sec_id }} .kld__eyebrow {
+      font-size: 16px;
+      font-size: 4.7761cqw;
+      letter-spacing: 0.32px;
+      letter-spacing: 0.0955cqw;
+    }
+    #{{ sec_id }} .kld__title {
+      font-size: 32px;
+      font-size: 9.5522cqw;
+    }
+    #{{ sec_id }} .kld__sub,
+    #{{ sec_id }} .kld__code {
+      font-size: 16px;
+      font-size: 4.7761cqw;
+    }
+    #{{ sec_id }} .kld__cta {
+      gap: 12px;
+      gap: 3.5821cqw;
+    }
+    #{{ sec_id }} .kld__btn {
+      width: 281px;
+      width: 83.8806cqw;
+      padding: 11.25px 20px;
+      padding: 3.3582cqw 5.9701cqw;
+      border-radius: 6px;
+      border-radius: 1.7910cqw;
+      font-size: 18px;
+      font-size: 5.3731cqw;
+    }
+    #{{ sec_id }} .kld__note {
+      width: 100%;
+      font-size: 10px;
+      font-size: 2.9851cqw;
+      letter-spacing: 0.2px;
+      letter-spacing: 0.0597cqw;
+    }
+
+    /* --- collage: side by side, bottom-flush --- */
+    #{{ sec_id }} .kld__collage {
+      position: static;
+      inset: auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: 12px;
+      margin-top: 3.5821cqw;
+      padding-left: 7.5px;
+      padding-left: 2.2388cqw;
+      padding-right: 9.1px;
+      padding-right: 2.7164cqw;
+    }
+    #{{ sec_id }} .kld__collage-item {
+      position: static;
+      inset: auto;
+      height: auto;
+    }
+    #{{ sec_id }} .kld__collage-item--left {
+      width: 163px;
+      width: 48.6567cqw;
+      aspect-ratio: 355.9253 / 423.3643;
+    }
+    #{{ sec_id }} .kld__collage-item--right {
+      width: 148.5px;
+      width: 44.3284cqw;
+      aspect-ratio: 332.4234 / 448.2968;
+    }
+  }
+</style>
+
+<section
+  id="{{ sec_id }}"
+  class="kidsy-labor-day-hero"
+  {% if s.title != blank %}aria-labelledby="{{ sec_id }}-title"{% endif %}>
+
+  <div class="kld__frame">
+  <div class="kld__card">
+
+    {%- comment -%} Decorative accents (Figma: Vector 14 / arrow-23 / Ellipse 810 / Vector 148 / Vector) {%- endcomment -%}
+    {%- if s.show_decorations -%}
+      <span class="kld__deco kld__deco--squiggle-gold" aria-hidden="true">
+        <svg viewBox="0 0 213.865 163.547" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M201.813 82.9047C210.776 119.368 218.313 183.494 176.757 148.294C124.812 104.294 51.4789 -68.0401 56.9789 40.1268C62.4789 148.294 45.3668 187.405 5.03335 107.96" stroke="{{ s.color_squiggle | default: '#FFBC38' }}" stroke-width="10.0645" stroke-linecap="round"/>
+        </svg>
+      </span>
+
+      <span class="kld__deco kld__deco--squiggle-white" aria-hidden="true">
+        <svg viewBox="0 0 77.9614 306.634" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M48.0097 288.313C54.6011 274.212 61.138 260.492 69.7449 247.915C71.4336 245.465 72.6321 240.456 76.2818 242.09C79.6592 243.614 76.99 247.97 76.4453 250.964C73.3402 267.352 67.0212 282.596 60.2119 297.677C55.4182 308.185 48.1187 309.437 39.6752 301.488C28.0722 290.6 16.578 279.656 3.66766 270.292C1.16185 268.441 -1.39833 266.208 0.889589 262.724C2.85066 259.73 5.79223 260.601 8.51594 261.798C13.9089 264.194 18.5391 267.842 23.4418 271.108C25.185 272.252 26.4925 274.321 29.4885 273.994C26.2746 252.38 37.2783 235.066 46.5933 217.209C49.426 211.819 52.2587 206.429 54.6011 200.821C57.4337 194.015 55.963 190.912 48.7724 189.551C40.2745 187.863 31.613 186.992 23.0061 185.685C21.0995 185.413 19.1383 184.977 17.2862 184.379C5.46531 180.731 1.27082 173.381 4.37585 161.403C6.33692 153.726 10.0957 146.758 14.617 140.388C22.4068 129.39 30.5236 118.61 38.5313 107.775C42.0176 103.039 45.286 98.1932 47.6829 92.8032C50.4611 86.5421 48.8268 81.6966 43.216 78.2666C38.5857 75.4355 33.6831 73.0943 28.8349 70.6444C24.1501 68.2488 19.5741 65.8533 15.5975 62.3144C8.57035 55.9988 6.11905 48.2677 9.16961 39.3389C13.9089 25.51 22.6248 14.0767 31.6675 2.91558C32.9204 1.33669 35.2083 -1.00442 37.1149 0.465578C39.5118 2.31669 36.6791 4.38557 35.5896 5.91001C29.2161 15.2744 22.7881 24.5844 18.4846 35.1466C13.0372 48.4855 15.8154 55.1822 28.8892 61.3344C35.2082 64.2744 41.7453 66.7788 47.7374 70.2632C58.6323 76.5788 61.3014 85.3443 56.3443 96.941C51.8774 107.449 44.5233 116.16 37.5506 125.089C31.395 132.983 25.1306 140.823 19.9556 149.425C17.6132 153.345 15.3797 157.374 13.8545 161.621C10.8039 170.114 12.6559 173.381 21.5897 174.688C30.6324 175.994 39.7841 176.375 48.8268 177.464C66.4764 179.587 72.9589 190.259 66.8577 206.864C66.2041 208.715 65.4415 210.512 64.5699 212.254C61.0836 219.277 57.5426 226.246 54.0563 233.27C52.5855 236.21 51.2237 239.15 49.6984 242.035C42.0176 256.844 39.4028 271.925 47.8463 288.367L48.0097 288.313Z" fill="#FFFFFF"/>
+        </svg>
+      </span>
+
+      <span class="kld__deco kld__deco--pool" aria-hidden="true"></span>
+
+      <span class="kld__deco kld__deco--shadow" aria-hidden="true">
+        <svg viewBox="0 0 344.038 76.8344" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <g opacity="0.15" filter="url(#{{ sec_id }}-blur)">
+            <path d="M246.01 24.9776L328.65 43.121L339.22 60.5924C319.041 63.2804 274.069 68.6562 255.62 68.6562C232.557 68.6562 226.792 72.0161 209.495 72.0161C192.199 72.0161 195.081 70.0001 181.628 68.6562C168.175 67.3122 161.449 67.9842 138.387 60.5924C119.937 54.679 90.9812 51.4088 78.8095 50.5128L41.3334 45.137L45.1771 36.4013L27.8805 39.7611L4.81831 29.6815L23.0759 24.9776L34.607 18.2579L65.3565 13.554C82.9735 10.6421 119.36 4.81831 123.973 4.81831H172.98L215.261 8.85017H255.62H290.213L296.939 18.2579L246.01 24.9776Z" fill="#493D28" fill-opacity="0.6"/>
+          </g>
+          <defs>
+            <filter id="{{ sec_id }}-blur" x="0" y="0" width="344.038" height="76.8344" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+              <feGaussianBlur stdDeviation="2.40915" result="effect1_foregroundBlur"/>
+            </filter>
+          </defs>
+        </svg>
+      </span>
+
+      <span class="kld__deco kld__deco--sparkle" aria-hidden="true">
+        <svg viewBox="0 0 14.0696 13.0496" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M7.06789 0C7.45993 0.711106 8.35938 3.94291 8.66975 4.89964C10.4439 4.91082 12.3271 4.93752 14.0696 4.63336C12.5754 5.73138 11.065 6.80736 9.53891 7.86113C10.093 9.04268 10.7942 11.5593 11.4049 13.0496C9.91046 11.8033 8.66897 10.8888 7.06106 9.80378C5.61773 10.6635 3.98064 11.9691 2.67922 13.0415C3.34173 11.4359 3.9499 9.48565 4.50574 7.81905C3.08167 6.94958 1.37175 5.61944 0 4.60883C1.90819 4.92215 3.4911 4.87092 5.41714 4.89653C5.74102 3.85348 6.61375 0.811406 7.06789 0Z" fill="#FFFFFF"/>
+        </svg>
+      </span>
+    {%- endif -%}
+
+    {%- comment -%} Copy stack {%- endcomment -%}
+    <div class="kld__content">
+      <div class="kld__copy">
+        <div class="kld__headings">
+          {%- if s.eyebrow != blank -%}
+            <p class="kld__eyebrow">{{ s.eyebrow }}</p>
+          {%- endif -%}
+          {%- if s.title != blank -%}
+            <h2 class="kld__title" id="{{ sec_id }}-title">{{ s.title }}</h2>
+          {%- endif -%}
+        </div>
+        {%- if s.subheading != blank -%}
+          <p class="kld__sub">{{ s.subheading }}</p>
+        {%- endif -%}
+        {%- if code_html != blank -%}
+          <p class="kld__code">{{ code_html }}</p>
+        {%- endif -%}
+        <script src="{{ 'promo-code.js' | asset_url }}" defer="defer"></script>
+      </div>
+
+      {%- if s.button_label != blank or s.note != blank -%}
+        <div class="kld__cta">
+          {%- if s.button_label != blank -%}
+            <a class="kld__btn" href="{{ s.button_link | default: '#' }}">{{ s.button_label }}</a>
+          {%- endif -%}
+          {%- if s.note != blank -%}
+            <p class="kld__note">{{ s.note | newline_to_br }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Product collage {%- endcomment -%}
+    <div class="kld__collage" aria-hidden="true">
+      <span class="kld__collage-item kld__collage-item--left">
+        <img src="{{ collage_left }}" alt="" width="712" height="847" loading="eager" fetchpriority="high" decoding="async">
+      </span>
+      <span class="kld__collage-item kld__collage-item--right">
+        <img src="{{ collage_right }}" alt="" width="665" height="897" loading="eager" fetchpriority="high" decoding="async">
+      </span>
+    </div>
+
+  </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Labor Day Hero",
+  "tag": "section",
+  "class": "section-kidsy-labor-day-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Long Weekend Starts Now"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Headline",
+      "default": "$15 OFF + FREE SHIPPING ON ORDERS OVER $100"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Sub-heading",
+      "default": "Big savings on premium baby & kids gear"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "code_text",
+      "label": "Promo code line",
+      "default": "Use code [code] at checkout",
+      "info": "Use [code] where the code should appear. Leave blank to hide the line."
+    },
+    {
+      "type": "text",
+      "id": "promo_code",
+      "label": "Promo code",
+      "default": "KIDSYLABORDAY15"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button text",
+      "default": "Shop labor day sale"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Fine print",
+      "info": "One line per row.",
+      "default": "Ends Monday At 11:59 PM CST"
+    },
+    {
+      "type": "header",
+      "content": "Product collage"
+    },
+    {
+      "type": "image_picker",
+      "id": "collage_left_image",
+      "label": "Left collage",
+      "info": "Transparent PNG/WebP. Defaults to the bundled Labor Day artwork."
+    },
+    {
+      "type": "image_picker",
+      "id": "collage_right_image",
+      "label": "Right collage",
+      "info": "Transparent PNG/WebP. Defaults to the bundled Labor Day artwork."
+    },
+    {
+      "type": "header",
+      "content": "Decoration"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_decorations",
+      "label": "Show decorative accents",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_section_bg",
+      "label": "Page background (around card)",
+      "default": "#FFFBF3"
+    },
+    {
+      "type": "color",
+      "id": "color_card_gradient",
+      "label": "Card gradient (desktop)",
+      "default": "#FFDFA8"
+    },
+    {
+      "type": "color",
+      "id": "color_card_mobile",
+      "label": "Card background (mobile)",
+      "default": "#FFE9BD"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Headline & button background",
+      "default": "#F45901"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_text",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Eyebrow & sub-heading",
+      "default": "#341300"
+    },
+    {
+      "type": "color",
+      "id": "color_note",
+      "label": "Fine print",
+      "default": "#563A2A"
+    },
+    {
+      "type": "color",
+      "id": "color_squiggle",
+      "label": "Gold squiggle",
+      "default": "#FFBC38"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0, "max": 60, "step": 1, "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0, "max": 60, "step": 1, "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding (mobile)",
+      "min": 0, "max": 60, "step": 1, "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding (mobile)",
+      "min": 0, "max": 60, "step": 1, "unit": "px",
+      "default": 5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Labor Day Hero"
+    }
+  ]
+}
+{% endschema %}

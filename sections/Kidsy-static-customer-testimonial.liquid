@@ -1,0 +1,399 @@
+{% style %}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } #shopify-section-{{ section.id }} .title-wrapper  { justify-content: {{ section.settings.heading_alignment }}; } #shopify-section-{{ section.id }} .title-wrapper .section-header-content { text-align: {{ section.settings.content_alignment }}; justify-content: {{ section.settings.heading_alignment }}; display: inline-flex; flex-wrap: wrap; } #shopify-section-{{ section.id }} .title-wrapper .section--eyebrow { justify-content: {{ section.settings.content_alignment }}; } @media (max-width: 768px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top_mobile }}px; padding-bottom: {{ section.settings.padding_bottom_mobile }}px; } }
+{% endstyle %}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="cust-testimonial-wrapper page-width section-{{ section.id }}-padding">
+    {%- unless section.settings.title == blank -%}
+      <div class="title-wrapper {% if section.settings.cta_label != blank %}header-with-CTA{% endif %}">
+        <div class="section-header-content">
+          {% if section.settings.review_eyebrow and section.settings.eyebrow_text != blank %}
+            <div class="section--eyebrow">
+              <div class="eyebrow-icons">
+                {% if section.settings.eyebrow_star != blank %}
+                  {% for i in (1..5) %}
+                    {% render 'custom-image', 
+                      image: section.settings.eyebrow_star, 
+                      alt: section.settings.eyebrow_star.alt, 
+                      class: 'eyebrow-icon' 
+                    %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <h6 class="eyebroe-text h6">{{ section.settings.eyebrow_text | escape }}</h6>
+            </div>
+          {% endif %}
+          {% if section.settings.heading_link != blank %}
+            <a href="{{ section.settings.heading_link }}" class="section--title h3" title="{{ section.settings.title | escape }}">
+              {{ section.settings.title | escape }}
+            </a>
+          {% else %}
+            <h3 class="section--title h3">
+              {{ section.settings.title | escape }}
+            </h3>
+          {% endif %}
+          {% if section.settings.subtitle != blank %}
+            <p class="section-description h5">
+              {{ section.settings.subtitle }}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    {%- endunless -%}
+
+    <div class="testimonial-wrapper">
+      <div class="testimonial-swiper swiper full_height__swiper">
+        <div class="swiper-wrapper">
+
+          {% for block in section.blocks %}
+            <div class="swiper-slide color-{{ section.settings.card_color_scheme }} gradient" {{ block.shopify_attributes }}>
+              <div class="testimonial-card" data-index="{{ forloop.index }}">
+                <div class="card-content">
+                  <div class="review-stars">
+                    {% for i in (1..block.settings.review_star) %}
+                      <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.21033 0.594188C7.4677 -0.197915 8.58832 -0.197915 8.84569 0.594187L10.1513 4.61248C10.2664 4.96672 10.5965 5.20656 10.969 5.20656H15.1941C16.0269 5.20656 16.3732 6.27233 15.6994 6.76187L12.2813 9.24531C11.9799 9.46425 11.8538 9.85231 11.9689 10.2066L13.2746 14.2248C13.5319 15.0169 12.6253 15.6756 11.9515 15.1861L8.53336 12.7026C8.23203 12.4837 7.82399 12.4837 7.52266 12.7026L4.10449 15.1861C3.43069 15.6756 2.52409 15.017 2.78146 14.2248L4.08709 10.2066C4.20219 9.85231 4.0761 9.46425 3.77476 9.24531L0.356597 6.76187C-0.317206 6.27233 0.0290825 5.20656 0.861948 5.20656H5.08703C5.4595 5.20656 5.78961 4.96672 5.90471 4.61248L7.21033 0.594188Z" fill="#FFBC38"/>
+                      </svg>
+                    {% endfor %}
+                  </div>
+                  <h6 class="h6 review-title">{{ block.settings.review_title }}</h6>
+                  <div class="review-content">{{ block.settings.text }}</div>
+                </div>
+                <div class="card-author">
+                  <div class="author-icon">
+                    {% if block.settings.author_image != blank %}
+                      {% render 'custom-image', image: block.settings.author_image, alt:block.settings.author_image.alt, class: 'author-img' %}
+                    {% else %}
+                      {% assign name = block.settings.author | strip %}
+                      {% assign name_array = name | split: ' ' %}
+
+                      {% if name_array.size > 1 %}
+                        {% assign first_initial = name_array[0] | slice: 0, 1 %}
+                        {% assign second_initial = name_array[1] | slice: 0, 1 %}
+                        {% assign initials = first_initial | append: second_initial %}
+                      {% else %}
+                        {% assign initials = name_array[0] | slice: 0, 2 %}
+                      {% endif %}
+                      <span class="h5 author-short_name">{{ initials | upcase }}</span>
+                    {% endif %}
+                  </div>
+                  <div class="author-info">
+                     <span class="h6 review-author">{{ block.settings.author }}</span>
+                    {% if block.settings.verify_buyer %}
+                      <span class="verified-badge">
+                        {{ "sections.testimonials.verified" | t }}
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8 16C6.89583 16 5.85938 15.7917 4.89062 15.375C3.91146 14.9583 3.0599 14.388 2.33594 13.6641C1.61198 12.9401 1.04167 12.0885 0.625 11.1094C0.208333 10.1406 0 9.10417 0 8C0 6.89583 0.208333 5.85938 0.625 4.89062C1.04167 3.91146 1.61198 3.0599 2.33594 2.33594C3.0599 1.61198 3.91146 1.04167 4.89062 0.625C5.85938 0.208333 6.89583 0 8 0C9.10417 0 10.1406 0.208333 11.1094 0.625C12.0885 1.04167 12.9401 1.61198 13.6641 2.33594C14.388 3.0599 14.9583 3.91146 15.375 4.89062C15.7917 5.85938 16 6.89583 16 8C16 9.10417 15.7917 10.1406 15.375 11.1094C14.9583 12.0885 14.388 12.9401 13.6641 13.6641C12.9401 14.388 12.0885 14.9583 11.1094 15.375C10.1406 15.7917 9.10417 16 8 16ZM11.4531 4.42188L6.71875 9.14062L4.46875 6.90625L3 8.375L6.71875 12.0781L12.9219 5.89062L11.4531 4.42188Z" fill="currentcolor"/>
+                        </svg>
+                      </span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+           
+        </div>
+      </div>
+      <div class="tab-swiper-navigation swiper-navigation">
+        <div class="swiper-pagination"></div>
+        <div class="navigation-arrows">
+          <div class="swiper-arrow swiper-button-prev">
+           <span aria-hidden="true">{{ 'left-arrow.svg' | inline_asset_content }}</span>
+          </div>
+          <div class="swiper-arrow swiper-button-next">
+            <span aria-hidden="true">{{ 'right-arrow.svg' | inline_asset_content }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    var sectionEl = document.querySelector('#shopify-section-{{ section.id }}');
+    if (!sectionEl) return;
+
+    var swiperWrapper = sectionEl.querySelector('.swiper-wrapper');
+    if (!swiperWrapper) return;
+
+    // Get slides
+    var slides = Array.from(swiperWrapper.children);
+
+    // Shuffle slides before initializing Swiper
+    slides.sort(() => Math.random() - 0.5);
+    slides.forEach(slide => swiperWrapper.appendChild(slide));
+
+    // Pick a random slide
+    var randomSlide = slides[Math.floor(Math.random() * slides.length)];
+    var staticCard = document.querySelector('.product .product__media-wrapper .product__dynamic-review');
+    if (staticCard) {
+      staticCard.classList.remove('default_hide');
+      staticCard.innerHTML = randomSlide.innerHTML;
+    }
+
+    // Initialize Swiper
+    var swiperEl = sectionEl.querySelector('.testimonial-swiper');
+    var prevEl = sectionEl.querySelector('.swiper-button-prev');
+    var nextEl = sectionEl.querySelector('.swiper-button-next');
+    {% comment %} var paginationEl = sectionEl.querySelector('.swiper-pagination'); {% endcomment %}
+
+    new Swiper(swiperEl, {
+      loop: true,
+      slidesPerView: {{ section.settings.mobile_card }},
+      slidesPerGroup: 1,
+      spaceBetween: 10,
+      navigation: {
+        prevEl: prevEl || null,
+        nextEl: nextEl || null,
+      },
+      pagination: false,
+      breakpoints: {
+        768: {
+          slidesPerView: {{ section.settings.desktop_card | minus: 1 }},
+          slidesPerGroup: 2,
+          spaceBetween: 20,
+        },
+        1200: {
+          slidesPerView: {{ section.settings.desktop_card }},
+          slidesPerGroup: 3,
+        },
+      },
+    });
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "Customer Testimonials",
+    "class": "cust-testimonial--section",
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "Color Scheme"
+      },
+      {
+        "type": "color_scheme",
+        "id": "card_color_scheme",
+        "label": "Card Color Scheme"
+      },
+      {
+        "type": "header",
+        "content": "Heading"
+      },
+      {
+        "type": "checkbox",
+        "id": "review_eyebrow",
+        "label": "Show review eyebrow",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "eyebrow_star",
+        "label": "Star icon",
+        "visible_if": "{{ section.settings.review_eyebrow }}"
+      },
+      {
+        "type": "text",
+        "id": "eyebrow_text",
+        "label": "Eyebrow text",
+        "default": "Excellent | 100,000+ Customers",
+        "visible_if": "{{ section.settings.review_eyebrow }}"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Proudly Serving 100k+ Happy Families"
+      },
+      {
+        "type": "url",
+        "id": "heading_link",
+        "label": "Heading link URL"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "subtitle",
+        "label": "Subtitle"
+      },
+      {
+      "type": "select",
+        "id": "heading_alignment",
+        "label": "Heading Alignment",
+        "options": [
+          {
+            "label": "Left",
+            "value": "flex-start"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "flex-end"
+          }
+        ],
+        "default": "flex-start"
+      },
+      {
+      "type": "select",
+        "id": "content_alignment",
+        "label": "Content Alignment",
+        "options": [
+          {
+            "label": "Left",
+            "value": "left"
+          },
+          {
+            "label": "Center",
+            "value": "center"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "header",
+        "content": "Product Card"
+      },
+      {
+        "type": "range",
+        "id": "desktop_card",
+        "label": "Desktop card",
+        "min": 2,
+        "max": 6,
+        "step": 0.1,
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "mobile_card",
+        "label": "Mobile card",
+        "min": 1,
+        "max": 3,
+        "step": 0.1,
+        "default": 2
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Section Padding - Mobile"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Padding Top (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Padding Bottom (px)",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "default": 40
+      }
+    ],
+    "blocks": [
+      {
+        "type": "testimonial",
+        "name": "Testimonial",
+        "settings": [
+          {
+            "type": "range",
+            "id": "review_star",
+            "label": "Star Rating",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "default": 5
+          },
+          {
+            "id": "review_title",
+            "type": "text",
+            "label": "Title",
+            "default": "Customer reviews"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "text",
+            "default": "<p>Add customer reviews and testimonials to showcase your store's happy customers.</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "author_image",
+            "label": "Author Image"
+          },
+          {
+            "type": "text",
+            "id": "author",
+            "label": "Author",
+            "default": "Author's name"
+          },
+          {
+            "type": "checkbox",
+            "id": "verify_buyer",
+            "label": "Verified Buyer",
+            "default": true
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Customer Testimonials",
+        "blocks": [
+          {
+            "type": "testimonial"
+          },
+          {
+            "type": "testimonial"
+          },
+          {
+            "type": "testimonial"
+          },
+          {
+            "type": "testimonial"
+          },
+          {
+            "type": "testimonial"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

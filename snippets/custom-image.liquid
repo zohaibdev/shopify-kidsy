@@ -1,0 +1,42 @@
+{%- comment -%}
+  Reusable Optimized Image Snippet
+  Usage:
+  {% render 'custom-image', image: product.featured_image, alt: product.title %}
+  or
+  {% render 'custom-image', image: section.settings.image, alt: section.settings.image.alt, class: 'custom-class', sizes: '(min-width: 768px) 50vw, 100vw' %}
+{%- endcomment -%}
+
+{% assign img = image | default: media.preview_image %}
+{% if img %}
+
+  {% assign alt_text = alt | default: img.alt | escape %}
+  {% assign img_width = img.width | default: 1445 %}
+  {% assign aspect_ratio = img.aspect_ratio | default: 1 %}
+  {% assign sizes_attr = sizes | default: '(min-width: 750px) calc(100vw - 22rem), 1100px' %}
+
+  <img
+    class="global-media-settings global-media-settings--no-shadow {{ class }}"
+    srcset="
+      {%- if img.width >= 550 -%}{{ img | image_url: width: 550 }} 550w,{%- endif -%}
+      {%- if img.width >= 1100 -%}{{ img | image_url: width: 1100 }} 1100w,{%- endif -%}
+      {%- if img.width >= 1445 -%}{{ img | image_url: width: 1445 }} 1445w,{%- endif -%}
+      {%- if img.width >= 1680 -%}{{ img | image_url: width: 1680 }} 1680w,{%- endif -%}
+      {% comment %} {%- if img.width >= 2048 -%}{{ img | image_url: width: 2048 }} 2048w,{%- endif -%}
+      {%- if img.width >= 2200 -%}{{ img | image_url: width: 2200 }} 2200w,{%- endif -%}
+      {%- if img.width >= 2890 -%}{{ img | image_url: width: 2890 }} 2890w,{%- endif -%}
+      {%- if img.width >= 4096 -%}{{ img | image_url: width: 4096 }} 4096w,{%- endif -%} {% endcomment %}
+      {{ img | image_url }} {{ img.width }}w
+    "
+    sizes="{{ sizes_attr }}"
+    src="{{ img | image_url: width: img_width }}"
+    alt="{{ alt_text }}"
+   {% if priority == 'high' %}
+      fetchpriority="high"
+      loading="eager"
+    {% else %}
+      loading="lazy"
+    {% endif %}
+    width="{{ img_width }}"
+    height="{{ img_width | divided_by: aspect_ratio | ceil }}"
+  >
+{% endif %}

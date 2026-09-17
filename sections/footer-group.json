@@ -1,0 +1,91 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "brand_information_GtydTn": {
+          "type": "brand_information",
+          "settings": {
+            "show_social": false
+          }
+        },
+        "klaviyo_email_marketing_sms_form_embed_block_ahrC6r": {
+          "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/form-embed-block/2632fe16-c075-4321-a88b-50b567f42507",
+          "settings": {
+            "formId": "T37tv8"
+          }
+        },
+        "link_list_P3WDyw": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Shop Now",
+            "menu": "footer-menu-shop-now",
+            "open_by_default": false
+          }
+        },
+        "link_list_kDzahg": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Navigate",
+            "menu": "footer-menu-navigate",
+            "open_by_default": false
+          }
+        },
+        "link_list_TnTbtp": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Our Policies",
+            "menu": "footer-menu-policy",
+            "open_by_default": false
+          }
+        },
+        "text_9ThbQt": {
+          "type": "text",
+          "settings": {
+            "heading": "<strong>Need Help?</strong>",
+            "subtext": "<p><a href=\"/pages/contact\" title=\"Contact Us\">Contact Us</a></p><p>Mon-Fri, 9am-5pm CST</p><p><a href=\"tel:3129648348\" title=\"tel:3129648348\">(312) 964-8348</a></p><p><a href=\"mailto:hello@kidsy.co\" title=\"mailto:hello@kidsy.co\">hello@kidsy.co</a></p><p>203 N LaSalle St, Suite 2100 Chicago, IL 60601</p>",
+            "open_by_default": true
+          }
+        }
+      },
+      "block_order": [
+        "brand_information_GtydTn",
+        "klaviyo_email_marketing_sms_form_embed_block_ahrC6r",
+        "link_list_P3WDyw",
+        "link_list_kDzahg",
+        "link_list_TnTbtp",
+        "text_9ThbQt"
+      ],
+      "settings": {
+        "color_scheme": "accent-2",
+        "newsletter_enable": false,
+        "newsletter_heading": "<strong>Never Miss A Deal - </strong>Sign up to Kidsy’s emails for exclusive offers",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "payment_enable": true,
+        "show_policy": false,
+        "margin_top": 0,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

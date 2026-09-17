@@ -1,0 +1,86 @@
+{% comment %}
+  ============================================================
+  PDP Product Image Discount Badge
+  ------------------------------------------------------------
+  Figma: 02. Kidsy | Internal → Product Detail Page (12123:12270)
+    • Desktop — 130px gold disc, 15px in from the image card's top-left,
+      2px dashed chocolate ring inset ~6.5px, "$15 Off" over two lines
+    • Mobile  —  80px disc, 12px in from the card's top-left
+
+  Purely visual: it never touches price or variant logic.
+
+  Text resolution order (so it is not hard-coded globally):
+    1. product.metafields.custom.promo_badge  — per-product override
+    2. section.settings.image_badge_text      — store-wide default
+
+  Accepts:
+  - product: {Object}
+  - section_id: {String}
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign badge_text = section.settings.image_badge_text
+  assign product_badge = product.metafields.custom.promo_badge.value
+  if product_badge != blank
+    assign badge_text = product_badge
+  endif
+-%}
+
+{%- if section.settings.show_image_discount_badge and badge_text != blank -%}
+  {%- assign kfsb_id = 'kfsb-' | append: section_id -%}
+
+  <style>
+    #{{ kfsb_id }} {
+      --kfsb-size: 130px;
+      --kfsb-bg: {{ section.settings.image_badge_bg | default: '#FFBC38' }};
+      --kfsb-text: {{ section.settings.image_badge_color | default: '#341300' }};
+
+      position: absolute;
+      left: 15px;
+      top: 15px;
+      z-index: 3;
+      width: var(--kfsb-size);
+      height: var(--kfsb-size);
+      border-radius: 50%;
+      background: var(--kfsb-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* never intercept clicks meant for the gallery */
+      pointer-events: none;
+    }
+    /* dashed ring, inset ~5% of the disc */
+    #{{ kfsb_id }}::before {
+      content: '';
+      position: absolute;
+      inset: calc(var(--kfsb-size) * 0.05);
+      border: 2px dashed var(--kfsb-text);
+      border-radius: 50%;
+    }
+    #{{ kfsb_id }} .kfsb__text {
+      position: relative;
+      max-width: 58%;
+      text-align: center;
+      color: var(--kfsb-text);
+      font-family: 'Roobert TRIAL', var(--font-body-family), sans-serif;
+      font-size: calc(var(--kfsb-size) * 0.3);
+      font-weight: 650;
+      line-height: 1.08;
+      text-transform: capitalize;
+    }
+
+    @media screen and (max-width: 749px) {
+      #{{ kfsb_id }} {
+        --kfsb-size: 80px;
+        left: 12px;
+        top: 12px;
+      }
+      #{{ kfsb_id }}::before { border-width: 2px; }
+    }
+  </style>
+
+  <div id="{{ kfsb_id }}" class="kfsb">
+    <span class="kfsb__text">{{ badge_text }}</span>
+  </div>
+{%- endif -%}

@@ -1,0 +1,78 @@
+{% comment %}
+  Renders active filters display above product grid
+  
+  Accepts:
+  - results: {Object} Collection or Search object
+  
+  Usage:
+  {% render 'active-filters-display', results: collection %}
+{% endcomment %}
+{%- liquid
+  assign sort_by = results.sort_by | default: results.default_sort_by
+  assign total_active_values = 0
+  
+  if results.url
+    assign results_url = results.url
+  else
+    assign terms = results.terms | escape
+    assign results_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
+  endif
+  
+  # Count total active filters
+  for filter in results.filters
+    assign total_active_values = total_active_values | plus: filter.active_values.size
+    if filter.type == 'price_range'
+      assign min = filter.min_value.value
+      assign max = filter.max_value.value
+      if min != null or max != null
+        assign total_active_values = total_active_values | plus: 1
+      endif
+    endif
+  endfor
+-%}
+{%- if total_active_values > 0 -%}
+  <div class="active-facets-top" id="active-facets-top-inner">
+    <div class="active-facets-top__inner">
+      
+      <div class="active-facets-top__list">
+        {%- for filter in results.filters -%}
+          {%- for value in filter.active_values -%}
+            <facet-remove>
+              <a href="{{ value.url_to_remove }}" class="active-facets-top__button">
+                <span class="active-facets-top__button-inner">
+                  {{ filter.label | escape }}: {{ value.label | escape }}
+                  <span class="active-facets-top__button-icon">
+                    {{- 'icon-close-small.svg' | inline_asset_content -}}
+                  </span>
+                </span>
+              </a>
+            </facet-remove>
+          {%- endfor -%}
+          
+          {%- if filter.type == 'price_range' -%}
+            {% assign min = filter.min_value.value %}
+            {% assign max = filter.max_value.value %}
+            {%- if min != null or max != null -%}
+              <facet-remove>
+                <a href="{{ filter.url_to_remove }}" class="active-facets-top__button">
+                  <span class="active-facets-top__button-inner">
+                    {{ filter.label | escape }}: {{ min | default: 0 | money }} - {{ max | default: filter.range_max | money }}
+                    <span class="active-facets-top__button-icon">
+                      {{- 'icon-close-small.svg' | inline_asset_content -}}
+                    </span>
+                  </span>
+                </a>
+              </facet-remove>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        
+        <facet-remove class="active-facets-top__button-wrapper">
+          <a href="{{ results_url }}" class="active-facets-top__button-remove">
+            <span>{{ 'products.facets.clear_all' | t }}</span>
+          </a>
+        </facet-remove>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

@@ -1,0 +1,284 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 16
+      }
+    },
+    "image_banner_czPYfw": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_Xp8gPW": {
+          "type": "heading",
+          "settings": {
+            "heading": "Frequently Asked Questions",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Xp8gPW"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".banner__media img {object-fit: scale-down;}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/iStock-1294544712.png",
+        "image_overlay_opacity": 0,
+        "image_height": "small",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "image_with_text_khV9mJ": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_CjimkK": {
+          "type": "heading",
+          "settings": {
+            "heading": "Frequently Asked Questions",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_CjimkK"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/iStock-1294544712_de8e5bdc-f09e-49a7-8ad8-3f1d8a772d2f.jpg",
+        "height": "adapt",
+        "desktop_image_width": "large",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "background-1",
+        "color_scheme": "background-2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_6AMUMd": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_wCkMHK": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What is Flex and what is their relationship with Kidsy?",
+            "icon": "question_mark",
+            "row_content": "<p>Kidsy has partnered with Flex to allow you to use your Health Savings Account (HSA) or Flexible Spending Account (FSA). This means you can now use your HSA or FSA debit card to buy [INSERT BRAND OR PRODUCT NAME] with pre-tax dollars, resulting in net savings of 30-40%, depending on your tax bracket.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_p7zGtt": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do I pay with my HSA or FSA card?",
+            "icon": "question_mark",
+            "row_content": "<p>To use your HSA or FSA debit card, add products to your cart as usual. At checkout, select “Flex | Pay with HSA/FSA” as your payment option, enter your HSA or FSA debit card, and complete your checkout as usual.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_EdfXVD": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What if I don’t have my HSA/FSA card available?",
+            "icon": "question_mark",
+            "row_content": "<p>If you don’t have your HSA or FSA card handy, still select “Flex | Pay with HSA/FSA” as your payment method. Enter your credit card information and Flex will email you an itemized receipt to submit for reimbursement.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_9excbc": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Flex isn’t showing up as a payment option (Shopify partners)?",
+            "icon": "question_mark",
+            "row_content": "<p>The key here is to make sure you are logged out of ShopPay. One of the easiest ways to do this is to go through checkout in an incognito window.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_JjgPUU": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "My HSA/FSA card keeps declining. What’s going on?",
+            "icon": "question_mark",
+            "row_content": "<p>HSA/FSA cards are debit cards and so the most common reason for declines is insufficient funds. Reach out to your HSA/FSA administrator to confirm your balance.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_FctJrm": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "I submitted my Flex itemized receipt for reimbursement and my FSA requires more information.",
+            "icon": "question_mark",
+            "row_content": "<p>Please forward us the request from your FSA and we will work with the Flex team to issue you a new receipt.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_NADNLR": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "I didn’t receive an email from Flex with my receipt. What do I do?",
+            "icon": "question_mark",
+            "row_content": "<p>We will reach out to the team and have them re-send your receipt.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_7gXgnz": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "My purchase receipt from [BRAND] has a different number than what my FSA was charged. How can we resolve it?",
+            "icon": "question_mark",
+            "row_content": "<p>Thanks for reaching out and apologies for the discrepancy. We'll review the charges and get back to you with details of the likely refund shortly.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_MAgk8U": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Why do I need to provide [Brand] with health information?",
+            "icon": "question_mark",
+            "row_content": "<p>In order to qualify to use your HSA or FSA card for [insert product name], the IRS requires you to have a Letter of Medical Necessity. [Brand] has partnered with Flex to enable asynchronous telehealth visits as part of our checkout. Within 24 hrs of your purchase, Flex will email you both an itemized receipt.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_GQRHVq": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What is a Letter of Medical Necessity?",
+            "icon": "question_mark",
+            "row_content": "<p>A letter is basically a note from a doctor saying that you are purchasing an item to treat or manage a medical condition. More details can be found here.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_DyxxTm": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do I need to do anything with my Letter of Medical Necessity?",
+            "icon": "question_mark",
+            "row_content": "<p>You should keep it on file for at least three years in the event of an IRS audit of your HSA or FSA account. Occasionally, FSAs may ask for the Letter to confirm eligibility of your purchase.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_hTXdEL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can you re-write my Letter of Medical Necessity in my husband's/friend's name? I used their card for the purchase.",
+            "icon": "question_mark",
+            "row_content": "<p>Unfortunately not. The individual who completed the checkout flow also completed an async telehealth visit with one of Flex’s providers in the background.</p><p>To change the details on the Letter of Medical Necessity, we can issue you a refund and your husband/friend etc. can go through the checkout flow themselves.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_RKweUq": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "The date on my Letter of Medical Necessity is one day different from my receipt.",
+            "icon": "question_mark",
+            "row_content": "<p>Thanks for letting us know! This may be a time zone issue. I’ve reached out to our partners at Flex to see if they can re-issue the Letter with an updated date.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Lt4dxt": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "My FSA says I need [a product name, NPI number, other info] added to my Letter for approval.",
+            "icon": "question_mark",
+            "row_content": "<p>Generally, we’re not able to accommodate one off requests but we will reach out to our partners at Flex and see if we can accommodate your request.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_CXkrQn": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "A customer wants to use two HSA/FSA cards to pay for the crib. Is there a provision for that? Or is there a workaround to provide that? No, unfortunately this isn't a supported option today.",
+            "icon": "question_mark",
+            "row_content": "<p>If they have insufficient funds in a single HSA or FSA account, they can instead enter a credit card on the Flex checkout page. They will receive their itemized receipt and Letter of Medical Necessity from Flex and can use those documents to submit for reimbursement for the whatever the available balance is in the account</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_JGhCXa": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is sales tax covered by HSA/FSA funds, or is it treated separately?",
+            "icon": "question_mark",
+            "row_content": "<p>Sales tax for eligible items is also covered by HSA/FSA funds. If the customer has a split cart, the tax will be divided among the cards based on the items.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_qfpzqx": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can old (non-Flex) customers use their order confirmation email to apply for HSA/FSA refunds?",
+            "icon": "question_mark",
+            "row_content": "<p>For Health Savings Accounts (HSAs), consumers can use an itemized receipt for reimbursement anytime after they have made the purchase, even if it is many years later.</p><p>For Flexible Spending Accounts (FSAs), most accounts require that the purchase was made in the calendar year during which the consumer had the FSA, as FSAs typically do not roll over. Some FSAs offer a buffer window, allowing customers additional time to submit receipts for expenses incurred during the previous calendar year.</p><p>In either case, customers may need an itemized receipt. Flex issues these receipts for transactions completed through the Flex checkout, but for older transactions, merchant support may be needed to generate the necessary documentation.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_7pQfV6": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can a customer purchase a product now and apply for FSA reimbursement in the next calendar year?",
+            "icon": "question_mark",
+            "row_content": "<p>The ability to apply for FSA reimbursement in a future calendar year depends on the policy of the specific FSA provider. Most FSA administrators require that the purchase be made during the time of coverage. For example, if the FSA coverage is for 2025, all purchases typically need to be made and/or submitted for reimbursement within that coverage period.</p><p>However, some administrators may have more flexible rules regarding the timing of when the expense occurred. We recommend that customers review their plan policy to confirm the details.</p><p><strong>Note:</strong> Health Savings Accounts (HSAs) are different and generally allow for reimbursement at any time, even in future years.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_wCkMHK",
+        "collapsible_row_p7zGtt",
+        "collapsible_row_EdfXVD",
+        "collapsible_row_9excbc",
+        "collapsible_row_JjgPUU",
+        "collapsible_row_FctJrm",
+        "collapsible_row_NADNLR",
+        "collapsible_row_7gXgnz",
+        "collapsible_row_MAgk8U",
+        "collapsible_row_GQRHVq",
+        "collapsible_row_DyxxTm",
+        "collapsible_row_hTXdEL",
+        "collapsible_row_RKweUq",
+        "collapsible_row_Lt4dxt",
+        "collapsible_row_CXkrQn",
+        "collapsible_row_JGhCXa",
+        "collapsible_row_qfpzqx",
+        "collapsible_row_7pQfV6"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_czPYfw",
+    "image_with_text_khV9mJ",
+    "collapsible_content_6AMUMd"
+  ]
+}

@@ -1,0 +1,97 @@
+<style>
+  .kidsy-points-section .container { max-width: 1400px; padding: 0px 10px; margin: 0px auto; } .kidsy-points-section .kidsy-points-wrapper { padding: 23px 0px 43px; } .kidsy-points-section .heading-wrap h2 { font-family: "Poppins", sans-serif; margin: 0px; font-size: 48px; font-weight: 500; line-height: 1.2; letter-spacing: 0; color: #000000; padding-bottom: 14px; } .kidsy-points-section .heading-wrap h2 p { margin: 0; } .kidsy-points-section .image-text-wrapper { display: flex; justify-content: center; gap: 30px; background-color: #FFDFA8; border: 1px solid #000000; border-radius: 25px; padding: 49px 80px; } .kidsy-points-section .image-text-wrap { display: flex; justify-content: center; align-items: center; gap: 11px; } .kidsy-points-section .image-wrap { display: block; height: 114px; } .kidsy-points-section .text-wrap p { font-family: "Poppins", sans-serif; margin: 0px; font-size: 18px; font-weight: 400; color: #000000; line-height: 1.2; letter-spacing: 0; } @media only screen and (max-width:768px) { .kidsy-points-section .kidsy-points-wrapper { padding: 15px 0px 11px; } .kidsy-points-section .heading-wrap h2 { font-size: 24px; text-align: center; line-height: 1; padding-bottom: 21px; padding-inline: 50px; } .kidsy-points-section .image-text-wrapper { flex-wrap: wrap; padding: 8px 19px 16px 20px; gap: 10px; } .kidsy-points-section .image-text-wrap { padding: 10px 0px; } .kidsy-points-section .text-wrap p { font-size: 16px; } .kidsy-points-section .image-wrap { display: block; height: 93px; } .kidsy-points-section .image-wrap img { width: 93px; height: 93px; } }
+</style>
+<section class="kidsy-points-section">
+  <div class="container">
+    <div class="kidsy-points-wrapper">
+      <div class="heading-wrap">
+        <h2>{{ section.settings.heading_text }}</h2>
+      </div>
+      <div class="image-text-wrapper">
+        {% for block in section.blocks %}
+          <div class="image-text-wrap">
+            <div class="image-wrap">
+              {%- if block.settings.bg_img != blank -%}
+                {%- liquid
+                  assign mobileImage = block.settings.bg_img
+                  if section.settings.bg_img_mobile != blank
+                    assign mobileImage = section.settings.bg_img_mobile
+                  endif
+                -%}
+                <picture>
+                  <source media="(min-width: 1901px)" srcset="{{ block.settings.bg_img | image_url: width: 2560 }}">
+                  <source media="(min-width: 1700px)" srcset="{{ block.settings.bg_img | image_url: width: 2020 }}">
+                  <source media="(min-width: 1500px)" srcset="{{ block.settings.bg_img | image_url: width: 1820 }}">
+                  <source media="(min-width: 1200px)" srcset="{{ block.settings.bg_img | image_url: width: 1600 }}">
+                  <source media="(min-width: 991px)" srcset="{{ block.settings.bg_img | image_url: width: 1350 }}">
+                  <source
+                    media="(min-width: 768px)"
+                    srcset="{{ block.settings.bg_img_mobile | image_url: width: 1100 }}"
+                  >
+                  <source
+                    media="(min-width: 576px)"
+                    srcset="{{ block.settings.bg_img_mobile | image_url: width: 800 }}"
+                  >
+                  <source
+                    media="(min-width: 400px)"
+                    srcset="{{ block.settings.bg_img_mobile | image_url: width: 700 }}"
+                  >
+                  <source media="(min-width: 0)" srcset="{{ block.settings.bg_img_mobile | image_url: width: 600 }}">
+                  <source media="(min-width: 0)" srcset="{{ block.settings.bg_img_mobile | image_url: width: 400 }}">
+                  <img
+                    src="{{ block.settings.bg_img | image_url }}"
+                    alt="{{ block.settings.bg_img.alt | default: block.settings.heading | escape }}"
+                    width="{{ block.settings.bg_img.width }}"
+                    loading="lazy"
+                    height="{{ block.settings.bg_img.width | divided_by: block.settings.bg_img.aspect_ratio | round }}"
+                  >
+                </picture>
+              {%- endif -%}
+            </div>
+            <div class="text-wrap">{{ block.settings.text }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Kidsy Points Section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading_text",
+      "label": "Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content",
+      "name": "Content",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "bg_img",
+          "label": "Destop Image"
+        },
+        {
+          "type": "image_picker",
+          "id":"bg_img_mobile",
+          "label": "Mobile Image"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Paragraph"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kidsy Points Section"
+    }
+  ]
+}
+{% endschema %}

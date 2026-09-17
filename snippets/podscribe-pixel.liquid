@@ -1,0 +1,26 @@
+<!-- Podscribe Pixel - Page Views -->
+<script defer>
+(function (w, d) {
+  var id = 'podscribe-capture';
+  var n = 'script';
+  if (d.getElementById(id)) return;
+  var e = d.createElement(n);
+  e.id = id;
+  e.src = 'https://d34r8q7sht0t9k.cloudfront.net/tag.js';
+  var s = d.getElementsByTagName(n)[0];
+  s.parentNode.insertBefore(e, s);
+
+  e.addEventListener('load', function () {
+    w.podscribe('init', {
+      user_id: '59e518c5-b02e-44bf-9458-2d2ba189a652',
+      advertiser: 'kidsy'
+    });
+
+    // Track page view
+    w.podscribe('view', {
+      device_id: '{{ customer.id | default: "guest" }}'
+    });
+  });
+})(window, document);
+</script>
+
